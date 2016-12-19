@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>首页</title>
 <%@ include file="../../bbs/head.jsp"%>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -53,13 +53,13 @@ $(document).ready(function(){
 	
 			<div id="sousuo" style="height: 50px;">
 				<font color="blue">站内搜索</font>&nbsp;&nbsp;&nbsp;&nbsp; <input
-					id="ss" style="width: 500px"></input>
-				<div id="mm" style="width: 120px">
-					<div data-options="name:'title',iconCls:'icon-ok'">主题</div>
-					<div data-options="name:'user'">作者</div>
-				</div>
+					id="ss" style="width: 500px"></input>				
 
-			</div>
+                   <div  id="mm" style="width:120px">
+                        <div data-options="name:'all',iconCls:'icon-ok'">主题</div> 
+                        <div data-options="name:'sports'">帖子</div>                       
+                   </div>
+			</div>			
 			<div>
 				<table id="tt" class="easyui-datagrid" iconCls="icon-save">
 					<thead>

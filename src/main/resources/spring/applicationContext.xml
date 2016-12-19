@@ -77,8 +77,22 @@
 		</property>
 	</bean>
 	
+	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 	      <property name="dataSource" ref="dataSource"/>
 	      <property name="configLocation" value="classpath:mybatis/sqlMapConfig.xml"/>
+	      <!-- 如果mppper类和xml文件不在同一个包下，就要配置mapplocations 指向xml文件存放的class路径 -->	
+	      <property name="mapperLocations" value="classpath:com/bbs/mapper/xml/*.xml"/>
 	</bean>
+	
+	<!-- MapperScannerConfigurer会自动扫描basePackage指定的包，找到映射接口类和映射XML文件 ,并进行注入-->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	      <property name="basePackage" value="com.bbs.mapper"/>
+	      <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>	     
+	</bean>
+	
+	
+	<!-- spring可以自动去扫描base-pack下面或者子包下面的Java文件，如果扫描到有@Component @Controller@Service等
+                              这些注解的类，则把这些类注册为bean -->
+	<context:component-scan base-package="com.bbs"></context:component-scan>
 </beans>
