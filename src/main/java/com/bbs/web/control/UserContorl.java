@@ -3,8 +3,11 @@ package com.bbs.web.control;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.tomcat.util.security.MD5Encoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,6 +18,7 @@ import com.bbs.bean.Admin;
 import com.bbs.bean.User;
 import com.bbs.service.AdminService;
 import com.bbs.service.UserService;
+import com.bbs.until.MD5Until;
 
 @Controller
 @RequestMapping("/userControl")
@@ -49,12 +53,20 @@ System.out.println(username);
 	
 	@RequestMapping(value="/userLogin",method=RequestMethod.POST)
 	public @ResponseBody Boolean validateUserLogin(@RequestParam("username")String username,@RequestParam("password")String password,
-			HttpSession session){
-		Boolean flag=false;
+			@RequestParam("isChecked")Boolean isChecked,HttpSession session,HttpServletResponse response){
+		Boolean flag=false;	
 		try {
 			User user=userService.findUserByUsernameAndPass(username, password);
 			if(user!=null){
-				session.setAttribute("username", username);	
+				session.setAttribute("username", username);				
+				if(isChecked){
+					Cookie cookie=new Cookie("Cookie_username", username);
+					cookie.setMaxAge(7*24*3600);
+					response.addCookie(cookie);
+					cookie=new Cookie("Cookie_password", password);
+					cookie.setMaxAge(7*24*3600);
+					response.addCookie(cookie);
+				}
 				flag=true;
 			}
 		} catch (Exception e) {
@@ -62,5 +74,15 @@ System.out.println(username);
 			e.printStackTrace();
 		}
 		return flag;
+	}
+	
+	@RequestMapping(value="/userLogout",method=RequestMethod.GET)
+	public @ResponseBody Boolean UserLogout(@RequestParam("username")String username,
+			HttpSession session){
+		if(session!=null){
+			session.removeAttribute("username");
+			return true;			
+		}
+		return false;
 	}
 }

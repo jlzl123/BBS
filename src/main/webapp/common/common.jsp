@@ -15,3 +15,5 @@
 	src="../js/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript"
 	src="../js/easyui/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript"
+	src="../js/md5.js"></script>	
