@@ -6,17 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>首页</title>
 <%@ include file="../../bbs/head.jsp"%>
-<script type="text/javascript">
-$(document).ready(function(){
-	$('#ss').searchbox({ 
-		searcher:function(value,name){ 
-		alert(value + "," + name) 
-		}, 
-		menu:'#mm', 
-		prompt:'请输入值' 
-		});
-});
-</script>
+<script type="text/javascript" src="../bbs/js/index.js"></script>
 <style type="text/css">
 #loginDiv {
 	float: right;
@@ -47,6 +37,7 @@ $(document).ready(function(){
 	margin-top: 20px;
 	margin-left: 300px;
 }
+
 </style>
 </head>
 <body>
@@ -64,7 +55,7 @@ $(document).ready(function(){
 				<table id="tt" class="easyui-datagrid" iconCls="icon-save">
 					<thead>
 						<tr>
-							<th data-options="field:'section',width:800" align="center"
+							<th data-options="field:'sectionName',width:800" align="center"
 								style=""><font size="3">版块</font></th>
 							<th data-options="field:'jianjie',width:300" align="center"><font
 								size="3">简介</font></th>

@@ -7,55 +7,7 @@
 <title>注册</title>
 <%@ include file="../../bbs/head.jsp"%>
 
- <script type="text/javascript">
-         $(document).ready(function(){
-        	$("#form").validate({
-        		rules:{
-        			username:{
-        				required:true,
-        				minlength:2
-        			},
-        			password:{
-        				required:true,
-        				minlength:6
-        			},
-        			repassword:{
-        				required:true,
-        				minlength:6,
-        				equalTo:"#password"
-        			},
-        			age:{
-        				required:true,
-        				range:[0,150] 
-        			},        			
-        			email:{
-        				required:true,
-        				email:true
-        			}
-        		},
-        		messages:{
-        			username:{
-        				required:"请输入您的用户名",
-        				minlength:"用户名至少由两个字母组成"
-        			},
-        			password:{
-        				required: "请输入密码",
-        				minlength:"密码长度不能小于 6 个字母",
-        			},
-        			repassword:{
-        				required:"请输入确认密码",
-        				minlength:"密码长度不能小于 6 个字母",
-        				equalTo:"两次密码输入不一致"
-        			},
-        			age:{
-        				required:"请输入年龄",
-        				range:"年龄必需在0-150之间" 
-        			},
-        			email:"请输入一个正确的邮箱",        			       		
-        		}
-        	}); 
-         });
- </script>
+ <script type="text/javascript" src="../bbs/js/regist.js"></script>
   <style type="text/css">
                .error{
                     color:red;
@@ -65,7 +17,7 @@
 <body>
       <div style="height: 30px;background-color:#00BFFF;padding-top: 10px;">
           <b style="padding-left: 50px;color: white;">用户注册</b>
-          <font style="padding-left: 900px;color: white;">您现在的位置：<a href="#">首页</a>>><b>用户注册</b></font>
+          <font style="padding-left: 900px;color: white;">您现在的位置：<a href="/BBS/bbs/index.jsp">首页</a>>><b>用户注册</b></font>
       </div>
       <b style="padding-left: 50%;margin-top: 10px">注册用户:</b>
       <div>
@@ -74,13 +26,14 @@
                  <tr height="35px">
                     <td width="200px">用户名:</td>
                     <td>
-                        <input id="username" name="username" type="text">
+                        <input id="user" name="user" type="text">
+                        <a id="errorFont" style="color: red;display: none">用户名已存在！</a>                       
                     </td>
                  </tr>
                  <tr height="35px">
                     <td>密码:</td>
                     <td>
-                        <input id="password" name="password" type="password">
+                        <input id="pass" name="pass" type="password">
                     </td>
                  </tr>
                  <tr height="35px">
@@ -111,7 +64,7 @@
                  <tr height="35px">
                     <td></td>
                     <td>
-                        <input id="submit" type="submit" value="注册" style="width: 80px">
+                        <input id="submit" type="button" value="注册" style="width: 80px">
                         <input id="reset" type="reset" value="重置" style="width: 80px">
                     </td>
                  </tr>

@@ -1,6 +1,7 @@
 package com.bbs.bean;
 
-import java.sql.Date;
+import java.util.Date;
+
 
 public class User {
 	private int userId;
@@ -9,7 +10,7 @@ public class User {
 	private String sex;
 	private int age;
 	private String email;
-	private Date addtime;
+	private Date addtime;//mysql可以保存date数据
 	private int userStatus;
 	public int getUserId() {
 		return userId;

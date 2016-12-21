@@ -4,4 +4,11 @@
         <select id="findUserByUsernameAndPass" parameterType="java.lang.String" resultType="User">
                 select * from users where username=#{0} and password=#{1}
         </select>
+        <select id="findUserByUsername" parameterType="java.lang.String" resultType="User">
+                select * from users where username=#{value}
+        </select>
+        <insert id="insertUser" parameterType="User">
+                insert into users(username,password,sex,age,email,addtime,userStatus) values(
+                #{username},#{password},#{sex},#{age},#{email},#{addtime},#{userStatus})
+        </insert>
 </mapper>

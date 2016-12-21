@@ -37,10 +37,15 @@
     	 
     	 var session= <%=session.getAttribute("username")%>;
     	 var isExist=<%=request.getAttribute("isExist")%>;
-alert(isExist);
+
     	 if(session!=null){
     		 $("#loginedDiv").css("display","block");
 		     $("#loginDiv").css("display","none");
+    	 }else{
+    		 if(isExist){
+    			 $("#loginedDiv").css("display","block");
+    		     $("#loginDiv").css("display","none");
+    		 }
     	 }
     	 
      })

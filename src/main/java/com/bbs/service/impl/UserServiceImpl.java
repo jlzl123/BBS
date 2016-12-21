@@ -20,4 +20,14 @@ public class UserServiceImpl implements UserService{
 		return userMapper.findUserByUsernameAndPass(username, password);
 	}
 
+	public User findUserByUsername(String username) throws Exception {
+		// TODO Auto-generated method stub
+		return userMapper.findUserByUsername(username);
+	}
+
+	public int insertUser(User user) throws Exception {
+		// TODO Auto-generated method stub
+		return userMapper.insertUser(user);
+	}
+
 }
