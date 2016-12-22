@@ -22,9 +22,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bbs.bean.Admin;
+import com.bbs.bean.Note;
 import com.bbs.bean.Section;
 import com.bbs.bean.User;
 import com.bbs.service.AdminService;
+import com.bbs.service.NoteService;
 import com.bbs.service.SectionService;
 import com.bbs.service.UserService;
 import com.bbs.until.MD5Until;
@@ -39,6 +41,8 @@ public class UserContorl {
 	private UserService userService;
 	@Resource
 	private SectionService sectionService;
+	@Resource
+	private NoteService noteService;
 	
 	@RequestMapping(value="/adminLogin",method=RequestMethod.POST)
 	public String validateAdmin(@RequestParam("username")String username,@RequestParam("password")String password,
@@ -136,32 +140,6 @@ System.out.println(username);
 		return flag;
 	}
 	
-//	@RequestMapping(value="/findAllSection",method=RequestMethod.GET)
-//	public @ResponseBody Map<String, Object> findAllSection(HttpServletRequest request){
-//		Map<String, Object> returnMap=new HashMap<String, Object>();
-//		List<Map<String, String>> listMap=new ArrayList<Map<String,String>>();
-//		try {
-//			List<Section> sectionList=sectionService.findAllSection();
-//            for(Section section:sectionList){
-//            	Map<String, String> map=new HashMap<String, String>();
-//            	map.put("sectionName", section.getSectionName());
-//            	map.put("jianjie", section.getJianjie());
-//            	map.put("sectionUser", section.getSectionUser());
-//            	listMap.add(map);
-//            }	
-//            if(listMap.size()>0){
-//            	returnMap.put("total", listMap.size());
-//            	returnMap.put("rows",listMap);
-//            }else{
-//            	returnMap.put("total", 0);
-//            	returnMap.put("rows",listMap);
-//            }
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return returnMap;
-//	}
 	@RequestMapping(value="/findAllSection",method=RequestMethod.GET)
 	public @ResponseBody List<Section> findAllSection(HttpServletRequest request){
 		List<Section> sectionList=null;
@@ -172,5 +150,24 @@ System.out.println(username);
 			e.printStackTrace();
 		}
 		return sectionList;
+	}
+	
+	@RequestMapping(value="/findAllNoteBySectionId",method=RequestMethod.GET)
+	public @ResponseBody List<Note> findAllNoteBySectionId(@RequestParam("sectionName")String sectionName,
+			Map<String, Object> map){		
+		List<Note> noteList=null;
+		if(sectionName!=null){
+			try {
+				Section section=sectionService.findSectionBySectionName(sectionName);
+				if(section!=null){
+					int sectionId=section.getSectionId();
+					noteList=noteService.findAllNoteBySectionId(sectionId);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}	
+		return noteList;
 	}
 }

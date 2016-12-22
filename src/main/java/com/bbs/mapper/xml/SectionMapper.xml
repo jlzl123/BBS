@@ -2,6 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.bbs.mapper.SectionMapper">
         <select id="findAllSection" resultType="Section">
-               select * from sections
+                select * from sections
+        </select>
+        <select id="findSectionBySectionName" parameterType="java.lang.String" resultType="Section">
+                select * from sections where sectionName=#{value}
         </select>
 </mapper>

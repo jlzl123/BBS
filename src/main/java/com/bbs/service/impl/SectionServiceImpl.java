@@ -21,4 +21,10 @@ public class SectionServiceImpl implements SectionService{
 		return sectionMapper.findAllSection();
 	}
 
+	public Section findSectionBySectionName(String sectionName)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return sectionMapper.findSectionBySectionName(sectionName);
+	}
+
 }
