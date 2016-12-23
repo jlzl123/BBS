@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>首页</title>
-<%@ include file="../../bbs/head.jsp"%>
+<%@ include file="../bbs/head.jsp"%>
 <script type="text/javascript" src="../bbs/js/index.js"></script>
 <style type="text/css">
 #loginDiv {

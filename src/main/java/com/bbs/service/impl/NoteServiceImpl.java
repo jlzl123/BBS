@@ -21,4 +21,14 @@ public class NoteServiceImpl implements NoteService{
 		return noteMapper.findAllNoteBySectionId(sectionId);
 	}
 
+	public int insertNote(Note note) throws Exception {
+		// TODO Auto-generated method stub
+		return noteMapper.insertNote(note);
+	}
+
+	public Note findNoteByNoteTitle(String noteTitle) throws Exception {
+		// TODO Auto-generated method stub
+		return noteMapper.findNoteByNoteTitle(noteTitle);
+	}
+
 }

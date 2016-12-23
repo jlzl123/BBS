@@ -7,4 +7,8 @@ import com.bbs.bean.Note;
 public interface NoteMapper {
 
 	public List<Note> findAllNoteBySectionId(int sectionId) throws Exception;
+	
+	public int insertNote(Note note) throws Exception;
+	
+	public Note findNoteByNoteTitle(String noteTitle) throws Exception;
 }

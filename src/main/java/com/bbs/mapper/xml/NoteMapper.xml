@@ -4,4 +4,13 @@
         <select id="findAllNoteBySectionId" parameterType="int" resultType="Note">
                 select * from notes where sectionId=#{value}
         </select>
+        
+        <select id="findNoteByNoteTitle" parameterType="java.lang.String" resultType="Note">
+                select * from notes where noteTitle=#{value}
+        </select>
+        
+        <insert id="insertNote" parameterType="Note">
+                insert into notes(noteTitle,status,userName,content,addtime,sectionId,newTime) values(
+                       #{noteTitle},#{status},#{userName},#{content},#{addtime},#{sectionId},#{newTime})
+        </insert>
 </mapper>

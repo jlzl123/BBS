@@ -5,8 +5,52 @@ var note={
 
 $(document).ready(function(){
 	note.getNoteData();
+	note.sendNote();
+	note.sendNoteDialog()
 })
 
+note.sendNote=function(){
+	$("#sendNote").click(function(){
+		var str=note.getFromVal();
+		$.ajax({
+			type:"POST",
+			url:"/BBS/userControl/addNote",
+			dataType:"text",//返回值类型
+			data:JSON.stringify(str),
+			contentType:"application/json;charset=utf-8",
+			success:function(data){
+				if(data=="success"){
+					$.messager.alert("成功","帖子发表成功！","info");					
+				}else if(data=="Exist"){
+					$.messager.alert("错误","帖子发表失败！帖子已存在！","error");	
+				}else{
+					$.messager.alert("错误","帖子发表失败！","error");
+				}
+			}
+		});
+	});
+}
+
+note.getFromVal=function(){
+	var title=$("#title").val();
+	var content=$("#content").val();
+	var status='普通';
+	var username=$("#font").html();
+	var sectionName=$("#param").text();
+	var addtime=new Date();
+	var str={
+			"noteTitle":title,
+			"status":status,
+			"userName":username,
+			"content":content,
+			"addtime":addtime,
+			"sectionName":sectionName,
+			"newTime":addtime
+	}
+	return str;
+}
+
+//初始化表格数据
 note.initDatagrid=function(){
 	$("#dd").datagrid({
 		pagination:true,
@@ -25,6 +69,12 @@ note.initDatagrid=function(){
 				    "cursor":"pointer"	//鼠标变小手
 				});			
 			});
+		},
+		onClickCell:function(index,field,value){//单机单元格是触发
+			var sectionName=$("#param").html();	
+			if(field=="noteTitle"){
+				window.location.href="/BBS/bbs/noteDetil.jsp?noteTitle="+value+"&sectionName="+sectionName;				
+			}
 		}
 	});
 	
@@ -44,6 +94,7 @@ note.initDatagrid=function(){
 	});
 }
 
+//向服务器请求数据
 note.getNoteData=function(){
 	var sectionName=$("#param").html();	
 	$.ajax({
@@ -78,6 +129,7 @@ note.paseData=function(data){
 	return json;
 }
 
+//解析时间字符串
 note.paseDate=function(date){
 	var time=new Date(date);
 	var year=time.getFullYear();

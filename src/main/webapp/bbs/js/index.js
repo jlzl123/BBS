@@ -24,11 +24,11 @@ index.initDatagrid=function(){
 		pageSize:5,
 		pageList:[5,10,15,20], 
 		data:index.Data.slice(0, 5),
-		rowStyler:function(index,row){
+		rowStyler:function(index,row){//改变行css
 			return 'height: 100px;';
 		},
-		onLoadSuccess:function(data){
-			var panel=$(this).datagrid('getPanel');
+		onLoadSuccess:function(data){//设置表格样式
+			var panel=$(this).datagrid('getPanel');//返回面板对象。
 			var tr=panel.find('div.datagrid-body tr');
 			tr.each(function(){
 				var td=$(this).children('td[field="sectionName"]');
@@ -38,7 +38,7 @@ index.initDatagrid=function(){
 				});			
 			});
 		},
-	    onClickRow:function(index,row){	    	
+	    onClickRow:function(index,row){//单机行是触发	    	
 	    	var sectionName=row.sectionName;
 //	    	$.get("/BBS/userControl/findAllNoteBySectionId",{"sectionName":sectionName});
 	    	//页面跳转重定向
