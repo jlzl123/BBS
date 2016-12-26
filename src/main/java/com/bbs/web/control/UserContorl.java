@@ -1,11 +1,9 @@
 package com.bbs.web.control;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
@@ -15,6 +13,8 @@ import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
 
+import org.apache.catalina.Session;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -46,8 +46,15 @@ public class UserContorl {
 	private SectionService sectionService;
 	@Resource
 	private NoteService noteService;
-	@Resource
+	@Autowired
+	// @Resource
 	private ReplayService replayService;
+
+	/*
+	 * @Autowired按照类型装配
+	 * 
+	 * @Resource按照名称装配
+	 */
 
 	@RequestMapping(value = "/adminLogin", method = RequestMethod.POST)
 	public String validateAdmin(@RequestParam("username") String username,
@@ -165,6 +172,7 @@ public class UserContorl {
 	public @ResponseBody List<Note> findAllNoteBySectionId(
 			@RequestParam("sectionName") String sectionName) {
 		List<Note> noteList = null;
+		List<Note> ln=new ArrayList<Note>();
 		if (sectionName != null) {
 			try {
 				Section section = sectionService
@@ -172,13 +180,22 @@ public class UserContorl {
 				if (section != null) {
 					int sectionId = section.getSectionId();
 					noteList = noteService.findAllNoteBySectionId(sectionId);
+					if(noteList!=null){
+						for(Note note:noteList){
+							int noteId=note.getNoteId();
+							List<Replay> list=replayService.findAllReplayByNoteId(noteId);
+							int replayToatl=list.size();
+							note.setReplayToatl(replayToatl);
+							ln.add(note);
+						}					
+					}
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		return noteList;
+		return ln;
 	}
 
 	@RequestMapping(value = "/addNote", method = RequestMethod.POST)
@@ -227,13 +244,46 @@ public class UserContorl {
 		if (noteTitle != null) {
 			try {
 				Note note = noteService.findNoteByNoteTitle(noteTitle);
-				replayList = replayService.findAllReplayByNoteId(note.getNoteId());
+				replayList = replayService.findAllReplayByNoteId(note
+						.getNoteId());
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 
 		return replayList;
+	}
+
+	@RequestMapping(value = "/addReplay", method = RequestMethod.POST)
+	public @ResponseBody String addReplay(HttpServletRequest request,HttpSession session) {
+		String returnStr = null;
+		String reqString = CommonUtil.getStrFromReq(request);
+		JSONObject json = JSONObject.fromObject(reqString);
+		String noteTitle = json.getString("noteTitle");
+		String userName = (String) session.getAttribute("username");
+System.out.println(userName);		
+		if (userName == null) {
+			return returnStr = "noLogin";
+		}
+		Note note = null;
+		try {
+			note = noteService.findNoteByNoteTitle(noteTitle);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Replay replay = (Replay) JSONObject.toBean(json, Replay.class);
+		replay.setNoteId(note.getNoteId());
+		replay.setUserName(userName);
+		try {
+			int i = replayService.insertReplay(replay);
+			if (i > 0) {
+				returnStr = "success";
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return returnStr;
 	}
 }

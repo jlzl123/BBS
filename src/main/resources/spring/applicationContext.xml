@@ -82,7 +82,7 @@
 	      <property name="dataSource" ref="dataSource"/>
 	      <property name="configLocation" value="classpath:mybatis/sqlMapConfig.xml"/>
 	      <!-- 如果mppper类和xml文件不在同一个包下，就要配置mapplocations 指向xml文件存放的class路径 -->	
-	      <property name="mapperLocations" value="classpath:com/bbs/mapper/xml/*.xml"/>
+	      <property name="mapperLocations" value="classpath:mybatis/xml/*.xml"/>
 	</bean>
 	
 	<!-- MapperScannerConfigurer会自动扫描basePackage指定的包，找到映射接口类和映射XML文件 ,并进行注入-->
@@ -91,6 +91,8 @@
 	      <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>	     
 	</bean>
 	
+	<!-- 统一异常处理 -->
+	<bean id="serviceException" class="com.bbs.exception.MyExceptionHandler"/>
 	
 	<!-- spring可以自动去扫描base-pack下面或者子包下面的Java文件，如果扫描到有@Component @Controller@Service等
                               这些注解的类，则把这些类注册为bean -->

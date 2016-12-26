@@ -6,28 +6,35 @@ var note={
 $(document).ready(function(){
 	note.getNoteData();
 	note.sendNote();
-	note.sendNoteDialog()
+//	note.sendNoteDialog()
 })
 
 note.sendNote=function(){
 	$("#sendNote").click(function(){
-		var str=note.getFromVal();
-		$.ajax({
-			type:"POST",
-			url:"/BBS/userControl/addNote",
-			dataType:"text",//返回值类型
-			data:JSON.stringify(str),
-			contentType:"application/json;charset=utf-8",
-			success:function(data){
-				if(data=="success"){
-					$.messager.alert("成功","帖子发表成功！","info");					
-				}else if(data=="Exist"){
-					$.messager.alert("错误","帖子发表失败！帖子已存在！","error");	
-				}else{
-					$.messager.alert("错误","帖子发表失败！","error");
+		var str=note.getFromVal();			
+		if(note.isNull(str.noteTitle)){
+			$.messager.alert("提示","请填写标题！","warning");
+		}else if(note.isNull(str.content)){
+			$.messager.alert("提示","请填写内容！","warning");
+		}else{
+			$.ajax({
+				type:"POST",
+				url:"/BBS/userControl/addNote",
+				dataType:"text",//返回值类型
+				data:JSON.stringify(str),
+				contentType:"application/json;charset=utf-8",
+				success:function(data){
+					if(data=="success"){
+						$.messager.alert("成功","帖子发表成功！","info");		
+						note.getNoteData();
+					}else if(data=="Exist"){
+						$.messager.alert("错误","帖子发表失败！帖子已存在！","error");	
+					}else{
+						$.messager.alert("错误","帖子发表失败！","error");
+					}
 				}
-			}
-		});
+			});		
+		}
 	});
 }
 
@@ -70,7 +77,7 @@ note.initDatagrid=function(){
 				});			
 			});
 		},
-		onClickCell:function(index,field,value){//单机单元格是触发
+		onClickCell:function(index,field,value){//单击单元格是触发
 			var sectionName=$("#param").html();	
 			if(field=="noteTitle"){
 				window.location.href="/BBS/bbs/noteDetil.jsp?noteTitle="+value+"&sectionName="+sectionName;				
@@ -119,9 +126,11 @@ note.paseData=function(data){
 		var addtime=note.paseDate(shuju[i].addtime);
 		var newReplayUser=shuju[i].newReplayUser;
 		var newTime=note.paseDate(shuju[i].newTime);
+		var replayToatl=shuju[i].replayToatl;
 		var str={
 				"noteTitle":noteTitle,
 				"userName":userName+"<br/><font size='2pt' color='#888888'>"+addtime+"</font>",
+				"replayToatl":replayToatl,
 				"newReplayUser":newReplayUser+"<br/><font size='2pt' color='#888888'>"+newTime+"</font>"
 		};
 		json.push(str);
@@ -133,8 +142,8 @@ note.paseData=function(data){
 note.paseDate=function(date){
 	var time=new Date(date);
 	var year=time.getFullYear();
-	var month=note.padleft0(time.getMonth());
-	var day=note.padleft0(time.getDay());
+	var month=note.padleft0(time.getMonth()+1);
+	var day=note.padleft0(time.getDate());
 	var hour=note.padleft0(time.getHours());
 	var minute=note.padleft0(time.getMinutes());
 	var second=note.padleft0(time.getSeconds());
@@ -144,4 +153,14 @@ note.paseDate=function(date){
 //补齐两位数
 note.padleft0 = function(obj) {
     return obj.toString().replace(/^[0-9]{1}$/, "0" + obj);
+}
+
+//判断输入字符串是否为空或者全部都是空格
+note.isNull=function(str){
+	if(str==""){
+		return true;
+	}
+	var regu="^[ ]+$";
+	var re=new RegExp(regu);
+	return re.test(str);
 }

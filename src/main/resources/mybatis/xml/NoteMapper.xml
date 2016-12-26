@@ -13,4 +13,8 @@
                 insert into notes(noteTitle,status,userName,content,addtime,sectionId,newTime) values(
                        #{noteTitle},#{status},#{userName},#{content},#{addtime},#{sectionId},#{newTime})
         </insert>
+        
+        <update id="updateNoteReplay" parameterType="java.lang.String" parameterMap="">
+                update notes set newReplayUser=#{},newTime=#{} where noteId=#{}
+        </update>
 </mapper>

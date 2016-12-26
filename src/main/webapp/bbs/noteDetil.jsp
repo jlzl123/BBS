@@ -12,6 +12,28 @@
 	height: 30px;
 	padding-top: 10px;
 }
+#sendReplay {
+	height: 30px;
+	width: 80px;
+	font-size: 10pt;
+	background: #0099FF;
+	color: white;
+}
+#pp{
+    height: 150px;
+	padding: 10px;
+	background: #fafafa;
+}
+#sendReplayDiv,#replayDiv{
+    padding-top: 10px;
+}
+#replayContent {
+	width: 500px;
+	height: 80px;
+}
+#a{
+    margin-top: 10px;
+}
 </style>
 </head>
 <body> 
@@ -24,6 +46,19 @@
 	</div>
 	<div>
 	    <table id="tt" class="easyui-datagrid"></table>
+	</div>
+	<div>
+	    <div id="replayDiv">
+	         <font>发表回复</font>
+	    </div>
+	    <div id="a">
+	        <div id="pp" class="easyui-panel" title="回复">
+	             <textarea id="replayContent" name="replayContent"></textarea>
+	             <div id="sendReplayDiv">
+					<input type="button" id="sendReplay" value="发表">
+		         </div>
+	        </div>
+	    </div>
 	</div>
 </body>
 </html>

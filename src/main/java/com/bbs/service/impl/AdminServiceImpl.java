@@ -14,12 +14,10 @@ public class AdminServiceImpl implements AdminService{
 	private AdminMapper adminMapper;
 
 	public Admin findAdminByUsername(Admin admin) throws Exception {
-		// TODO Auto-generated method stub
 		return adminMapper.findAdminByUsername(admin);
 	}
 
 	public int insertAdmin(Admin admin) throws Exception {
-		// TODO Auto-generated method stub
 		return adminMapper.insertAdmin(admin);
 	}
 

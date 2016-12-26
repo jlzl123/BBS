@@ -12,6 +12,9 @@ public class Note {
     private Date addtime;
     private String newReplayUser;
     private Date newTime;
+    
+    private int replayToatl;
+    
 	public int getNoteId() {
 		return noteId;
 	}
@@ -67,5 +70,10 @@ public class Note {
 		this.newTime = newTime;
 	}
     
-    
+    public int getReplayToatl() {
+		return replayToatl;
+	}
+    public void setReplayToatl(int replayToatl) {
+		this.replayToatl = replayToatl;
+	}
 }

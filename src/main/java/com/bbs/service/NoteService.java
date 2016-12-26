@@ -3,6 +3,7 @@ package com.bbs.service;
 import java.util.List;
 
 import com.bbs.bean.Note;
+import com.bbs.exception.ServiceException;
 
 public interface NoteService {
 

@@ -4,4 +4,9 @@
         <select id="findAllReplayByNoteId" parameterType="int" resultType="Replay">
                 select * from replays where noteId=#{value}
         </select>
+        
+        <insert id="insertReplay" parameterType="Replay">
+                insert into replays(replayContent,userName,replayTime,noteId) values(
+                       #{replayContent},#{userName},#{replayTime},#{noteId})
+        </insert>
 </mapper>
