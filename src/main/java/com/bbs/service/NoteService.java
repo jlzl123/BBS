@@ -12,4 +12,6 @@ public interface NoteService {
 	public int insertNote(Note note) throws Exception;
 	
 	public Note findNoteByNoteTitle(String noteTitle) throws Exception;
+	
+	public int updateNoteReplay(Note note) throws Exception;
 }

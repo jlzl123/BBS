@@ -34,6 +34,32 @@
 #a{
     margin-top: 10px;
 }
+#huifuDiv{
+    float: right;
+    padding-top: 250px;
+    padding-right: 10px;
+    cursor: pointer;
+}
+#jubao,#huifu,#colseReplay{
+    color: blue;
+}
+#huifu{
+    float: right;
+}
+#colseReplay{
+    float: right;
+    display: none;
+}
+#inreplayDiv{
+    border: solid 1px #c3c3c3;
+    padding:50px;
+    margin-top: 250px;
+    margin-left:480px;
+    width: 500px;  
+    height:200px;
+    background-color:#F0FFFF;
+    display: none;
+}
 </style>
 </head>
 <body> 

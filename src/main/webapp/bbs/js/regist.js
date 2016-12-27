@@ -32,8 +32,12 @@ regist.addUser=function(){
 		if(flag){
 			$.post("/BBS/userControl/addUser",{"json":JSON.stringify(json)},
 					function(data){
-				if(data){
-					$.messager.alert("提示","注册成功，请登录。","info");
+				if(data=="添加用户信息异常!"){
+					$.messager.alert("错误","信息不正确，请检查修改","error");
+				}else{
+					if(data){
+						$.messager.alert("提示","注册成功，请登录。","info");
+					}				
 				}
 			});			
 		}else{
@@ -94,12 +98,16 @@ regist.validate=function(){
 regist.validateUsername=function(){
 	$("#user").change(function(){       		
 		$.get("/BBS/userControl/validateUsername",{"username":$("#user").val()},
-				function(data){       			
-			 if(data){
-				 $("#errorFont").css("display","");//如果设置block的话标签位置会变化
-			 }else{
-				 $("#errorFont").css("display","none");
-			 }
+				function(data){
+			if(data=="查询用户信息异常!"){
+				$.messager.alert("错误",data,"warning");
+			}else{
+				if(data){
+					$("#errorFont").css("display","");//如果设置block的话标签位置会变化
+				}else{
+					$("#errorFont").css("display","none");
+				}				
+			}
 		});
 	});
 }

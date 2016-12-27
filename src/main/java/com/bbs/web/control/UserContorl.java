@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bbs.bean.Admin;
+import com.bbs.bean.InReplay;
 import com.bbs.bean.Note;
 import com.bbs.bean.Replay;
 import com.bbs.bean.Section;
@@ -56,55 +57,28 @@ public class UserContorl {
 	 * @Resource按照名称装配
 	 */
 
-	@RequestMapping(value = "/adminLogin", method = RequestMethod.POST)
-	public String validateAdmin(@RequestParam("username") String username,
-			@RequestParam("password") String password, HttpSession session) {
-		// TODO Auto-generated method stub
-		// ModelAndView model=new ModelAndView("index");
-		Admin a = new Admin();
-		a.setUsername(username);
-		a.setPassword(password);
-		Admin admin = null;
-		try {
-			admin = adminService.findAdminByUsername(a);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		if (admin != null) {
-			session.setAttribute("adminName", username);
-		}
-		return "admin";
-	}
-
 	@RequestMapping(value = "/userLogin", method = RequestMethod.POST)
 	public @ResponseBody Boolean validateUserLogin(
 			@RequestParam("username") String username,
 			@RequestParam("password") String password,
 			@RequestParam("isChecked") Boolean isChecked, HttpSession session,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws Exception {
 		Boolean flag = false;
-		try {
-			User user = userService.findUserByUsernameAndPass(username,
-					password);
-			if (user != null) {
-				session.setAttribute("username", username);
-				if (isChecked) {
-					Cookie cookie = new Cookie("Cookie_username", username);
-					cookie.setMaxAge(7 * 24 * 3600);
-					// 设置cookie的路径，当请求为改路径极其子路径时会提交cookie
-					cookie.setPath("/BBS");
-					response.addCookie(cookie);
-					cookie = new Cookie("Cookie_password", password);
-					cookie.setMaxAge(7 * 24 * 3600);
-					cookie.setPath("/BBS");
-					response.addCookie(cookie);
-				}
-				flag = true;
+		User user = userService.findUserByUsernameAndPass(username, password);
+		if (user != null) {
+			session.setAttribute("username", username);
+			if (isChecked) {
+				Cookie cookie = new Cookie("Cookie_username", username);
+				cookie.setMaxAge(7 * 24 * 3600);
+				// 设置cookie的路径，当请求为改路径极其子路径时会提交cookie
+				cookie.setPath("/BBS");
+				response.addCookie(cookie);
+				cookie = new Cookie("Cookie_password", password);
+				cookie.setMaxAge(7 * 24 * 3600);
+				cookie.setPath("/BBS");
+				response.addCookie(cookie);
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			flag = true;
 		}
 		return flag;
 	}
@@ -121,24 +95,20 @@ public class UserContorl {
 
 	@RequestMapping(value = "/validateUsername", method = RequestMethod.GET)
 	public @ResponseBody Boolean validateUsername(
-			@RequestParam("username") String username) {
+			@RequestParam("username") String username) throws Exception {
 		Boolean flag = false;
 		if (username != null) {
-			try {
-				User user = userService.findUserByUsername(username);
-				if (user != null) {
-					flag = true;
-				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			User user = userService.findUserByUsername(username);
+			if (user != null) {
+				flag = true;
 			}
 		}
 		return flag;
 	}
 
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
-	public @ResponseBody Boolean addUser(@RequestParam("json") String json) {
+	public @ResponseBody Boolean addUser(@RequestParam("json") String json)
+			throws Exception {
 		Boolean flag = false;
 		JSONObject jsonObject = JSONObject.fromObject(json);
 		User user = (User) JSONObject.toBean(jsonObject, User.class);
@@ -146,60 +116,50 @@ public class UserContorl {
 		Date date = new Date();
 		user.setAddtime(date);
 		user.setUserStatus(1);
-		try {
-			userService.insertUser(user);
+		int i = userService.insertUser(user);
+		if (i > 0) {
 			flag = true;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		return flag;
 	}
 
 	@RequestMapping(value = "/findAllSection", method = RequestMethod.GET)
-	public @ResponseBody List<Section> findAllSection(HttpServletRequest request) {
+	public @ResponseBody List<Section> findAllSection(HttpServletRequest request)
+			throws Exception {
 		List<Section> sectionList = null;
-		try {
-			sectionList = sectionService.findAllSection();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		sectionList = sectionService.findAllSection();
 		return sectionList;
 	}
 
 	@RequestMapping(value = "/findAllNoteBySectionId", method = RequestMethod.GET)
 	public @ResponseBody List<Note> findAllNoteBySectionId(
-			@RequestParam("sectionName") String sectionName) {
+			@RequestParam("sectionName") String sectionName) throws Exception {
 		List<Note> noteList = null;
-		List<Note> ln=new ArrayList<Note>();
+		List<Note> ln = new ArrayList<Note>();
 		if (sectionName != null) {
-			try {
-				Section section = sectionService
-						.findSectionBySectionName(sectionName);
-				if (section != null) {
-					int sectionId = section.getSectionId();
-					noteList = noteService.findAllNoteBySectionId(sectionId);
-					if(noteList!=null){
-						for(Note note:noteList){
-							int noteId=note.getNoteId();
-							List<Replay> list=replayService.findAllReplayByNoteId(noteId);
-							int replayToatl=list.size();
-							note.setReplayToatl(replayToatl);
-							ln.add(note);
-						}					
+			Section section = sectionService
+					.findSectionBySectionName(sectionName);
+			if (section != null) {
+				int sectionId = section.getSectionId();
+				noteList = noteService.findAllNoteBySectionId(sectionId);
+				if (noteList != null) {//查询回复数
+					for (Note note : noteList) {
+						int noteId = note.getNoteId();
+						List<Replay> list = replayService
+								.findAllReplayByNoteId(noteId);
+						int replayToatl = list.size();
+						note.setReplayToatl(replayToatl);
+						ln.add(note);
 					}
 				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 		}
 		return ln;
 	}
 
 	@RequestMapping(value = "/addNote", method = RequestMethod.POST)
-	public @ResponseBody String addNote(HttpServletRequest request) {
+	public @ResponseBody String addNote(HttpServletRequest request)
+			throws Exception {
 		String returnStr = null;
 		String reqString = CommonUtil.getStrFromReq(request);
 		JSONObject json = JSONObject.fromObject(reqString);
@@ -207,83 +167,84 @@ public class UserContorl {
 		Note note = (Note) JSONObject.toBean(JSONObject.fromObject(reqString),
 				Note.class);
 		if (sectionName != null) {
-			try {
-				Section section = sectionService
-						.findSectionBySectionName(sectionName);
-				note.setSectionId(section.getSectionId());
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			Section section = sectionService.findSectionBySectionName(sectionName);
+			note.setSectionId(section.getSectionId());
 		} else {
 			return returnStr;
 		}
-		try {
-			Note n = noteService.findNoteByNoteTitle(note.getNoteTitle());
-			if (n == null) {
-				int i = noteService.insertNote(note);
-				if (i == 1) {
-					returnStr = "success";
-					return returnStr;
-				}
-			} else {
-				returnStr = "Exist";
-				return returnStr;// 返回Exist，表示note已存在
+		Note n = noteService.findNoteByNoteTitle(note.getNoteTitle());
+		if (n == null) {
+			int i = noteService.insertNote(note);
+			if (i >0) {
+				returnStr = "success";
+				return returnStr;
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} else {
+			returnStr = "Exist";
+			return returnStr;// 返回Exist，表示note已存在
 		}
 		return reqString;
 	}
 
 	@RequestMapping(value = "/findReplay", method = RequestMethod.GET)
 	public @ResponseBody List<Replay> findReplay(
-			@RequestParam("noteTitle") String noteTitle) {
-		List<Replay> replayList = null;
+			@RequestParam("noteTitle") String noteTitle) throws Exception {
+		List<Replay> replayList =new ArrayList<Replay>();
 		if (noteTitle != null) {
-			try {
-				Note note = noteService.findNoteByNoteTitle(noteTitle);
-				replayList = replayService.findAllReplayByNoteId(note
+			Note note = noteService.findNoteByNoteTitle(noteTitle);
+			//加入帖子内容
+			Replay replay=new Replay();
+			replay.setNoteId(note.getNoteId());
+			replay.setReplayContent(note.getContent());
+			replay.setUserName(note.getUserName());
+			replay.setReplayTime(note.getAddtime());
+			replayList.add(replay);
+			if (note != null) {
+				List<Replay> list= replayService.findAllReplayByNoteId(note
 						.getNoteId());
-			} catch (Exception e) {
-				e.printStackTrace();
+				for(Replay r:list){
+					replayList.add(r);
+				}
 			}
-		}
 
+		}
 		return replayList;
 	}
 
 	@RequestMapping(value = "/addReplay", method = RequestMethod.POST)
-	public @ResponseBody String addReplay(HttpServletRequest request,HttpSession session) {
+	public @ResponseBody String addReplay(HttpServletRequest request,
+			HttpSession session) throws Exception {
 		String returnStr = null;
 		String reqString = CommonUtil.getStrFromReq(request);
 		JSONObject json = JSONObject.fromObject(reqString);
 		String noteTitle = json.getString("noteTitle");
+//		String newTime = json.getString("replayTime");
 		String userName = (String) session.getAttribute("username");
-System.out.println(userName);		
 		if (userName == null) {
 			return returnStr = "noLogin";
 		}
-		Note note = null;
-		try {
-			note = noteService.findNoteByNoteTitle(noteTitle);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Note note = noteService.findNoteByNoteTitle(noteTitle);
+
 		Replay replay = (Replay) JSONObject.toBean(json, Replay.class);
 		replay.setNoteId(note.getNoteId());
 		replay.setUserName(userName);
-		try {
-			int i = replayService.insertReplay(replay);
-			if (i > 0) {
-				returnStr = "success";
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+		int i = replayService.insertReplay(replay);
+		note.setNewReplayUser(replay.getUserName());
+		note.setNewTime(replay.getReplayTime());
+		noteService.updateNoteReplay(note);
+		if (i > 0) {
+			returnStr = "success";
 		}
+
 		return returnStr;
+	}
+	
+	@RequestMapping(value="/findAllInReplay",method=RequestMethod.GET)
+	public @ResponseBody List<InReplay> findAllInReplayByNoteIdAndReplayId(HttpServletRequest request){
+		List<InReplay> inReplayList=new ArrayList<InReplay>();
+		String reqString=CommonUtil.getStrFromReq(request);
+		System.out.println(reqString);
+		return inReplayList;
 	}
 }

@@ -38,11 +38,12 @@ index.initDatagrid=function(){
 				});			
 			});
 		},
-	    onClickRow:function(index,row){//单机行是触发	    	
+	    onClickRow:function(index,row){//单机行是触发	
 	    	var sectionName=row.sectionName;
 //	    	$.get("/BBS/userControl/findAllNoteBySectionId",{"sectionName":sectionName});
 	    	//页面跳转重定向
 	    	window.location.href="/BBS/bbs/note.jsp?sectionName="+sectionName;
+//	    	$(this).datagrid('unselectRow', rowIndex);//取消点击表格选中事件
 	    }
 		
 	});
@@ -69,8 +70,12 @@ index.getSectionData=function(){
 		type:"GET",
 		url:"/BBS/userControl/findAllSection",
 		success:function(data){
-			index.Data=data;
-			index.initDatagrid();
+			if(data=="查询所有版本信息异常!"){
+				$.messager.alert("错误",data,"warning");
+			}else{
+				index.Data=data;
+				index.initDatagrid();			
+			}
 		}
 	});
 }

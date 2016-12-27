@@ -1,5 +1,6 @@
 package com.bbs.exception;
 
+//自定义的异常处理类，用于处理异常信息
 public class ServiceException extends Exception{
 
 	private String message;

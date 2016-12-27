@@ -12,4 +12,6 @@ public interface ReplayService {
 	public List<Replay> findAllReplayByNoteId(int noteId) throws Exception;
 	
 	public int insertReplay(Replay replay) throws Exception;
+	
+	public Replay findReplayByUserAndContent(Replay replay) throws Exception;
 }

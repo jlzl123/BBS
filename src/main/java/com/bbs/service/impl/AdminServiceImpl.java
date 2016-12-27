@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.bbs.bean.Admin;
+import com.bbs.exception.ServiceException;
 import com.bbs.mapper.AdminMapper;
 import com.bbs.service.AdminService;
 
@@ -14,11 +15,22 @@ public class AdminServiceImpl implements AdminService{
 	private AdminMapper adminMapper;
 
 	public Admin findAdminByUsername(Admin admin) throws Exception {
-		return adminMapper.findAdminByUsername(admin);
+		try {
+			return adminMapper.findAdminByUsername(admin);			
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new ServiceException("查询管理员信息异常!");
+		}
+
 	}
 
 	public int insertAdmin(Admin admin) throws Exception {
-		return adminMapper.insertAdmin(admin);
+		try {
+			return adminMapper.insertAdmin(admin);		
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new ServiceException("添加管理员异常!");
+		}
 	}
 
 }

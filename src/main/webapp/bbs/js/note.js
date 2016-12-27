@@ -29,6 +29,8 @@ note.sendNote=function(){
 						note.getNoteData();
 					}else if(data=="Exist"){
 						$.messager.alert("错误","帖子发表失败！帖子已存在！","error");	
+					}else if(data=="查询版快信息异常!"||data=="查询帖子信息异常!"||data=="添加帖子信息异常!"){
+						$.messager.alert("错误",data,"warning");
 					}else{
 						$.messager.alert("错误","帖子发表失败！","error");
 					}
@@ -108,8 +110,12 @@ note.getNoteData=function(){
 		type:"GET",
 		url:"/BBS/userControl/findAllNoteBySectionId?sectionName="+sectionName,		
 		success:function(data){
-			note.Data=note.paseData(data);
-			note.initDatagrid();			
+			if(data=="查询版快信息异常!"||data=="查询所有回复信息异常!"){
+				$.messager.alert("错误",data,"warning");
+			}else{
+				note.Data=note.paseData(data);
+				note.initDatagrid();							
+			}
 		}
 	});
 }
