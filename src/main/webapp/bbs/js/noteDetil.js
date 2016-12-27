@@ -3,6 +3,7 @@ var noteDetil = {
 }
 
 $(document).ready(function() {
+	var jsonReplay;//查询inReplay信息的json数据
 	noteDetil.getReplayData();
 	noteDetil.sendReplay();
 })
@@ -19,7 +20,16 @@ noteDetil.initDatagrid = function() {
 						},
 						onClickRow : function(rowIndex, rowData) {
 							$(this).datagrid('unselectRow', rowIndex);// 取消点击表格选中事件
-						},
+							var replayUser=rowData.userName;
+							var replayContent=rowData.replayContent
+							var noteTitle=$("#param1").text();
+							jsonReplay={
+									"replayUser":replayUser,
+									"replayContent":replayContent,
+									"noteTitle":noteTitle
+							}
+							
+						},					
 						onLoadSuccess : function(data) {
 							var panel = $(this).datagrid('getPanel');
 							var tr = panel.find('div.datagrid-body tr');
@@ -71,7 +81,13 @@ noteDetil.initDatagrid = function() {
 													+ ")</a><a id='colseReplay'>收起回复</a></div>"
 													+"<div id='inreplayDiv'><table id='ttt' class='easyui-datagrid'></table></div>"
 										} else if (row) {
-											return value;
+											return value
+											+ "<div id='huifuDiv'><a id='jubao'>举报</a>|"
+											+ index+ 1
+											+ "楼&nbsp;&nbsp;<a id='huifu' class='huifu'>回复("
+											+ 1
+											+ ")</a><a id='colseReplay'>收起回复</a></div>"
+											+"<div id='inreplayDiv'><table id='ttt' class='easyui-datagrid'></table></div>"
 										}
 									}
 								} ] ]
@@ -105,7 +121,8 @@ noteDetil.getReplayData = function() {
 			} else {
 				noteDetil.Data = data;
 				noteDetil.initDatagrid();
-				noteDetil.getinRepleyDate();
+				noteDetil.initInRepleyDate();
+//				noteDetil.oneselfClick();
 			}
 		}
 	});
@@ -165,8 +182,13 @@ noteDetil.sendReplay = function() {
 			});
 }
 
-noteDetil.getinRepleyDate = function() {
-	$("#huifu").click(function() {
+noteDetil.initInRepleyDate = function() {
+	$(".huifu").click(function() {//click先出发,onClickRow后出发，jsonReplay没赋值
+		alert(12)
+		$("#huifuDiv").onClick=function(){
+		}
+		$("#huifuDiv").click();//自动单击一次
+		noteDetil.getInReplayDate();
 		$("#huifu").css('display', "none");
 		$("#colseReplay").css('display', "block");
 		$("#inreplayDiv").slideDown("slow");
@@ -182,4 +204,23 @@ noteDetil.getinRepleyDate = function() {
 		$("#colseReplay").css('display', "none");
 		$("#inreplayDiv").slideUp("slow");
 	});
+}
+
+noteDetil.getInReplayDate=function(){
+	$.ajax({
+		type:"POST",
+		url:"/BBS/userControl/findAllInReplay",
+		dataType:"json",
+		data:JSON.stringify(jsonReplay),
+		contentType:"application/json;charset=utf-8",
+		success:function(data){
+			alert(JSON.stringify(data))
+		}
+	});
+}
+
+//表格初始化时单击一次,用来加载数据
+noteDetil.oneselfClick=function(){
+	$("#huifuDiv").onClick=function(){
+	}
 }

@@ -22,7 +22,7 @@ public class ReplayServiceImpl implements ReplayService{
 			return replayMappper.findAllReplayByNoteId(noteId);		
 		} catch (Exception e) {
 			// TODO: handle exception
-			throw new ServiceException("²éÑ¯ËùÓĞ»Ø¸´ĞÅÏ¢Òì³£!");
+			throw new ServiceException("ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½Ğ»Ø¸ï¿½ï¿½ï¿½Ï¢ï¿½ì³£!");
 		}
 	}
 
@@ -31,17 +31,18 @@ public class ReplayServiceImpl implements ReplayService{
 			return replayMappper.insertReplay(replay);				
 		} catch (Exception e) {
 			// TODO: handle exception
-			throw new ServiceException("Ìí¼Ó»Ø¸´ĞÅÏ¢Òì³£!");
+			throw new ServiceException("ï¿½ï¿½Ó»Ø¸ï¿½ï¿½ï¿½Ï¢ï¿½ì³£!");
 		}
 	}
 
+	//æ ¹æ®å›å¤å†…å®¹å’Œå›å¤ç”¨æˆ·ç¡®å®šå”¯ä¸€id
 	public Replay findReplayByUserAndContent(Replay replay) throws Exception {
 		// TODO Auto-generated method stub
 		try {
 			return replayMappper.findReplayByUserAndContent(replay);
 		} catch (Exception e) {
 			// TODO: handle exception
-			throw new ServiceException("²éÑ¯»Ø¸´ĞÅÏ¢Òì³£!");
+			throw new ServiceException("ï¿½ï¿½Ñ¯ï¿½Ø¸ï¿½ï¿½ï¿½Ï¢ï¿½ì³£!");
 		}
 	}
 

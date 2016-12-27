@@ -28,6 +28,7 @@ import com.bbs.bean.Replay;
 import com.bbs.bean.Section;
 import com.bbs.bean.User;
 import com.bbs.service.AdminService;
+import com.bbs.service.InReplayService;
 import com.bbs.service.NoteService;
 import com.bbs.service.ReplayService;
 import com.bbs.service.SectionService;
@@ -50,11 +51,13 @@ public class UserContorl {
 	@Autowired
 	// @Resource
 	private ReplayService replayService;
+	@Resource
+	private InReplayService inReplayService;
 
 	/*
-	 * @Autowired°´ÕÕÀàÐÍ×°Åä
+	 * @Autowiredï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½
 	 * 
-	 * @Resource°´ÕÕÃû³Æ×°Åä
+	 * @Resourceï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½
 	 */
 
 	@RequestMapping(value = "/userLogin", method = RequestMethod.POST)
@@ -70,7 +73,7 @@ public class UserContorl {
 			if (isChecked) {
 				Cookie cookie = new Cookie("Cookie_username", username);
 				cookie.setMaxAge(7 * 24 * 3600);
-				// ÉèÖÃcookieµÄÂ·¾¶£¬µ±ÇëÇóÎª¸ÄÂ·¾¶¼«Æä×ÓÂ·¾¶Ê±»áÌá½»cookie
+				// ï¿½ï¿½ï¿½ï¿½cookieï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½Ê±ï¿½ï¿½ï¿½á½»cookie
 				cookie.setPath("/BBS");
 				response.addCookie(cookie);
 				cookie = new Cookie("Cookie_password", password);
@@ -142,7 +145,7 @@ public class UserContorl {
 			if (section != null) {
 				int sectionId = section.getSectionId();
 				noteList = noteService.findAllNoteBySectionId(sectionId);
-				if (noteList != null) {//²éÑ¯»Ø¸´Êý
+				if (noteList != null) {//ï¿½ï¿½Ñ¯ï¿½Ø¸ï¿½ï¿½ï¿½
 					for (Note note : noteList) {
 						int noteId = note.getNoteId();
 						List<Replay> list = replayService
@@ -181,7 +184,7 @@ public class UserContorl {
 			}
 		} else {
 			returnStr = "Exist";
-			return returnStr;// ·µ»ØExist£¬±íÊ¾noteÒÑ´æÔÚ
+			return returnStr;// ï¿½ï¿½ï¿½ï¿½Existï¿½ï¿½ï¿½ï¿½Ê¾noteï¿½Ñ´ï¿½ï¿½ï¿½
 		}
 		return reqString;
 	}
@@ -192,7 +195,7 @@ public class UserContorl {
 		List<Replay> replayList =new ArrayList<Replay>();
 		if (noteTitle != null) {
 			Note note = noteService.findNoteByNoteTitle(noteTitle);
-			//¼ÓÈëÌû×ÓÄÚÈÝ
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			Replay replay=new Replay();
 			replay.setNoteId(note.getNoteId());
 			replay.setReplayContent(note.getContent());
@@ -240,11 +243,23 @@ public class UserContorl {
 		return returnStr;
 	}
 	
-	@RequestMapping(value="/findAllInReplay",method=RequestMethod.GET)
-	public @ResponseBody List<InReplay> findAllInReplayByNoteIdAndReplayId(HttpServletRequest request){
+	@RequestMapping(value="/findAllInReplay",method=RequestMethod.POST)
+	public @ResponseBody List<InReplay> findAllInReplayByNoteIdAndReplayId(HttpServletRequest request) throws Exception{
 		List<InReplay> inReplayList=new ArrayList<InReplay>();
 		String reqString=CommonUtil.getStrFromReq(request);
-		System.out.println(reqString);
+		JSONObject json=JSONObject.fromObject(reqString);
+		String userName=json.getString("replayUser");
+		String replayContent=json.getString("replayContent");
+		String noteTitle=json.getString("noteTitle");
+System.out.println(userName+"+++++"+replayContent+"+++++++++++++++"+noteTitle);		
+		Replay replay=new Replay();
+		replay.setUserName(userName);
+		replay.setReplayContent(replayContent);
+		Replay r=replayService.findReplayByUserAndContent(replay);
+		int replayId=r.getReplayId();
+		Note note=noteService.findNoteByNoteTitle(noteTitle);
+		int noteId=note.getNoteId();
+		inReplayList=inReplayService.findAllInReplayByNoteIdAndReplayId(noteId, replayId);
 		return inReplayList;
 	}
 }
