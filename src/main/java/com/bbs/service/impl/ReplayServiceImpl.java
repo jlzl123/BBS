@@ -31,7 +31,7 @@ public class ReplayServiceImpl implements ReplayService{
 			return replayMappper.insertReplay(replay);				
 		} catch (Exception e) {
 			// TODO: handle exception
-			throw new ServiceException("��ӻظ���Ϣ�쳣!");
+			throw new ServiceException("添加回复信息异常!");
 		}
 	}
 
@@ -42,7 +42,7 @@ public class ReplayServiceImpl implements ReplayService{
 			return replayMappper.findReplayByUserAndContent(replay);
 		} catch (Exception e) {
 			// TODO: handle exception
-			throw new ServiceException("��ѯ�ظ���Ϣ�쳣!");
+			throw new ServiceException("查询回复信息异常!");
 		}
 	}
 

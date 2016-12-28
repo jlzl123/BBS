@@ -55,9 +55,9 @@ public class UserContorl {
 	private InReplayService inReplayService;
 
 	/*
-	 * @Autowired��������װ��
+	 * @Autowired根据类型装配
 	 * 
-	 * @Resource��������װ��
+	 * @Resource根据名称装配
 	 */
 
 	@RequestMapping(value = "/userLogin", method = RequestMethod.POST)
@@ -73,7 +73,7 @@ public class UserContorl {
 			if (isChecked) {
 				Cookie cookie = new Cookie("Cookie_username", username);
 				cookie.setMaxAge(7 * 24 * 3600);
-				// ����cookie��·����������Ϊ��·��������·��ʱ���ύcookie
+				// 设置cookie的路径，当请求为该路径下是提交cookie
 				cookie.setPath("/BBS");
 				response.addCookie(cookie);
 				cookie = new Cookie("Cookie_password", password);
@@ -145,7 +145,7 @@ public class UserContorl {
 			if (section != null) {
 				int sectionId = section.getSectionId();
 				noteList = noteService.findAllNoteBySectionId(sectionId);
-				if (noteList != null) {//��ѯ�ظ���
+				if (noteList != null) {//添加回复数
 					for (Note note : noteList) {
 						int noteId = note.getNoteId();
 						List<Replay> list = replayService
@@ -195,7 +195,7 @@ public class UserContorl {
 		List<Replay> replayList =new ArrayList<Replay>();
 		if (noteTitle != null) {
 			Note note = noteService.findNoteByNoteTitle(noteTitle);
-			//������������
+			//在一楼添加加帖子内容
 			Replay replay=new Replay();
 			replay.setNoteId(note.getNoteId());
 			replay.setReplayContent(note.getContent());
@@ -206,6 +206,10 @@ public class UserContorl {
 				List<Replay> list= replayService.findAllReplayByNoteId(note
 						.getNoteId());
 				for(Replay r:list){
+					List<InReplay> lir=inReplayService.findAllInReplayByNoteIdAndReplayId(
+							r.getNoteId(),r.getReplayId());
+					int inReplayTotal=lir.size();
+					r.setInReplayTotal(inReplayTotal);
 					replayList.add(r);
 				}
 			}
@@ -250,8 +254,7 @@ public class UserContorl {
 		JSONObject json=JSONObject.fromObject(reqString);
 		String userName=json.getString("replayUser");
 		String replayContent=json.getString("replayContent");
-		String noteTitle=json.getString("noteTitle");
-System.out.println(userName+"+++++"+replayContent+"+++++++++++++++"+noteTitle);		
+		String noteTitle=json.getString("noteTitle");	
 		Replay replay=new Replay();
 		replay.setUserName(userName);
 		replay.setReplayContent(replayContent);

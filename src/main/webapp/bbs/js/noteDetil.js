@@ -9,6 +9,7 @@ $(document).ready(function() {
 })
 
 noteDetil.initDatagrid = function() {
+	var pageNoumber=1;
 	$("#tt")
 			.datagrid(
 					{
@@ -20,16 +21,16 @@ noteDetil.initDatagrid = function() {
 						},
 						onClickRow : function(rowIndex, rowData) {
 							$(this).datagrid('unselectRow', rowIndex);// 取消点击表格选中事件
-							var replayUser=rowData.userName;
-							var replayContent=rowData.replayContent
-							var noteTitle=$("#param1").text();
-							jsonReplay={
-									"replayUser":replayUser,
-									"replayContent":replayContent,
-									"noteTitle":noteTitle
+							var replayUser = rowData.userName;
+							var replayContent = rowData.replayContent
+							var noteTitle = $("#param1").text();
+							jsonReplay = {
+								"replayUser" : replayUser,
+								"replayContent" : replayContent,
+								"noteTitle" : noteTitle
 							}
-							
-						},					
+							noteDetil.initInRepleyDate();
+						},
 						onLoadSuccess : function(data) {
 							var panel = $(this).datagrid('getPanel');
 							var tr = panel.find('div.datagrid-body tr');
@@ -48,9 +49,9 @@ noteDetil.initDatagrid = function() {
 									title : '回复人',
 									width : 200,
 									formatter : function(value, row, index) {
-	//									var louzhu;
+										//									var louzhu;
 										if (index == 0) {
-	//										louzhu = value;
+											//										louzhu = value;
 											return "楼主:<font color='blue'>"
 													+ value
 													+ "</font><br/>发表时间:<br/>"
@@ -72,22 +73,35 @@ noteDetil.initDatagrid = function() {
 										return 'vertical-align:text-top;';// 设置内容居上
 									},
 									formatter : function(value, row, index) {
-										if (index == 0) {
+										var number=(pageNoumber-1)*10+index;//pageNoumber默认为1
+										if (number == 0) {
 											return value
 													+ "<div id='huifuDiv'><a id='jubao'>举报</a>|"
-													+ index+ 1
-													+ "楼&nbsp;&nbsp;<a id='huifu'>回复("
-													+ 1
-													+ ")</a><a id='colseReplay'>收起回复</a></div>"
-													+"<div id='inreplayDiv'><table id='ttt' class='easyui-datagrid'></table></div>"
+													+ parseInt(number + 1)
+													+ "楼&nbsp;&nbsp;<a id='huifu1'>回复"
+													+ "</a></div>"
+
 										} else if (row) {
-											return value
-											+ "<div id='huifuDiv'><a id='jubao'>举报</a>|"
-											+ index+ 1
-											+ "楼&nbsp;&nbsp;<a id='huifu' class='huifu'>回复("
-											+ 1
-											+ ")</a><a id='colseReplay'>收起回复</a></div>"
-											+"<div id='inreplayDiv'><table id='ttt' class='easyui-datagrid'></table></div>"
+											if (row.inReplayTotal != 0) {			                                 
+												return value
+														+ "<div id='huifuDiv'><a id='jubao'>举报</a>|"
+														+ parseInt(number + 1)
+														+ "楼&nbsp;&nbsp;<a id='huifu' class='huifu'>回复("
+														+ row.inReplayTotal
+														+ ")</a><a id='colseReplay' class='colseReplay'>收起回复</a></div>"
+														+ "<div id='inreplayDiv'><table id='ttt' class='easyui-datagrid'></table>"
+														+ "<div class='button'>我也说一句</div><div class='textDiv'><input type='text' class='text'>"
+														+ "<br/><button class='replayIn'>回复</button></div></div>"
+											} else {
+												return value
+														+ "<div id='huifuDiv'><a id='jubao'>举报</a>|"
+														+ parseInt(number + 1)
+														+ "楼&nbsp;&nbsp;<a id='huifu' class='huifu'>回复"
+														+ "</a><a id='colseReplay' class='colseReplay'>收起回复</a></div>"
+														+ "<div id='inreplayDiv'><table id='ttt' class='easyui-datagrid'></table>"
+														+ "<div class='button'>我也说一句</div><div><input type='text' class='text'>"
+														+ "<br/><button class='replayIn'>回复</button></div></div>"
+											}
 										}
 									}
 								} ] ]
@@ -99,6 +113,7 @@ noteDetil.initDatagrid = function() {
 		layout : [ 'list', 'sep', 'first', 'prev', 'links', 'next', 'last',
 				'efresh', 'manual' ],
 		onSelectPage : function(pageNo, pageSize) {
+			pageNoumber=pageNo;
 			var start = (pageNo - 1) * pageSize;
 			var end = start + pageSize;
 			$("#tt").datagrid('loadData', noteDetil.Data.slice(start, end));
@@ -122,7 +137,7 @@ noteDetil.getReplayData = function() {
 				noteDetil.Data = data;
 				noteDetil.initDatagrid();
 				noteDetil.initInRepleyDate();
-//				noteDetil.oneselfClick();
+				//				noteDetil.oneselfClick();
 			}
 		}
 	});
@@ -183,44 +198,121 @@ noteDetil.sendReplay = function() {
 }
 
 noteDetil.initInRepleyDate = function() {
+	var danji;
 	$(".huifu").click(function() {//click先出发,onClickRow后出发，jsonReplay没赋值
-		alert(12)
-		$("#huifuDiv").onClick=function(){
+		$(this).parent().onClick = function() {
 		}
-		$("#huifuDiv").click();//自动单击一次
-		noteDetil.getInReplayDate();
-		$("#huifu").css('display', "none");
-		$("#colseReplay").css('display', "block");
-		$("#inreplayDiv").slideDown("slow");
-		$("#ttt").datagrid({
-			columns:[[
-			          {
-			        	  field:"inReplay"
-			          }]]
-		});
+		$(this).parent().click();//自动单击一次
+		danji=$(this).parent();
+		var dg = $(this).parent().next().children("table")
+		$(this).css('display', "none");
+		$(this).next().css('display', "block");
+		$(this).parent().next().slideDown("slow");
+		noteDetil.getInReplayDate(dg);	
 	});
-	$("#colseReplay").click(function() {
-		$("#huifu").css('display', "block");
-		$("#colseReplay").css('display', "none");
-		$("#inreplayDiv").slideUp("slow");
+	$(".colseReplay").click(function() {
+		$(this).prev().css('display', "block");
+		$(this).css('display', "none");
+		$(this).parent().next().slideUp("slow");
+	});
+	$("#huifu1").click(function() {
+		scrollTo(0, document.body.scrollHeight)//页面滚动到底部
+	});
+
+	$(".button").click(function(){
+		danji.click();
+		var value=$(this).next().css("display");		
+		if(value=="none"){
+			$(this).next().css("display","block");			
+		}
+		if(value=="block"){		
+			$(this).next().css("display","none");
+		}
+	});
+	$(".button").mouseover(function(){
+		$(this).css("color","blue");
+		$(this).css("border-color","blue");
+	});
+	$(".button").mouseout(function(){
+		$(this).css({"color":"black","border-color":"#FFFFFF","border": "solid 1px"});
 	});
 }
 
-noteDetil.getInReplayDate=function(){
+noteDetil.getInReplayDate = function(object) {
 	$.ajax({
-		type:"POST",
-		url:"/BBS/userControl/findAllInReplay",
-		dataType:"json",
-		data:JSON.stringify(jsonReplay),
-		contentType:"application/json;charset=utf-8",
-		success:function(data){
-			alert(JSON.stringify(data))
+		type : "POST",
+		url : "/BBS/userControl/findAllInReplay",
+		dataType : "json",
+		data : JSON.stringify(jsonReplay),
+		contentType : "application/json;charset=utf-8",
+		success : function(data) {
+			if (data.length > 0) {
+				object.datagrid({
+					nowrap : false,// 自动换行
+					width : "600px",
+					pagination : true,
+					pageList : [ 5 ], //每页
+					pageSize : 5,
+					rowStyler : function(index, row) {
+						return 'height:50px';
+					},
+					columns : [ [ {
+						field : "inReplay",
+						title : "<font size='3'>楼层回复内容</font>",
+						width : "560px",
+					} ] ]
+				});
+				var Data = noteDetil.paseInReplayDate(data);
+				object.datagrid('loadData', Data.slice(0, 5));
+				var pager = object.datagrid("getPager");
+				pager.pagination({
+					total : Data.length,
+					layout : [ 'sep', 'first', 'prev', 'links', 'next', 'last',
+							'efresh', 'manual' ],
+					onSelectPage : function(pageNo, pageSize) {//改变页面是触发
+						var start = (pageNo - 1) * pageSize;
+						var end = start + pageSize;
+						object.datagrid('loadData', Data.slice(start, end));
+						pager.pagination('refresh', {
+							total : Data.length,
+							pageNumber : pageNo
+						});
+					}
+				});
+				$(".minReplay").click(function(){
+					var ob=$(this).parents("#ttt").css("display","block");
+					//siblings(".textDiv").css("display","block");
+					alert(13)
+				});
+			}
 		}
 	});
+
+}
+
+noteDetil.paseInReplayDate = function(data) {
+	var shuju = new Array();
+	if (data != null) {
+		for (var i = 0; i < data.length; i++) {
+			var inReplayContent = data[i].inReplayContent;
+			var inReplayUser = data[i].inReplayUser;
+			var inReplayToUser = data[i].inReplayToUser;
+			var inReplayTime = noteDetil.paseDate(data[i].addtime);
+			var str = {
+				"inReplay" : inReplayUser + ":&nbsp;回复&nbsp;" + inReplayToUser
+						+ "&nbsp;:" + inReplayContent
+						+ "<br/><div class='inReplayTimeDiv'><a>"
+						+ inReplayTime
+						+ "</a>&nbsp;&nbsp;<a class='minReplay'>回复</a></div>"
+			}
+			shuju.push(str);
+		}
+	}
+	return shuju;
 }
 
 //表格初始化时单击一次,用来加载数据
-noteDetil.oneselfClick=function(){
-	$("#huifuDiv").onClick=function(){
+noteDetil.oneselfClick = function() {
+	$("#huifuDiv").onClick = function() {
 	}
 }

@@ -24,7 +24,7 @@ public class InReplayServiceImpl implements InReplayService{
 			return inReplayMapper.findAllInReplayByNoteIdAndReplayId(noteId, replayId);			
 		} catch (Exception e) {
 			// TODO: handle exception
-			throw new ServiceException("查询楼层回复信息异常!");
+			throw new ServiceException("鏌ヨ妤煎眰鍥炲淇℃伅寮傚父!");
 		}
 	}
 

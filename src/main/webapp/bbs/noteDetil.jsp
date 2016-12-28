@@ -40,7 +40,7 @@
     padding-right: 10px;
     cursor: pointer;
 }
-#jubao,#huifu,#colseReplay{
+#jubao,#huifu,#colseReplay,#huifu1{
     color: blue;
 }
 #huifu{
@@ -51,13 +51,46 @@
     display: none;
 }
 #inreplayDiv{
-    border: solid 1px #c3c3c3;
-    padding:50px;
     margin-top: 250px;
     margin-left:480px;
-    width: 500px;  
-    height:200px;
+    width: 600px;  
+   
     background-color:#F0FFFF;
+    display: none;
+}
+.inReplayTimeDiv{
+    float: right;
+    color: #888888;
+}
+.minReplay{
+    cursor: pointer;
+}
+.button{
+    float: right;
+    margin-top: 10px;
+    margin-right:10px;
+    background-color: #FFFFFF;
+    border: solid 1px;
+    border-color: #888888;
+    font-size: 9pt;
+    padding-left: 5px;
+    padding-right: 5px;
+    cursor: pointer;
+}
+.text{
+    width: 580px;
+    height:30px;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+.replayIn{
+    float: right;
+    margin-right: 10px;
+    margin-top: 10px;
+    background: #0099FF;
+	color: white;
+}
+.textDiv{
     display: none;
 }
 </style>

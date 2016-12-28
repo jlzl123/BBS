@@ -11,7 +11,7 @@ import com.bbs.service.AdminService;
 
 @Service("adminService")
 public class AdminServiceImpl implements AdminService{
-	@Resource//@ResourceÄ¬ÈÏÊÇ°´ÕÕÃû³ÆÀ´×°Åä×¢ÈëµÄ£¬Ö»ÓĞµ±ÕÒ²»µ½ÓëÃû³ÆÆ¥ÅäµÄbean²Å»á°´ÕÕÀàĞÍÀ´×°Åä×¢Èë
+	@Resource//@Resourceé»˜è®¤æ˜¯æŒ‰ç…§åç§°æ¥è£…é…æ³¨å…¥çš„ï¼Œåªæœ‰å½“æ‰¾ä¸åˆ°ä¸åç§°åŒ¹é…çš„beanæ‰ä¼šæŒ‰ç…§ç±»å‹æ¥è£…é…æ³¨å…¥
 	private AdminMapper adminMapper;
 
 	public Admin findAdminByUsername(Admin admin) throws Exception {
@@ -19,7 +19,7 @@ public class AdminServiceImpl implements AdminService{
 			return adminMapper.findAdminByUsername(admin);			
 		} catch (Exception e) {
 			// TODO: handle exception
-			throw new ServiceException("²éÑ¯¹ÜÀíÔ±ĞÅÏ¢Òì³£!");
+			throw new ServiceException("æŸ¥è¯¢ç®¡ç†å‘˜ä¿¡æ¯å¼‚å¸¸!");
 		}
 
 	}
@@ -29,7 +29,7 @@ public class AdminServiceImpl implements AdminService{
 			return adminMapper.insertAdmin(admin);		
 		} catch (Exception e) {
 			// TODO: handle exception
-			throw new ServiceException("Ìí¼Ó¹ÜÀíÔ±Òì³£!");
+			throw new ServiceException("æ·»åŠ ç®¡ç†å‘˜å¼‚å¸¸!");
 		}
 	}
 

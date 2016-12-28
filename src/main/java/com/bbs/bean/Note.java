@@ -13,7 +13,7 @@ public class Note {
     private String newReplayUser;
     private Date newTime;
     
-    private int replayToatl;
+    private int replayToatl;//非表字段
     
 	public int getNoteId() {
 		return noteId;

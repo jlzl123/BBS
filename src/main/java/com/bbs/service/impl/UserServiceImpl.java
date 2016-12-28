@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService{
 			return userMapper.findUserByUsernameAndPass(username, password);			
 		} catch (Exception e) {
 			// TODO: handle exception
-			throw new ServiceException("查询用户信息异常!");
+			throw new ServiceException("鏌ヨ鐢ㄦ埛淇℃伅寮傚父!");
 		}
 	}
 
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService{
 			return userMapper.findUserByUsername(username);		
 		} catch (Exception e) {
 			// TODO: handle exception
-			throw new ServiceException("查询用户信息异常!");
+			throw new ServiceException("鏌ヨ鐢ㄦ埛淇℃伅寮傚父!");
 		}
 	}
 
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService{
 			return userMapper.insertUser(user);		
 		} catch (Exception e) {
 			// TODO: handle exception
-			throw new ServiceException("添加用户信息异常!");
+			throw new ServiceException("娣诲姞鐢ㄦ埛淇℃伅寮傚父!");
 		}
 	}
 

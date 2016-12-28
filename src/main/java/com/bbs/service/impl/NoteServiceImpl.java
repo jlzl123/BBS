@@ -23,7 +23,7 @@ public class NoteServiceImpl implements NoteService{
 			return noteMapper.findAllNoteBySectionId(sectionId);			
 		} catch (Exception e) {
 			// TODO: handle exception
-			throw new ServiceException("²éÑ¯ËùÓĞÌû×ÓĞÅÏ¢Òì³£!");
+			throw new ServiceException("æŸ¥è¯¢æ‰€æœ‰å¸–å­ä¿¡æ¯å¼‚å¸¸!");
 		}
 	}
 
@@ -33,7 +33,7 @@ public class NoteServiceImpl implements NoteService{
 			return noteMapper.insertNote(note);		
 		} catch (Exception e) {
 			// TODO: handle exception
-			throw new ServiceException("Ìí¼ÓÌû×ÓĞÅÏ¢Òì³£!");
+			throw new ServiceException("æ·»åŠ å¸–å­ä¿¡æ¯å¼‚å¸¸!");
 		}
 	}
 
@@ -43,7 +43,7 @@ public class NoteServiceImpl implements NoteService{
 			return noteMapper.findNoteByNoteTitle(noteTitle);			
 		} catch (Exception e) {
 			// TODO: handle exception
-			throw new ServiceException("²éÑ¯Ìû×ÓĞÅÏ¢Òì³£!");
+			throw new ServiceException("æŸ¥è¯¢å¸–å­ä¿¡æ¯å¼‚å¸¸!");
 		}
 	}
 
@@ -53,7 +53,7 @@ public class NoteServiceImpl implements NoteService{
 			return noteMapper.updateNoteReplay(note);
 		} catch (Exception e) {
 			// TODO: handle exception
-			throw new ServiceException("¸üĞÂÌû×ÓĞÅÏ¢Òì³£!");
+			throw new ServiceException("æ›´æ–°å¸–å­ä¿¡æ¯å¼‚å¸¸!");
 		}
 
 	}

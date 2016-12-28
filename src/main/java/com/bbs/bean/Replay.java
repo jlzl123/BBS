@@ -9,6 +9,9 @@ public class Replay {
 	private String userName;
 	private Date replayTime;
 	private int noteId;
+	
+	private int inReplayTotal;//非表字段
+	
 	public int getReplayId() {
 		return replayId;
 	}
@@ -40,5 +43,10 @@ public class Replay {
 		this.noteId = noteId;
 	}
 	
-	
+	public int getInReplayTotal() {
+		return inReplayTotal;
+	}
+	public void setInReplayTotal(int inReplayTotal) {
+		this.inReplayTotal = inReplayTotal;
+	}
 }

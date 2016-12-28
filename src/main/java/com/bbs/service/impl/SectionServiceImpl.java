@@ -23,7 +23,7 @@ public class SectionServiceImpl implements SectionService{
 			return sectionMapper.findAllSection();			
 		} catch (Exception e) {
 			// TODO: handle exception
-			throw new ServiceException("²éÑ¯ËùÓĞ°æ¿ìĞÅÏ¢Òì³£!");
+			throw new ServiceException("æŸ¥è¯¢æ‰€æœ‰ç‰ˆå¿«ä¿¡æ¯å¼‚å¸¸!");
 		}
 	}
 
@@ -34,7 +34,7 @@ public class SectionServiceImpl implements SectionService{
 			return sectionMapper.findSectionBySectionName(sectionName);		
 		} catch (Exception e) {
 			// TODO: handle exception
-			throw new ServiceException("²éÑ¯°æ¿ìĞÅÏ¢Òì³£!");
+			throw new ServiceException("æŸ¥è¯¢ç‰ˆå¿«ä¿¡æ¯å¼‚å¸¸!");
 		}
 	}
 
