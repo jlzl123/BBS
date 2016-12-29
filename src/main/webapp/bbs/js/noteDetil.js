@@ -101,7 +101,7 @@ noteDetil.initDatagrid = function() {
 														+ "</a><a id='colseReplay' class='colseReplay'>收起回复</a></div>"
 														+ "<div id='inreplayDiv'><table id='ttt' class='easyui-datagrid'></table>"
 														+ "<div class='button'>我也说一句</div><div><input type='text' class='text'>"
-														+ "<br/><button class='replayIn'>回复</button></div></div>"
+														+ "<br/><button class='replayIn' onclick='noteDetil.inReplayonClick(this)'>回复</button></div></div>"
 											}
 										}
 									}
@@ -285,7 +285,7 @@ noteDetil.getInReplayDate = function(object) {
 					total : Data.length,
 					layout : [ 'sep', 'first', 'prev', 'links', 'next', 'last',
 							'efresh', 'manual' ],
-					onSelectPage : function(pageNo, pageSize) {//改变页面是触发
+					onSelectPage : function(pageNo, pageSize) {//改变页面时触发
 						var start = (pageNo - 1) * pageSize;
 						var end = start + pageSize;
 						object.datagrid('loadData', Data.slice(start, end));
@@ -301,6 +301,7 @@ noteDetil.getInReplayDate = function(object) {
 
 }
 
+//解析楼层内回复的数据为指定的格式显示
 noteDetil.paseInReplayDate = function(data) {
 	var shuju = new Array();
 	if (data != null) {
@@ -340,23 +341,25 @@ noteDetil.inReplayonClick=function(object){
 		url:"/BBS/userControl/validateIsLogined",
 		dataType:"text",
 		success:function(data){
-			if(data!="T"){
+			if(data!="T"){//验证用户是否已登录
 				var inReplayUser=data;
 				var text=$(object).prevAll("input").val();
-				if(text.trim()!=""){
+				if(text.trim()!=""){//判断回复内容不为空
 					var hf=JSON.stringify(text).substring(2,5);
-					if(text.split(":")[1].trim()==""){
+					var flag=text.split(":")[1]==null;
+					if(!flag&&text.split(":")[1].trim()==""){//判断回复后面的内容不为空
 						$.messager.alert("错误","请输入回复内容!","warning");
-					}else {
-						if(hf.trim()=="回复"){
+					}else {//回复内容不为空
+						if(hf.trim()=="回复"){//回复层主
 							var i=JSON.stringify(text).indexOf(":");
 							inReplayToUser=JSON.stringify(text).substring(5,i).trim();
 							var last=JSON.stringify(text).length;
 							inReplayContent=JSON.stringify(text).substring(i+1,last-1).trim()
-						}else{					
+						}else{//回复用户					
 							inReplayToUser=replayUser;
 							inReplayContent=text.trim();
 						}
+						
 						var str={
 								"inReplayContent":inReplayContent,
 								"noteTitle":noteTitle,
@@ -366,7 +369,7 @@ noteDetil.inReplayonClick=function(object){
 								"inReplayToUser":inReplayToUser,
 								"addtime":new Date()
 						}
-						$.ajax({
+						$.ajax({//添加回复信息
 							type:"POST",
 							url:"/BBS/userControl/addInReplay",
 							dataType:"text",
@@ -375,6 +378,7 @@ noteDetil.inReplayonClick=function(object){
 							success:function(data){
 								if(data=="success"){
 									$.messager.alert("成功","回复成功!","info");
+									
 								}else if(data=="error"){
 									$.messager.alert("错误","回复失败!","error");
 								}
