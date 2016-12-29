@@ -7,6 +7,7 @@ $(document).ready(function() {
 	var inReplayToUser;
 	noteDetil.getReplayData();
 	noteDetil.sendReplay();
+
 })
 
 noteDetil.initDatagrid = function() {
@@ -30,7 +31,7 @@ noteDetil.initDatagrid = function() {
 								"replayContent" : replayContent,
 								"noteTitle" : noteTitle
 							}
-							noteDetil.initInRepleyDate();
+//							noteDetil.initInRepleyDate();
 						},
 						onLoadSuccess : function(data) {
 							var panel = $(this).datagrid('getPanel');
@@ -87,20 +88,20 @@ noteDetil.initDatagrid = function() {
 												return value
 														+ "<div id='huifuDiv'><a id='jubao'>举报</a>|"
 														+ parseInt(number + 1)
-														+ "楼&nbsp;&nbsp;<a id='huifu' class='huifu'>回复("
+														+ "楼&nbsp;&nbsp;<a id='huifu' class='uifu' onclick='noteDetil.replayonClick(this)'>回复("
 														+ row.inReplayTotal
-														+ ")</a><a id='colseReplay' class='colseReplay'>收起回复</a></div>"
+														+ ")</a><a id='colseReplay' class='olseReplay' onclick='noteDetil.colseReplayonClick(this)'>收起回复</a></div>"
 														+ "<div id='inreplayDiv'><table id='ttt' class='easyui-datagrid'></table>"
-														+ "<div class='button'>我也说一句</div><div class='textDiv'><input type='text' class='text'>"
+														+ "<div class='button' onclick='noteDetil.buttononClick(this)'>我也说一句</div><div class='textDiv'><input type='text' class='text'>"
 														+ "<br/><button class='replayIn' onclick='noteDetil.inReplayonClick(this)'>回复</button></div></div>"
 											} else {
 												return value
 														+ "<div id='huifuDiv'><a id='jubao'>举报</a>|"
 														+ parseInt(number + 1)
-														+ "楼&nbsp;&nbsp;<a id='huifu' class='huifu'>回复"
-														+ "</a><a id='colseReplay' class='colseReplay'>收起回复</a></div>"
+														+ "楼&nbsp;&nbsp;<a id='huifu' class='uifu' onclick='noteDetil.replayonClick(this)'>回复"
+														+ "</a><a id='colseReplay' class='olseReplay' onclick='noteDetil.colseReplayonClick(this)'>收起回复</a></div>"
 														+ "<div id='inreplayDiv'><table id='ttt' class='easyui-datagrid'></table>"
-														+ "<div class='button'>我也说一句</div><div><input type='text' class='text'>"
+														+ "<div class='button' onclick='noteDetil.buttononClick(this)'>我也说一句</div><div><input type='text' class='text'>"
 														+ "<br/><button class='replayIn' onclick='noteDetil.inReplayonClick(this)'>回复</button></div></div>"
 											}
 										}
@@ -198,38 +199,71 @@ noteDetil.sendReplay = function() {
 			});
 }
 
-noteDetil.initInRepleyDate = function() {
+noteDetil.replayonClick=function(object){
 	var danji;
-	$(".huifu").click(function() {//click先出发,onClickRow后出发，jsonReplay没赋值
-		$(this).parent().onClick = function() {
+//	$(object).click(function() {//click先出发,onClickRow后出发，jsonReplay没赋值
+		$(object).parent().onClick = function() {
 		}
-		$(this).parent().click();//自动单击一次
-		danji=$(this).parent();
-		var dg = $(this).parent().next().children("table")
-		$(this).css('display', "none");
-		$(this).next().css('display', "block");
-		$(this).parent().next().slideDown("slow");
+		$(object).parent().click();//自动单击一次
+		danji=$(object).parent();
+		var dg = $(object).parent().next().children("table")
+		$(object).css('display', "none");
+		$(object).next().css('display', "block");
+		$(object).parent().next().slideDown("slow");
 		noteDetil.getInReplayDate(dg);	
-	});
-	$(".colseReplay").click(function() {
-		$(this).prev().css('display', "block");
-		$(this).css('display', "none");
-		$(this).parent().next().slideUp("slow");
-	});
+//	});
+}
+
+noteDetil.colseReplayonClick=function(object){
+		$(object).prev().css('display', "block");
+		$(object).css('display', "none");
+		$(object).parent().next().slideUp("slow");
+
+}
+
+noteDetil.buttononClick=function(object){
+		var value=$(object).next().css("display");		
+		if(value=="none"){
+			$(object).next().css("display","block");			
+		}
+		if(value=="block"){		
+			$(object).next().css("display","none");
+		}
+
+}
+
+noteDetil.initInRepleyDate = function() {
+//	var danji;
+//	$(".huifu").click(function() {//click先出发,onClickRow后出发，jsonReplay没赋值
+//		$(this).parent().onClick = function() {
+//		}
+//		$(this).parent().click();//自动单击一次
+//		danji=$(this).parent();
+//		var dg = $(this).parent().next().children("table")
+//		$(this).css('display', "none");
+//		$(this).next().css('display', "block");
+//		$(this).parent().next().slideDown("slow");
+//		noteDetil.getInReplayDate(dg);	
+//	});
+//	$(".colseReplay").click(function() {
+//		$(this).prev().css('display', "block");
+//		$(this).css('display', "none");
+//		$(this).parent().next().slideUp("slow");
+//	});
 	$("#huifu1").click(function() {
 		scrollTo(0, document.body.scrollHeight)//页面滚动到底部
 	});
 
-	$(".button").click(function(){
-		danji.click();
-		var value=$(this).next().css("display");		
-		if(value=="none"){
-			$(this).next().css("display","block");			
-		}
-		if(value=="block"){		
-			$(this).next().css("display","none");
-		}
-	});
+//	$(".button").click(function(){
+//		danji.click();
+//		var value=$(this).next().css("display");		
+//		if(value=="none"){
+//			$(this).next().css("display","block");			
+//		}
+//		if(value=="block"){		
+//			$(this).next().css("display","none");
+//		}
+//	});
 	$(".button").mouseover(function(){
 		$(this).css("color","blue");
 		$(this).css("border-color","blue");
