@@ -4,6 +4,7 @@ var noteDetil = {
 
 $(document).ready(function() {
 	var jsonReplay;//查询inReplay信息的json数据
+	var inReplayToUser;
 	noteDetil.getReplayData();
 	noteDetil.sendReplay();
 })
@@ -91,7 +92,7 @@ noteDetil.initDatagrid = function() {
 														+ ")</a><a id='colseReplay' class='colseReplay'>收起回复</a></div>"
 														+ "<div id='inreplayDiv'><table id='ttt' class='easyui-datagrid'></table>"
 														+ "<div class='button'>我也说一句</div><div class='textDiv'><input type='text' class='text'>"
-														+ "<br/><button class='replayIn'>回复</button></div></div>"
+														+ "<br/><button class='replayIn' onclick='noteDetil.inReplayonClick(this)'>回复</button></div></div>"
 											} else {
 												return value
 														+ "<div id='huifuDiv'><a id='jubao'>举报</a>|"
@@ -236,6 +237,9 @@ noteDetil.initInRepleyDate = function() {
 	$(".button").mouseout(function(){
 		$(this).css({"color":"black","border-color":"#FFFFFF","border": "solid 1px"});
 	});
+//	$(".replayIn").click(function(){
+//		alert($(this).prev().val())
+//	});
 }
 
 noteDetil.getInReplayDate = function(object) {
@@ -255,6 +259,18 @@ noteDetil.getInReplayDate = function(object) {
 					pageSize : 5,
 					rowStyler : function(index, row) {
 						return 'height:50px';
+					},
+					onClickRow:function(index,row){
+						//split用指定字符分割字符串，取分割后的第一个元素即使用户名
+						inReplayToUser=row.inReplay.split(":")[0]
+						$(".minReplay").click(function(){
+//							$(".minReplay").parent().onClick = function() {
+//							}
+//							$(this).click();//自动单击一次
+							var ob=$(this).parents("#inreplayDiv").children(".textDiv");
+							ob.css("display","block");
+							ob.children("input").val("  回复 "+inReplayToUser+" :");
+						});
 					},
 					columns : [ [ {
 						field : "inReplay",
@@ -278,11 +294,6 @@ noteDetil.getInReplayDate = function(object) {
 							pageNumber : pageNo
 						});
 					}
-				});
-				$(".minReplay").click(function(){
-					var ob=$(this).parents("#ttt").css("display","block");
-					//siblings(".textDiv").css("display","block");
-					alert(13)
 				});
 			}
 		}
@@ -315,4 +326,71 @@ noteDetil.paseInReplayDate = function(data) {
 noteDetil.oneselfClick = function() {
 	$("#huifuDiv").onClick = function() {
 	}
+}
+
+noteDetil.inReplayonClick=function(object){
+//	alert($(object).prevAll("input").val())
+	var replayUser=jsonReplay.replayUser;
+	var replayContent=jsonReplay.replayContent;
+	var noteTitle=$("#param1").text();
+	var inReplayToUser;
+	var inReplayContent;
+	$.ajax({
+		type:"POST",
+		url:"/BBS/userControl/validateIsLogined",
+		dataType:"text",
+		success:function(data){
+			if(data!="T"){
+				var inReplayUser=data;
+				var text=$(object).prevAll("input").val();
+				if(text.trim()!=""){
+					var hf=JSON.stringify(text).substring(2,5);
+					if(text.split(":")[1].trim()==""){
+						$.messager.alert("错误","请输入回复内容!","warning");
+					}else {
+						if(hf.trim()=="回复"){
+							var i=JSON.stringify(text).indexOf(":");
+							inReplayToUser=JSON.stringify(text).substring(5,i).trim();
+							var last=JSON.stringify(text).length;
+							inReplayContent=JSON.stringify(text).substring(i+1,last-1).trim()
+						}else{					
+							inReplayToUser=replayUser;
+							inReplayContent=text.trim();
+						}
+						var str={
+								"inReplayContent":inReplayContent,
+								"noteTitle":noteTitle,
+								"replayUser":replayUser,
+								"replayContent":replayContent,
+								"inReplayUser":inReplayUser,
+								"inReplayToUser":inReplayToUser,
+								"addtime":new Date()
+						}
+						$.ajax({
+							type:"POST",
+							url:"/BBS/userControl/addInReplay",
+							dataType:"text",
+							data:JSON.stringify(str),
+							contentType:"application/json,charset=utf-8",
+							success:function(data){
+								if(data=="success"){
+									$.messager.alert("成功","回复成功!","info");
+								}else if(data=="error"){
+									$.messager.alert("错误","回复失败!","error");
+								}
+							}
+						});					
+					}
+				}else{
+					$.messager.alert("错误","请输入回复内容!","warning");
+				}
+				
+			}
+		},
+	    error:function(xhr,status,error){
+	    	$.messager.alert("错误",xhr,"error");
+	    	$.messager.alert("错误",status,"error");
+	    	$.messager.alert("错误",error,"error");
+	    }
+	});
 }

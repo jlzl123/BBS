@@ -60,6 +60,15 @@ public class UserContorl {
 	 * @Resource根据名称装配
 	 */
 
+	@RequestMapping(value="/validateIsLogined",method=RequestMethod.POST)
+	public @ResponseBody String validateIsLogined(HttpSession session){
+		String username=(String) session.getAttribute("username");
+		if(username!=null){
+			return username;
+		}
+		return "T";
+	}
+	
 	@RequestMapping(value = "/userLogin", method = RequestMethod.POST)
 	public @ResponseBody Boolean validateUserLogin(
 			@RequestParam("username") String username,
@@ -264,5 +273,30 @@ public class UserContorl {
 		int noteId=note.getNoteId();
 		inReplayList=inReplayService.findAllInReplayByNoteIdAndReplayId(noteId, replayId);
 		return inReplayList;
+	}
+	
+	@RequestMapping(value="/addInReplay",method=RequestMethod.POST)
+	public @ResponseBody String addInReplay(HttpServletRequest request) throws Exception{
+		String returnStr=null;
+		String reqString=CommonUtil.getStrFromReq(request);
+		JSONObject json=JSONObject.fromObject(reqString);
+		String replayUser=json.getString("replayUser");
+		String replayContent=json.getString("replayContent");
+		String noteTitle=json.getString("noteTitle");
+		InReplay inReplay=(InReplay) JSONObject.toBean(json, InReplay.class);
+		int noteId=noteService.findNoteByNoteTitle(noteTitle).getNoteId();
+		Replay replay=new Replay();
+		replay.setReplayContent(replayContent);
+		replay.setUserName(replayUser);
+		int replayId=replayService.findReplayByUserAndContent(replay).getReplayId();
+		inReplay.setNoteId(noteId);
+		inReplay.setReplayId(replayId);
+		int i=inReplayService.insertInReplay(inReplay);
+		if(i>0){
+			reqString="success";
+		}else{
+			reqString="error";
+		}
+		return reqString;
 	}
 }

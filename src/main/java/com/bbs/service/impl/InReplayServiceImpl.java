@@ -28,4 +28,14 @@ public class InReplayServiceImpl implements InReplayService{
 		}
 	}
 
+	public int insertInReplay(InReplay inReplay) throws Exception {
+		// TODO Auto-generated method stub
+		try {
+			return inReplayMapper.insertInReplay(inReplay);			
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new ServiceException("添加楼层回复异常!");
+		}
+	}
+
 }
