@@ -7,4 +7,10 @@
         <select id="findSectionBySectionName" parameterType="java.lang.String" resultType="Section">
                 select * from sections where sectionName=#{value}
         </select>
+        <select id="findSectionBySectionId" parameterType="int" resultType="Section">
+                select * from sections where sectionId=#{value}
+        </select>
+        <select id="findAllSectionBySectionName" parameterType="java.lang.String" resultType="Section">
+                select * from sections where sectionName like '%${value}%'
+        </select>
 </mapper>

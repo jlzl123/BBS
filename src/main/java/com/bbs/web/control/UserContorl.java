@@ -143,6 +143,13 @@ public class UserContorl {
 		return sectionList;
 	}
 
+	@RequestMapping(value="/findAllSectionBySectionName",method=RequestMethod.GET)
+	public @ResponseBody List<Section> findAllSectionBySectionName(
+			@RequestParam("sectionName")String sectionName) throws Exception{
+		List<Section> sectionList = sectionService.findAllSectionBySectionName(sectionName);
+		return sectionList;
+	}
+	
 	@RequestMapping(value = "/findAllNoteBySectionId", method = RequestMethod.GET)
 	public @ResponseBody List<Note> findAllNoteBySectionId(
 			@RequestParam("sectionName") String sectionName) throws Exception {
@@ -169,6 +176,12 @@ public class UserContorl {
 		return ln;
 	}
 
+	@RequestMapping(value="/findAllNoteByNoteTitle",method=RequestMethod.GET)
+	public @ResponseBody List<Note> findAllNoteByNoteTitle(@RequestParam("noteTitle")String noteTitle) throws Exception{
+		List<Note> noteList=noteService.findAllNoteByNoteTitle(noteTitle);
+		return noteList;
+	}
+	
 	@RequestMapping(value = "/addNote", method = RequestMethod.POST)
 	public @ResponseBody String addNote(HttpServletRequest request)
 			throws Exception {
@@ -298,5 +311,21 @@ public class UserContorl {
 			reqString="error";
 		}
 		return reqString;
+	}
+	
+	@RequestMapping(value="/findSectionNameBynoteTitle",method=RequestMethod.GET)
+	public @ResponseBody String findSectionNameBynoteTitle(
+			@RequestParam("noteTitle")String noteTitle) throws Exception{
+		String returnStr=null;
+		Note note=noteService.findNoteByNoteTitle(noteTitle);
+		Section section=sectionService.findSectionBySectionId(note.getSectionId());
+		returnStr=section.getSectionName();
+		return returnStr;
+	}
+	
+	@RequestMapping(value="/findAllNoteByUserName",method=RequestMethod.GET)
+	public @ResponseBody List<Note> findAllNoteByUserName(
+			@RequestParam("userName")String userName) throws Exception{
+		return noteService.findAllNoteByUserName(userName);
 	}
 }

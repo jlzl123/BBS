@@ -42,7 +42,7 @@ public class LoginFilter extends OncePerRequestFilter {
 		}	
 		if(Cookie_username!=null){
 			try {
-				//手动获得bean
+				//鎵嬪姩鑾峰彇bean
 				ApplicationContext ac=WebApplicationContextUtils.getWebApplicationContext(
 						request.getServletContext());
 				UserService userService=(UserService) ac.getBean("userService");

@@ -38,4 +38,25 @@ public class SectionServiceImpl implements SectionService{
 		}
 	}
 
+	public List<Section> findAllSectionBySectionName(String sectionName)
+			throws Exception {
+		// TODO Auto-generated method stub
+		try {
+			return sectionMapper.findAllSectionBySectionName(sectionName);		
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new ServiceException("查询所有版快信息异常!");
+		}
+	}
+
+	public Section findSectionBySectionId(int sectionId) throws Exception {
+		// TODO Auto-generated method stub
+		try {
+			return sectionMapper.findSectionBySectionId(sectionId);		
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new ServiceException("查询版快信息异常!");
+		}
+	}
+
 }

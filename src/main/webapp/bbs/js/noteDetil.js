@@ -4,12 +4,12 @@ var noteDetil = {
 
 $(document).ready(function() {
 	var jsonReplay;//查询inReplay信息的json数据
-	var inReplayToUser;
 	noteDetil.getReplayData();
 	noteDetil.sendReplay();
-
+    noteDetil.sectionHT();
 })
 
+//初始化帖子回复数据
 noteDetil.initDatagrid = function() {
 	var pageNoumber=1;
 	$("#tt")
@@ -31,7 +31,6 @@ noteDetil.initDatagrid = function() {
 								"replayContent" : replayContent,
 								"noteTitle" : noteTitle
 							}
-//							noteDetil.initInRepleyDate();
 						},
 						onLoadSuccess : function(data) {
 							var panel = $(this).datagrid('getPanel');
@@ -51,9 +50,7 @@ noteDetil.initDatagrid = function() {
 									title : '回复人',
 									width : 200,
 									formatter : function(value, row, index) {
-										//									var louzhu;
 										if (index == 0) {
-											//										louzhu = value;
 											return "楼主:<font color='blue'>"
 													+ value
 													+ "</font><br/>发表时间:<br/>"
@@ -127,6 +124,7 @@ noteDetil.initDatagrid = function() {
 	});
 }
 
+//获得帖子回复数据
 noteDetil.getReplayData = function() {
 	var noteTitle = $("#param1").text();
 	$.ajax({
@@ -139,7 +137,6 @@ noteDetil.getReplayData = function() {
 				noteDetil.Data = data;
 				noteDetil.initDatagrid();
 				noteDetil.initInRepleyDate();
-				//				noteDetil.oneselfClick();
 			}
 		}
 	});
@@ -199,6 +196,7 @@ noteDetil.sendReplay = function() {
 			});
 }
 
+//显示楼层回复
 noteDetil.replayonClick=function(object){
 	var danji;
 //	$(object).click(function() {//click先出发,onClickRow后出发，jsonReplay没赋值
@@ -214,6 +212,7 @@ noteDetil.replayonClick=function(object){
 //	});
 }
 
+//关闭楼层回复
 noteDetil.colseReplayonClick=function(object){
 		$(object).prev().css('display', "block");
 		$(object).css('display', "none");
@@ -221,8 +220,9 @@ noteDetil.colseReplayonClick=function(object){
 
 }
 
+//回复框触发事件
 noteDetil.buttononClick=function(object){
-		var value=$(object).next().css("display");		
+		var value=$(object).next().css("display");	
 		if(value=="none"){
 			$(object).next().css("display","block");			
 		}
@@ -232,38 +232,21 @@ noteDetil.buttononClick=function(object){
 
 }
 
+//楼层回复按钮触发事件
+noteDetil.minReplayClick=function(object){
+	var str=$(object).parent().parent().text();
+	var inReplayToUser=str.split(":")[0]
+	var ob=$(object).parents("#inreplayDiv").children(".textDiv");
+	ob.css("display","block");
+	ob.children("input").val("  回复 "+inReplayToUser+" :");
+}
+
 noteDetil.initInRepleyDate = function() {
-//	var danji;
-//	$(".huifu").click(function() {//click先出发,onClickRow后出发，jsonReplay没赋值
-//		$(this).parent().onClick = function() {
-//		}
-//		$(this).parent().click();//自动单击一次
-//		danji=$(this).parent();
-//		var dg = $(this).parent().next().children("table")
-//		$(this).css('display', "none");
-//		$(this).next().css('display', "block");
-//		$(this).parent().next().slideDown("slow");
-//		noteDetil.getInReplayDate(dg);	
-//	});
-//	$(".colseReplay").click(function() {
-//		$(this).prev().css('display', "block");
-//		$(this).css('display', "none");
-//		$(this).parent().next().slideUp("slow");
-//	});
+
 	$("#huifu1").click(function() {
 		scrollTo(0, document.body.scrollHeight)//页面滚动到底部
 	});
 
-//	$(".button").click(function(){
-//		danji.click();
-//		var value=$(this).next().css("display");		
-//		if(value=="none"){
-//			$(this).next().css("display","block");			
-//		}
-//		if(value=="block"){		
-//			$(this).next().css("display","none");
-//		}
-//	});
 	$(".button").mouseover(function(){
 		$(this).css("color","blue");
 		$(this).css("border-color","blue");
@@ -271,11 +254,9 @@ noteDetil.initInRepleyDate = function() {
 	$(".button").mouseout(function(){
 		$(this).css({"color":"black","border-color":"#FFFFFF","border": "solid 1px"});
 	});
-//	$(".replayIn").click(function(){
-//		alert($(this).prev().val())
-//	});
 }
 
+//初始化楼层回复数据
 noteDetil.getInReplayDate = function(object) {
 	$.ajax({
 		type : "POST",
@@ -286,6 +267,7 @@ noteDetil.getInReplayDate = function(object) {
 		success : function(data) {
 			if (data.length > 0) {
 				object.datagrid({
+					fitColumns:true,//防止水平滚动
 					nowrap : false,// 自动换行
 					width : "600px",
 					pagination : true,
@@ -293,18 +275,6 @@ noteDetil.getInReplayDate = function(object) {
 					pageSize : 5,
 					rowStyler : function(index, row) {
 						return 'height:50px';
-					},
-					onClickRow:function(index,row){
-						//split用指定字符分割字符串，取分割后的第一个元素即使用户名
-						inReplayToUser=row.inReplay.split(":")[0]
-						$(".minReplay").click(function(){
-//							$(".minReplay").parent().onClick = function() {
-//							}
-//							$(this).click();//自动单击一次
-							var ob=$(this).parents("#inreplayDiv").children(".textDiv");
-							ob.css("display","block");
-							ob.children("input").val("  回复 "+inReplayToUser+" :");
-						});
 					},
 					columns : [ [ {
 						field : "inReplay",
@@ -349,7 +319,7 @@ noteDetil.paseInReplayDate = function(data) {
 						+ "&nbsp;:" + inReplayContent
 						+ "<br/><div class='inReplayTimeDiv'><a>"
 						+ inReplayTime
-						+ "</a>&nbsp;&nbsp;<a class='minReplay'>回复</a></div>"
+						+ "</a>&nbsp;&nbsp;<a class='minReplay' onclick='noteDetil.minReplayClick(this)'>回复</a></div>"
 			}
 			shuju.push(str);
 		}
@@ -363,8 +333,8 @@ noteDetil.oneselfClick = function() {
 	}
 }
 
+//发送回复信息
 noteDetil.inReplayonClick=function(object){
-//	alert($(object).prevAll("input").val())
 	var replayUser=jsonReplay.replayUser;
 	var replayContent=jsonReplay.replayContent;
 	var noteTitle=$("#param1").text();
@@ -412,7 +382,7 @@ noteDetil.inReplayonClick=function(object){
 							success:function(data){
 								if(data=="success"){
 									$.messager.alert("成功","回复成功!","info");
-									
+									noteDetil.getInReplayDate($(object).parent().prev().prev())
 								}else if(data=="error"){
 									$.messager.alert("错误","回复失败!","error");
 								}
@@ -421,8 +391,9 @@ noteDetil.inReplayonClick=function(object){
 					}
 				}else{
 					$.messager.alert("错误","请输入回复内容!","warning");
-				}
-				
+				}			
+			}else{
+				$.messager.alert("错误", "您还未登录，请先登录！", "error");
 			}
 		},
 	    error:function(xhr,status,error){
@@ -430,5 +401,18 @@ noteDetil.inReplayonClick=function(object){
 	    	$.messager.alert("错误",status,"error");
 	    	$.messager.alert("错误",error,"error");
 	    }
+	});
+}
+
+noteDetil.sectionHT=function(){
+	$("#param2").mouseover(function(){
+		$(this).css({"color":"blue","font-size":"18px"});
+	});
+	$("#param2").mouseout(function(){
+		$(this).css({"color":"white","font-size":"16px"});
+	});
+	$("#param2").click(function(){
+		var sectionName=$(this).text();
+		window.location.href="/BBS/bbs/note.jsp?sectionName="+sectionName;
 	});
 }

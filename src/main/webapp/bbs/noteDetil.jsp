@@ -93,12 +93,20 @@
 .textDiv{
     display: none;
 }
+#param2{
+    cursor: pointer;
+}
+#navigation{
+    float:right;
+    padding-right:30px;
+    color: white;
+}
 </style>
 </head>
 <body> 
      <div style="height: 30px;width:100%; background-color: #00BFFF; padding-top: 10px;">
 		<b style="padding-left: 50px; color: white;">标题：<a id="param1">${param.noteTitle}</a></b>
-		<font style="padding-left:52%; color: white;">您现在的位置：<a
+		<font id="navigation">您现在的位置：<a
 			href="/BBS/bbs/index.jsp">首页</a>>>
 			<a id="param2">${param.sectionName}</a>>>
 			<b>帖子详情</b></font>

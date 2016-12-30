@@ -62,6 +62,7 @@ note.getFromVal=function(){
 //初始化表格数据
 note.initDatagrid=function(){
 	$("#dd").datagrid({
+		fitColumns:true,//防止水平滚动
 		pagination:true,
 		data:note.Data.slice(0, 10),
 		rowStyler:function(index,row){
@@ -169,4 +170,8 @@ note.isNull=function(str){
 	var regu="^[ ]+$";
 	var re=new RegExp(regu);
 	return re.test(str);
+}
+
+note.fixWidth=function(percent){
+	return document.body.clientWidth*percent;
 }

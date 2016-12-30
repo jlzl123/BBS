@@ -35,10 +35,9 @@
     		 });
     	 });
     	 
-    	 var session= <%=session.getAttribute("username")%>;
+    	 var session= '<%=session.getAttribute("username")%>';
     	 var isExist=<%=request.getAttribute("isExist")%>;
-
-    	 if(session!=null){
+    	 if(session!='null'){
     		 $("#loginedDiv").css("display","block");
 		     $("#loginDiv").css("display","none");
     	 }else{
@@ -68,8 +67,15 @@
 	padding-left: 8px;
 }
 
-#table {
+html,body{
+    width:100% 
+}
+.tab {
 	background-color: #ADD8E6;
+	width: 100%;
+}
+.th{
+    width: 20%;
 }
 #loginedDiv{
     padding-top: 10px;
@@ -116,13 +122,13 @@
 		</div>
 		<div>
 			<div id="table">				
-				<table>
+				<table class="tab">
 					<tr height="50px">
-						<th width="250px"><a href="../bbs/index.jsp">首页</a></th>
-						<th width="250px">校园信息</th>
-						<th width="250px">在线论坛</th>
-						<th width="250px"><a href="../bbs/regist.jsp">用户注册</a></th>
-						<th width="250px"><a href="../bbs/admin.jsp">后台管理</a></th>
+						<th class="th"><a href="../bbs/index.jsp">首页</a></th>
+						<th class="th">校园信息</th>
+						<th class="th">在线论坛</th>
+						<th class="th"><a href="../bbs/regist.jsp">用户注册</a></th>
+						<th class="th"><a href="../bbs/admin.jsp">后台管理</a></th>
 					</tr>
 				</table>
 			</div>

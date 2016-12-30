@@ -13,4 +13,8 @@ public interface NoteMapper {
 	public Note findNoteByNoteTitle(String noteTitle) throws Exception;
 	
 	public int updateNoteReplay(Note note) throws Exception;
+	
+	public List<Note> findAllNoteByNoteTitle(String noteTitle) throws Exception;
+	
+	public List<Note> findAllNoteByUserName(String userName) throws Exception;
 }

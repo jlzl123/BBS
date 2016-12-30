@@ -51,26 +51,31 @@
 #title {
 	width: 300px;
 }
+#navition{
+    color: white;
+    float: right;
+    padding-right: 30px;
+}
 </style>
 </head>
 <body>
 	<div
 		style="height: 30px; background-color: #00BFFF; padding-top: 10px;">
 		<b style="padding-left: 50px; color: white;">主题：<a id="param">${param.sectionName}</a></b>
-		<font style="padding-left: 900px; color: white;">您现在的位置：<a
+		<font id="navition">您现在的位置：<a
 			href="/BBS/bbs/index.jsp">首页</a>>><b>版块</b></font>
 	</div>
 	<div>
 		<table id="dd" class="easyui-datagrid">
 			<thead>
 				<tr>
-					<th data-options="field:'noteTitle',width:800" align="center"
+					<th data-options="field:'noteTitle',width:note.fixWidth(0.75)" align="center"
 						style=""><font size="3">标题</font></th>
-					<th data-options="field:'userName',width:200,align:'right'"
+					<th data-options="field:'userName',width:note.fixWidth(0.1),align:'right'"
 						align="center"><font size="3">作者</font></th>
-					<th data-options="field:'replayToatl',width:100" align="center"><font
+					<th data-options="field:'replayToatl',width:note.fixWidth(0.05)" align="center"><font
 						size="3">回复数</font></th>
-					<th data-options="field:'newReplayUser',width:200" align="center"><font
+					<th data-options="field:'newReplayUser',width:note.fixWidth(0.1)" align="center"><font
 						size="3">最新回复</font></th>
 				</tr>
 			</thead>
