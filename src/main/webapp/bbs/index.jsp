@@ -75,7 +75,7 @@
 			</thead>
 		</table>
 	</div>
-	<div id="tDiv">
+	<div id="tDiv" style="display: none">
 		<table id="t" class="easyui-datagrid" style="display: none">
 			<thead>
 				<tr>

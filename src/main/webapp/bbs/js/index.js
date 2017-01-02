@@ -31,6 +31,7 @@ index.setSeach=function(){
 							function(data){
 						if(data.length>0){
 							$("#ttDiv").css("display","none");
+							$("#tDiv").css("display","block");
 							$("#t").css("display","block");
 							index.initNoteDatagrid(data);
 						}else{
