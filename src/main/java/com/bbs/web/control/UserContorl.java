@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
@@ -142,6 +143,24 @@ public class UserContorl {
 		sectionList = sectionService.findAllSection();
 		return sectionList;
 	}
+	
+	@RequestMapping(value="/findSection",method=RequestMethod.POST)
+	public @ResponseBody Map<String, Object> findSection(@RequestParam("pageIndex")int pageIndex) throws Exception{
+		Map<String, Object> map=new HashMap<String, Object>();
+		int pageSize=9;
+		int rowCount=0;
+		List<Section> list=sectionService.findAllSection();
+		rowCount=list.size();
+		if(rowCount%pageSize!=0){
+			rowCount=rowCount/pageSize+1;
+		}else{
+			rowCount=rowCount/pageSize;
+		}
+		map.put("list", list);
+		map.put("pageCount", rowCount);
+		map.put("pageIndex", pageIndex);
+		return map;
+	}
 
 	@RequestMapping(value="/findAllSectionBySectionName",method=RequestMethod.GET)
 	public @ResponseBody List<Section> findAllSectionBySectionName(
@@ -173,9 +192,47 @@ public class UserContorl {
 				}
 			}
 		}
+		int pageSize=10;
 		return ln;
 	}
 
+	@RequestMapping(value="/findallNoteBySectionId",method=RequestMethod.POST)
+	public @ResponseBody Map<String, Object> findallNoteBySectionId(@RequestParam("sectionName"
+			)String sectionName,@RequestParam("pageIndex")int pageIndex) throws Exception{
+		Map<String, Object> map=new HashMap<String, Object>();
+		List<Note> ln = new ArrayList<Note>();
+		if (sectionName != null) {
+			Section section = sectionService.findSectionBySectionName(sectionName);
+			if (section != null) {
+				int sectionId = section.getSectionId();
+				List<Note> noteList = noteService.findAllNoteBySectionId(sectionId);
+				if (noteList != null) {//添加回复数
+					for (Note note : noteList) {
+						int noteId = note.getNoteId();
+						List<Replay> list = replayService
+								.findAllReplayByNoteId(noteId);
+						int replayToatl = list.size();
+						note.setReplayToatl(replayToatl);
+						ln.add(note);
+					}
+				}
+			}
+		}
+		//加上分页数和当前页码
+		int pageSize=10;
+		int rowCount=0;
+		rowCount=ln.size();
+		if(rowCount%pageSize!=0){
+			rowCount=rowCount/pageSize+1;
+		}else{
+			rowCount=rowCount/pageSize;
+		}
+		map.put("list", ln);
+		map.put("pageIndex", pageIndex);
+		map.put("pageCount", rowCount);
+		return map;
+	}
+	
 	@RequestMapping(value="/findAllNoteByNoteTitle",method=RequestMethod.GET)
 	public @ResponseBody List<Note> findAllNoteByNoteTitle(@RequestParam("noteTitle")String noteTitle) throws Exception{
 		List<Note> noteList=noteService.findAllNoteByNoteTitle(noteTitle);
@@ -327,5 +384,19 @@ public class UserContorl {
 	public @ResponseBody List<Note> findAllNoteByUserName(
 			@RequestParam("userName")String userName) throws Exception{
 		return noteService.findAllNoteByUserName(userName);
+	}
+	
+	@RequestMapping(value="/findNoteDetilByNoteTitle",method=RequestMethod.GET)
+	public @ResponseBody Map<String, Object> findNoteDetilByNoteTitle(@RequestParam("noteTitle") String noteTitle) throws Exception{
+		Map<String, Object> map=new HashMap<String, Object>();
+		Note note=noteService.findNoteByNoteTitle(noteTitle);
+		List<Replay> list=replayService.findAllReplayByNoteId(note.getNoteId());
+		int replayToatl=list.size();
+		Section section=sectionService.findSectionBySectionId(note.getSectionId());
+		String sectionName=section.getSectionName();
+		note.setReplayToatl(replayToatl);
+        map.put("note", note);
+        map.put("sectionName", sectionName);
+		return map;
 	}
 }

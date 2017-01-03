@@ -53,9 +53,9 @@
 			style="width: 500px"></input>
 
 		<div id="mm" style="width: 120px">
-			<div data-options="name:'sectionName',iconCls:'icon-ok'">主题</div>
-			<div data-options="name:'noteTitle',iconCls:'icon-ok'">帖子</div>
-			<div data-options="name:'userName',iconCls:'icon-ok'">用户</div>
+			<div data-options="name:'sectionName',iconCls:'icon-ok'"><font id="sectionName">主题</font></div>
+			<div data-options="name:'noteTitle',iconCls:'icon-ok'"><font id="noteTitle">帖子</font></div>
+			<div data-options="name:'userName',iconCls:'icon-ok'"><font id="userName">用户</font></div>
 			<div data-options="name:'newTime',iconCls:'icon-ok'"><font id="newTime">最新发表</font></div>
 		</div>
 		<input id="dt" type="text" style="display: none">

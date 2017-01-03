@@ -4,11 +4,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>首页</title>
 <%@include file="head.jsp"%>
+<script type="text/javascript" src="../test/js/index.js"></script>
 </head>
 <body>
-
 	<div>
 		<!-- LEFT -->
 
@@ -20,7 +20,7 @@
 
 			<div id="sectionDiv"></div>
 			<!--/.col-xs-6.col-lg-4-->
-
+            <ul id="example"></ul>
 			<div class="panel-footer"></div>
 		</div>
 

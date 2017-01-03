@@ -11,7 +11,7 @@ $(document).ready(function(){
 //搜索框
 index.setSeach=function(){
 	$('#ss').searchbox({ 
-		searcher:function(value,name){ 
+		searcher:function(value,name){ //搜索时调用
 			if(value.trim()==""){
 				$.messager.alert("错误","请输入搜素内容","warning");
 			}else{
@@ -72,6 +72,10 @@ index.onClickListener=function(){
 		});
 //		$("#dt").css("display","block");
 	});
+
+//	$("#noteTitle").click(function(){	
+//		alert(2)
+//	});
 }
 
 //解析时间字符串

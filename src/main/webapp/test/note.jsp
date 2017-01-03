@@ -6,9 +6,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <%@include file="head.jsp"%>
+<script type="text/javascript" src="../test/js/note.js"></script>
 </head>
 <body>
-
+   <a id="param" style="display: none">${param.sectionName}</a>
 	<div>
 		<div class="input-group">
 
@@ -35,39 +36,10 @@
 				</span>
 
 			</div>
-			<!-- List group -->
-			<ul class="list-group topic-list">
-
-				<li class="list-group-item topic-entry">
-					<div class="entry media">
-						<div class="media-left media-middle">
-							<a class="list-avatar-link" href="#"><img class="user-avatar"
-								src="http://www.gravatar.com/avatar/4e5750bb485db473fc5fcaac227b78e3?d=&amp;s=48"></a>
-						</div>
-						<div class="media-body media-middle">
-							<a href="/detail/{{ blog.id}}" class="entry-link"> 标题 </a>
-							<p class="entry-meta">
-
-								<span class="meta"> <span
-									class="label label-info meta-top"> 置顶 </span>
-								</span> <span class="meta"> <a href="#"> <span
-										class="label label-default meta-node"> 校园新闻 </span>
-								</a>
-								</span> <span class="meta meta-username"> <a href="#">
-										发帖人:万万 </a>
-								</span> <span class="meta meta-pub_date"> 2016.12.30 </span> <span
-									class="meta meta-last_replied hidden-xs"> 最后回复:
-									2016.12.30 </span>
-							</p>
-						</div>
-						<div class="media-right media-middle">
-							<span class="badge">回帖数:11</span>
-						</div>
-					</div>
-				</li>
-
-			</ul>
-			<div class="panel-footer"></div>
+			<div id="noteDiv"></div>
+			<ul id="example"></ul>
+			
+			<!--  <div class="panel-footer"></div>-->
 		</div>
 
 	</div>

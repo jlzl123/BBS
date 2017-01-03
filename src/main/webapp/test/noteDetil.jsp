@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <%@include file="head.jsp"%>
+<script type="text/javascript" src="../test/js/noteDetil.js"></script>
 </head>
 <body>
 <div > <!-- LEFT -->
@@ -18,7 +19,7 @@
                 <li><a href="/n/1/">校园新闻</a></li>
                 <li class="active">关于的新闻</li>
             </ol>
-            <h1 class="topic-title">标题</h1>
+            <h1 id="noteTitle" class="topic-title">${param.noteTitle} </h1>
             <div class="topic-meta row">
                 <div class="col-xs-2 col-sm-1">
                     <img class="user-avatar"
@@ -26,15 +27,15 @@
                 </div>
                 <div class="col-xs-9 col-sm-10">
                     <p class="text-muted">
-                        <a href="/u/1/">发帖人</a>
+                        <a href="/u/1/" id="noteUser"></a>
                         <br/>
-                        <span>发帖时间 <a class="text-primary" href="/n/1/">类型</a>, </span>
-                        <span>查看: 1015 次</span>
+                        <span id="noteAddTime"><a class="text-primary" href="/n/1/" id="sectionName"></a>, </span>
+                        <span>查看: <a id="replayTatol"></a> 次</span>
                     </p>
                 </div>
             </div>
             <div class="topic-content">
-				<p>能否连任不是董明珠说了算？<br />在2014年的一次公开采访中，谈到2018年换届，董小姐表示自己上一届选举就想退了，绝不会像茅台老总季克良一样72岁还在辛苦连任。<br />纵观董明珠在格力的从业历程，随着格力业绩提升，董明珠的地位也越来越高。2013年，董明珠提出五年再造一个格力的目标，表示要在2018年实现2000亿元的营收，营业额每年增加20%，并在2013年，2014年都顺利完成了目标。在中小股东的支持下，董明珠最终成为格力集团和格力电器的双料董事长，这地位一直延续到今年11月董明珠格力集团董事长的位置被周乐伟接替。<br />然而从2015年开始，格力电器的营收同比下跌超过三成，根据财报数据，格力电器2015营收为977.45亿元，同比下降29.04%;今年前三季度营收984亿比2014年同期减少16.2%，连续两年增收200亿的目标已经落空。对比同为白色家电领头企业的美的，2015年实现营收1384.4亿元，同比仅微降2.28%。<br />家电行业专家梁振鹏告诉北京时间财经，格力的营业额不断缩水主要是由于格力电器产品结构非常单一，销售额主要由空调支撑，而美的等企业抢占了二十年前家电市场爆发式增长的先机，尤其多元化战略开展较早，因此不论从营业额、产品线齐全程度等方面来说，格力与美的相比处境更加艰难。<br />格力电器市场部部长陈自立告诉北京时间，由于在空调主业的增长空间已经有限，公司一直在寻求新的发展空间，这也是近年来公司进入冰箱、小家电等领域的原因。<br /></p>
+				<p id="noteContent"><br /></p>
             </div>
         </div>
 

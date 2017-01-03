@@ -1,15 +1,51 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <%@include file="common.jsp"%>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#login").click(function() {
+			var pass = $("#password").val();
+			var password = hex_md5(pass)//md5加密  		 
+			$.post("/BBS/userControl/userLogin", {
+				"username" : $("#username").val(),
+				"password" : password,
+				"isChecked" : $("#check").is(":checked")
+			}, function(data) {
+				if (data) {
+					//      				     $("#loginedDiv").css("display","block");
+					$("#form").css("display", "none");
+					//      				     $("#font").text($("#username").val());
+				} else {
+					alert("登录失败，用户名或密码错误！");
+				}
+			});
+		});
+	})
+</script>
+<style type="text/css">
+.panel-header, .panel-body {
+	border-width: 0px;
+}
+
+.datagrid, .combo-p {
+	border: solid 1px #D4D4D4;
+}
+
+.datagrid * {
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+}
+</style>
 </head>
 <body>
 
-   	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	<div class="container">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed"
@@ -22,17 +58,19 @@
 			<a class="navbar-brand" href="#">校园BBS</a>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
-			<form class="navbar-form navbar-right" role="form">
+			<form class="navbar-form navbar-right" role="form" id="form">
 				<div class="form-group">
-					<input type="text" placeholder="用户名" class="form-control">
+					<input id="username" type="text" placeholder="用户名"
+						class="form-control">
 				</div>
 				<div class="form-group">
-					<input type="password" placeholder="密码" class="form-control">
+					<input id="password" type="password" placeholder="密码"
+						class="form-control">
 				</div>
 
-				<button type="submit" class="btn btn-success">登 录</button>
+				<input id="login" type="button" class="btn btn-success" value="登录"></input>
 				<div class="checkbox">
-					<label> <input type="checkbox">记住密码 <a>忘记密码</a>
+					<label> <input id="check" type="checkbox">记住密码 <a>忘记密码</a>
 					</label>
 				</div>
 				<button class="btn">注 册</button>
@@ -86,6 +124,6 @@
 		<!-- /input-group -->
 	</div>
 	<!-- /.col-lg-6 -->
-   
+
 </body>
 </html>
