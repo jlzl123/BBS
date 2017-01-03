@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>帖子</title>
 <%@include file="head.jsp"%>
 <script type="text/javascript" src="../test/js/note.js"></script>
 </head>
@@ -70,7 +70,7 @@
 				</div>
 				<div class="form-group">
 					<div class="controls ">
-						<input type="submit" name="submit" value="回复"
+						<input type="submit" name="submit" value="发表"
 							class="btn btn-primary" id="submit-id-submit" />
 					</div>
 				</div>

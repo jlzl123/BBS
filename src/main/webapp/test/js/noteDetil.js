@@ -13,11 +13,11 @@ noteDetil.initNoteDetil=function(){
 		url:"/BBS/userControl/findNoteDetilByNoteTitle",
 		dataType:"json",
 		data:"noteTitle="+noteTitle,
-		success:function(data){
-	
+		success:function(data){	   
 			$("#noteUser").text(data.note.userName);
 			$("#noteAddTime").text(noteDetil.paseDate(data.note.addtime));
 			$("#sectionName").text(data.sectionName);
+			$("#sectionName").attr("href","/BBS/test/note.jsp?sectionName="+data.sectionName);
 			$("#replayTatol").text(data.note.replayToatl);
 			$("#noteContent").text(data.note.content);
 		}

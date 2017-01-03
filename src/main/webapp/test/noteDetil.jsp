@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>帖子详情</title>
 <%@include file="head.jsp"%>
 <script type="text/javascript" src="../test/js/noteDetil.js"></script>
 </head>
@@ -29,7 +29,7 @@
                     <p class="text-muted">
                         <a href="/u/1/" id="noteUser"></a>
                         <br/>
-                        <span id="noteAddTime"><a class="text-primary" href="/n/1/" id="sectionName"></a>, </span>
+                        <span><font id="noteAddTime"></font>&nbsp;<a class="text-primary" id="sectionName"></a>, </span>
                         <span>查看: <a id="replayTatol"></a> 次</span>
                     </p>
                 </div>

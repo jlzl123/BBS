@@ -8,6 +8,18 @@
 <%@include file="common.jsp"%>
 <script type="text/javascript">
 	$(document).ready(function() {
+		 var session= '<%=session.getAttribute("username")%>';
+    	 var isExist=<%=request.getAttribute("isExist")%>;
+    	 if(session!='null'){
+    		 $("#logined").css("display","block");
+		     $("#form").css("display","none");
+    	 }else{
+    		 if(isExist){
+    			 $("#logined").css("display","block");
+    		     $("#form").css("display","none");
+    		 }
+    	 }
+		
 		$("#login").click(function() {
 			var pass = $("#password").val();
 			var password = hex_md5(pass)//md5加密  		 
@@ -17,13 +29,23 @@
 				"isChecked" : $("#check").is(":checked")
 			}, function(data) {
 				if (data) {
-					//      				     $("#loginedDiv").css("display","block");
 					$("#form").css("display", "none");
-					//      				     $("#font").text($("#username").val());
+					$("#logined").css("display", "block");
+					$("#span").text($("#username").val())
 				} else {
 					alert("登录失败，用户名或密码错误！");
 				}
 			});
+		});
+		$("#loginOut").click(function(){
+			 $.get("/BBS/userControl/userLogout",{"username":$("#span").val()},
+    				 function(data){
+    			        if(data){
+    			        	$("#logined").css("display","none");
+       				        $("#form").css("display","block");
+       				        alert("成功退出！");
+    			        }
+    		 });
 		});
 	})
 </script>
@@ -75,6 +97,12 @@
 				</div>
 				<button class="btn">注 册</button>
 			</form>
+			<div class="navbar-form navbar-right" style="display: none" id="logined">
+			     <a href="#">
+                   <span id="span" class="glyphicon glyphicon-user"><%=session.getAttribute("username") %></span>
+                 </a>
+                 <button id="loginOut" type="button" class="btn btn-default btn-sm">退出</button>
+			</div>
 		</div>
 		<!--/.navbar-collapse -->
 	</div>
@@ -96,9 +124,9 @@
 		<div>
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="#">校园信息</a></li>
-				<li><a href="#">在线论坛</a></li>
-				<li><a href="#">用户注册</a></li>
-				<li><a href="#">后台管理</a></li>
+				<li><a href="/BBS/test/index.jsp">在线论坛</a></li>
+				<li><a href="/BBS/test/regist.jsp">用户注册</a></li>
+				<li><a href="/BBS/test/admin.jsp">后台管理</a></li>
 
 			</ul>
 		</div>
