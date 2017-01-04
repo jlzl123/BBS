@@ -8,7 +8,7 @@
 <!-- 新 Bootstrap 核心 CSS 文件 -->
 <link rel="stylesheet"
 	href="../common/css/bootstrap.min.css">
-<link rel="stylesheet" href="../common/css/bootstrapValidator.css">
+<link rel="stylesheet" href="../common/css/bootstrapValidator.min.css">
 
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
 <script src="../common/js/jquery.min.js"></script>
@@ -38,7 +38,7 @@
 								firstName : {
 									validators : {
 										notEmpty : {
-											message : 'The first name is required and cannot be empty'
+											message : '分公司'
 										}
 									}
 								},

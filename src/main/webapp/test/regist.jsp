@@ -47,9 +47,10 @@
 							</label>
 						</div>
 					</div>
-
+                    <div>
 					<button id="regist" type="submit" class="btn btn-default">注册</button>
-					<button type="reset" class="btn btn-default">重置</button>
+					<button type="reset" class="btn btn-default">重置</button>               
+                    </div>
 
 				</form>
 

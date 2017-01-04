@@ -3,8 +3,35 @@ var regist={
 }
 
 $(document).ready(function(){
-	regist.formValidate();
-	regist.addUser();
+//	regist.formValidate();
+//	regist.addUser();
+	$("#form").bootstrapValidator({
+		message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+		fields:{
+			username:{
+				validators:{
+					notEmpty:{
+						message:"用户名不能为空!"
+					},
+					stringLength:{
+						min:2,
+						max:10,
+						message:"用户名只能在2-10个字符之间哦~"
+					}
+				}
+			},
+			
+		}
+	});
+	$("#regist").click(function(){	
+		$("#form").bootstrapValidator("validate");
+		alert(123)
+	});
 })
 
 regist.addUser=function(){
