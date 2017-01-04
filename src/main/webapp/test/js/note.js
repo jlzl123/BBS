@@ -4,7 +4,61 @@ var note={
 
 $(document).ready(function(){
 	note.initNoteData();
+	note.sendNote();
+	note.ChangeInfoDiv();
 })
+
+note.sendNote=function(){
+	$("#sendNote").click(function(){
+		var str=note.getFromVal();
+		if(str.userName.trim()=="null"){
+			alert("请先登录！");
+		}else if(str.noteTitle.trim()==""){	
+			alert("请填写标题！");
+		}else if(str.content.trim()==""){
+			alert("请填写内容！");
+		}else{
+			$.ajax({
+				type:"POST",
+				url:"/BBS/userControl/addNote",
+				dataType:"text",//返回值类型
+				data:JSON.stringify(str),
+				contentType:"application/json;charset=utf-8",
+				success:function(data){
+					if(data=="success"){
+						alert("帖子发表成功！");		
+						note.getNoteData();
+					}else if(data=="Exist"){
+						alert("帖子发表失败！帖子已存在！");	
+					}else if(data=="查询版快信息异常!"||data=="查询帖子信息异常!"||data=="添加帖子信息异常!"){
+						alert(data);
+					}else{
+						alert("帖子发表失败！");
+					}
+				}
+			});		
+		}
+	});
+}
+
+note.getFromVal=function(){
+	var title=$("#title").val();
+	var content=$("#content").val();
+	var status='普通';
+	var username=$("#span").text();
+	var sectionName=$("#param").text();
+	var addtime=new Date();
+	var str={
+			"noteTitle":title,
+			"status":status,
+			"userName":username,
+			"content":content,
+			"addtime":addtime,
+			"sectionName":sectionName,
+			"newTime":addtime
+	}
+	return str;
+}
 
 note.initNoteData=function(){
 	var sectionName=$('#param').text();
@@ -18,7 +72,7 @@ note.initNoteData=function(){
 				alert(data);
 			}else{
 				var str="";
-				$.each(data.list.splice(0,10),function(index,item){
+				$.each(data.list.slice(0,10),function(index,item){
 					var addtime=note.paseDate(item.addtime);
 					var newTime=note.paseDate(item.newTime);
 					str+='<!-- List group --><ul class="list-group topic-list">'
@@ -37,7 +91,7 @@ note.initNoteData=function(){
 						+'</span> <span class="meta meta-username"> <a href="#">发帖人:'+item.userName+' </a>'
 						+'</span> <span class="meta meta-pub_date"> '+addtime+' </span> <span'
 						+'class="meta meta-last_replied hidden-xs"> 最后回复:'
-						+newTime+' </span</p></div>'
+						+'<a href="#">'+item.userName+'</a>&nbsp;'+newTime+' </span</p></div>'
 						+'<div class="media-right media-middle"><span class="badge">回帖数:'+item.replayToatl+'</span>'
 						+'</div></div></li></ul>';
 				});
@@ -77,7 +131,7 @@ note.initNoteData=function(){
 										alert(data);
 									}else{
 										var str="";
-										$.each(data.list.splice((page-1)*10,(page-1)*10+10),function(index,item){
+										$.each(data.list.slice((page-1)*10,(page-1)*10+10),function(index,item){
 											var addtime=note.paseDate(item.addtime);
 											var newTime=note.paseDate(item.newTime);
 											str+='<!-- List group --><ul class="list-group topic-list">'
@@ -96,7 +150,7 @@ note.initNoteData=function(){
 												+'</span> <span class="meta meta-username"> <a href="#">发帖人:'+item.userName+' </a>'
 												+'</span> <span class="meta meta-pub_date"> '+addtime+' </span> <span'
 												+'class="meta meta-last_replied hidden-xs"> 最后回复:'
-												+newTime+' </span</p></div>'
+												+'<a href="#">'+item.userName+'</a>&nbsp;'+newTime+' </span</p></div>'
 												+'<div class="media-right media-middle"><span class="badge">回帖数:'+item.replayToatl+'</span>'
 												+'</div></div></li></ul>';
 										});
@@ -106,8 +160,8 @@ note.initNoteData=function(){
 							});
 						}
 				}
+				$('#example').bootstrapPaginator(options);
 			}						
-			$('#example').bootstrapPaginator(options);
 		}
 	});
 }
@@ -171,4 +225,13 @@ note.paseDate=function(date){
 //补齐两位数
 note.padleft0 = function(obj) {
     return obj.toString().replace(/^[0-9]{1}$/, "0" + obj);
+}
+
+note.ChangeInfoDiv=function(){
+	var username=$("#span").text();
+	if(username.trim()!="null"){
+		$("#tishi").css("display","none");
+	}else{
+		$("#tishi").css("display","block");
+	}
 }

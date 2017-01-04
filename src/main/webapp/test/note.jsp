@@ -48,11 +48,14 @@
 	<div class="panel-footer"></div>
 
 	<div class="panel panel-default">
+	        <div id="tishi" class="alert alert-warning" role="alert" style="padding-top: 10px;">
+                                                    请先<a href="#">登录</a> 或者 <a href="/BBS/test/regist.jsp">注册新账号</a> 然后发帖
+            </div>
 		<div class="panel-heading">发表帖子</div>
 		<div class="panel-body">
 			<form method="post">
 				<div class="input-group">
-					<span class="input-group-addon">主题名:</span> <input type="text"
+					<span class="input-group-addon">主题名:</span> <input id="title" type="text"
 						class="form-control" placeholder="少于64个字">
 				</div>
 				<div id="div_id_content_raw" class="form-group">
@@ -61,7 +64,7 @@
 							<div class="wmd-panel">
 								<div id="id_content_raw_wmd_button_bar"></div>
 								<textarea class="pagedownwidget form-control wmd-input"
-									cols="40" id="id_content_raw" name="content_raw" rows="10"></textarea>
+									cols="40" id="content" name="content_raw" rows="10"></textarea>
 							</div>
 							<div id="id_content_raw_wmd_preview"
 								class="wmd-panel wmd-preview"></div>
@@ -70,8 +73,8 @@
 				</div>
 				<div class="form-group">
 					<div class="controls ">
-						<input type="submit" name="submit" value="发表"
-							class="btn btn-primary" id="submit-id-submit" />
+						<input type="button" name="submit" value="发表"
+							class="btn btn-primary" id="sendNote" title="警告"/>
 					</div>
 				</div>
 			</form>

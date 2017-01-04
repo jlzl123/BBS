@@ -296,6 +296,47 @@ public class UserContorl {
 		}
 		return replayList;
 	}
+	
+	@RequestMapping(value="/findAllReplay",method=RequestMethod.POST)
+	public @ResponseBody Map<String, Object> findAllReplay(@RequestParam("noteTitle")String noteTitle,
+			@RequestParam("pageIndex")int pageIndex) throws Exception{
+		Map<String, Object> map=new HashMap<String, Object>();
+		List<Replay> replayList =new ArrayList<Replay>();
+		if (noteTitle != null) {
+			Note note = noteService.findNoteByNoteTitle(noteTitle);
+			//在一楼添加加帖子内容
+			Replay replay=new Replay();
+			replay.setNoteId(note.getNoteId());
+			replay.setReplayContent(note.getContent());
+			replay.setUserName(note.getUserName());
+			replay.setReplayTime(note.getAddtime());
+			replayList.add(replay);
+			if (note != null) {
+				List<Replay> list= replayService.findAllReplayByNoteId(note
+						.getNoteId());
+				for(Replay r:list){
+					List<InReplay> lir=inReplayService.findAllInReplayByNoteIdAndReplayId(
+							r.getNoteId(),r.getReplayId());
+					int inReplayTotal=lir.size();
+					r.setInReplayTotal(inReplayTotal);
+					replayList.add(r);
+				}
+			}
+
+		}
+		int rowCount=0;
+		int pageSize=10;
+		rowCount=replayList.size();
+		if(rowCount%pageSize!=0){
+			rowCount=rowCount/pageSize+1;
+		}else{
+			rowCount=rowCount/pageSize;
+		}
+		map.put("list", replayList);
+		map.put("pageIndex", pageIndex);
+		map.put("pageCount", rowCount);
+		return map;
+	}
 
 	@RequestMapping(value = "/addReplay", method = RequestMethod.POST)
 	public @ResponseBody String addReplay(HttpServletRequest request,

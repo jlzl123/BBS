@@ -132,7 +132,7 @@ noteDetil.getReplayData = function() {
 		url : "/BBS/userControl/findReplay?noteTitle=" + noteTitle,
 		success : function(data) {
 			if (data == "查询帖子信息异常!" || data == "查询所有回复信息异常!") {
-				$.messager("错误", data, "warning");
+				$.messager.alert("错误", data, "warning");
 			} else {
 				noteDetil.Data = data;
 				noteDetil.initDatagrid();
@@ -172,7 +172,7 @@ noteDetil.sendReplay = function() {
 					// "userName":username,
 					"replayTime" : new Date()
 				}
-				if (replayContent != null) {
+				if (replayContent.trim()!="" ) {
 					$.ajax({
 						type : "POST",
 						url : "/BBS/userControl/addReplay",
@@ -192,6 +192,8 @@ noteDetil.sendReplay = function() {
 							}
 						}
 					});
+				}else{
+					$.messager.alert("错误", "请输入内容!", "warning");
 				}
 			});
 }

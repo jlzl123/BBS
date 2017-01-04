@@ -52,33 +52,11 @@
 
         </div>
         <!-- List group -->
-        <ul class="list-group reply-list">
-			<!--循环这里-->
-            <li class="list-group-item reply-item">
-                <div class="topic-meta row">
-                    <div class="col-xs-2 col-sm-1">
-                        <img class="user-avatar"
-                             src="http://www.gravatar.com/avatar/c14d6906b85a0830d407b7f55f0f0f3e?d=&amp;s=48" alt=""/>
-                    </div>
-                    <div class="col-xs-9 col-sm-10">
-                        <p class="text-muted">
-                            <a href="#">回复者id</a> <br/>
-                            <span>回复时间</span>
-                        </p>
-                    </div>
-                </div>
-                <div class="reply-content">
-                    回复内容
-                </div>
-                <p class="reply-link">
-                    <a href="#" data-username="kim0051" class="reply-to">回复他</a>
-                </p>
-
-            </li>
-        </ul>
+        
+        <div id="noteDetilDiv"></div>
+	    <ul id="example"></ul>
 
     </div>
-
 
 	<div class="panel-footer">
 
@@ -90,9 +68,8 @@
         <div class="panel-body">
 
 
-            <div class="alert alert-warning" role="alert">
-                请先<a href="/login/">登录</a> 或者 <a href="/reg/">注册新账号</a> 然后回复
-
+            <div id="tishi" class="alert alert-warning" role="alert">
+                                                    请先<a href="#">登录</a> 或者 <a href="/BBS/test/regist.jsp">注册新账号</a> 然后回复
             </div>
 
 
@@ -108,7 +85,7 @@
 		<div class="controls ">
 			<div class="wmd-wrapper" id="id_content_raw-wmd-wrapper">
 				<div class="wmd-panel"> <div id="id_content_raw_wmd_button_bar"></div>
-					<textarea class="pagedownwidget form-control wmd-input" cols="40" id="id_content_raw" name="content_raw" rows="10"></textarea>
+					<textarea class="pagedownwidget form-control wmd-input" cols="40" id="replayContent" name="content_raw" rows="10"></textarea>
 				</div>
 				<div id="id_content_raw_wmd_preview" class="wmd-panel wmd-preview">
 				</div>
@@ -117,7 +94,7 @@
 	</div>
 	<div class="form-group">
 		<div class="controls ">
-	<input type="submit" name="submit" value="回复" class="btn btn-primary" id="submit-id-submit"/>
+	<input type="button" name="submit" value="回复" class="btn btn-primary" id="sendReplay"/>
 	</div>	</div> </form>
 		</div>
     </div>

@@ -31,7 +31,8 @@
 				if (data) {
 					$("#form").css("display", "none");
 					$("#logined").css("display", "block");
-					$("#span").text($("#username").val())
+					$("#span").text($("#username").val());
+					$("#tishi").css("display", "none");
 				} else {
 					alert("登录失败，用户名或密码错误！");
 				}
@@ -43,6 +44,8 @@
     			        if(data){
     			        	$("#logined").css("display","none");
        				        $("#form").css("display","block");
+       				        $("#span").text("null");
+       				        $("#tishi").css("display", "block");
        				        alert("成功退出！");
     			        }
     		 });

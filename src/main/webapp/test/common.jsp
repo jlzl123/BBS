@@ -8,6 +8,8 @@
 
 <link rel="stylesheet"
 	href="../common/css/bootstrapv3.css">
+<link rel="stylesheet"
+	href="../common/css/bootstrapValidator.css">	
 
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
 <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
@@ -32,3 +34,7 @@
 	src="../common/js/md5.js"></script>	
 <script type="text/javascript"
 	src="../common/js/bootstrap-paginator.js"></script>	
+<script type="text/javascript"
+	src="../common/js/bootstrapValidator.js"></script>		
+<script type="text/javascript"
+	src="../common/js/zh_CN.js"></script>	

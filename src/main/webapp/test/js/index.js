@@ -32,6 +32,7 @@ index.initSectionData=function(){
 }
 
 index.initsectionData=function(){
+	//第一页查询数据
 	$.ajax({
 		type:"POST",
 		dataType:"json",
@@ -39,7 +40,8 @@ index.initsectionData=function(){
 		data:"pageIndex="+1,
 		success:function(data){
 			var str="";
-			$.each(data.list.splice(0,9),function(i,n){
+			//循环定量数据
+			$.each(data.list.slice(0,9),function(i,n){
 				str+='<div class="col-xs-6 col-lg-4"><h2>'+n.sectionName+'</h2>'
     			+'<div class="panel-body panel-subtitle">'
     			+'<span class="label label-success">'+n.sectionUser+'</span></div><p>'+n.jianjie+'</p>'
@@ -47,16 +49,18 @@ index.initsectionData=function(){
     			+'</p></div><!--/.col-xs-6.col-lg-4-->';
 			});
 //			$("#a").append(str);
+			//输出数据
 			$("#sectionDiv").html(str);
-			var pageCount=data.pageCount;
-			var currentPage=data.currentPage;
+			var pageCount=data.pageCount;//总页数
+			var currentPage=data.currentPage;//当前页码
 			
 			var options={
 					bootstrapMajorVersion: 3, //版本
 					currentPage: currentPage, //当前页数
 					totalPages: pageCount, //总页数
-					numberOfPages:5,
-					alignment:"left",
+					numberOfPages:5,//设置控件显示的页码数
+					alignment:"left",//设置控件的对齐方式
+					//设置分页按钮
 					itemTexts:function(type,page,current){
 						switch(type){
 						    case "first":
@@ -71,6 +75,7 @@ index.initsectionData=function(){
 						    	return page;
 						}
 					},
+					//设置分页按钮触发事件
 					onPageClicked:function(event,originalEvent,type,page){
 						$.ajax({
 							type:"POST",
@@ -79,7 +84,7 @@ index.initsectionData=function(){
 							data:"pageIndex="+page,
 							success:function(data){
 								var str="";
-								$.each(data.list.splice((page-1)*9,(page-1)*9+9),function(i,n){
+								$.each(data.list.slice((page-1)*9,(page-1)*9+9),function(i,n){
 									str+='<div class="col-xs-6 col-lg-4"><h2>'+n.sectionName+'</h2>'
 					    			+'<div class="panel-body panel-subtitle">'
 					    			+'<span class="label label-success">'+n.sectionUser+'</span></div><p>'+n.jianjie+'</p>'
