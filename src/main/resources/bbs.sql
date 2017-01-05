@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50622
 File Encoding         : 65001
 
-Date: 2016-12-27 17:46:43
+Date: 2017-01-05 17:44:25
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -44,7 +44,7 @@ CREATE TABLE `inreplays` (
   `inReplayToUser` varchar(50) DEFAULT NULL,
   `addtime` datetime NOT NULL,
   PRIMARY KEY (`inReplayId`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of inreplays
@@ -56,6 +56,49 @@ INSERT INTO `inreplays` VALUES ('4', '1050就和965一个德行，首发价那�
 INSERT INTO `inreplays` VALUES ('5', ' 等的是1050出来看965降不降价', '1', '1', '李四', '张三', '2016-12-27 17:01:27');
 INSERT INTO `inreplays` VALUES ('6', '制程上去了差距就小了', '1', '1', '张三', '李四', '2016-12-27 17:01:51');
 INSERT INTO `inreplays` VALUES ('7', '有一句说一句，和桌面版差距百分之十五已经很小了', '1', '2', '123456', 'admin', '2016-12-27 17:02:17');
+INSERT INTO `inreplays` VALUES ('8', '好地方共和国', '1', '1', '123456', '张三', '2016-12-29 15:12:10');
+INSERT INTO `inreplays` VALUES ('9', '好地方共和国', '1', '1', '123456', '张三', '2016-12-29 15:12:26');
+INSERT INTO `inreplays` VALUES ('10', '拉开进攻', '1', '1', '123456', '李四', '2016-12-29 15:13:09');
+INSERT INTO `inreplays` VALUES ('11', '买家付款结构化', '1', '2', '123456', '123456', '2016-12-29 15:13:51');
+INSERT INTO `inreplays` VALUES ('12', '关键时刻将很快就会', '1', '2', '123456', '123456', '2016-12-29 15:16:36');
+INSERT INTO `inreplays` VALUES ('13', '结果是黄金分割', '1', '2', '123456', '123456', '2016-12-29 15:19:16');
+INSERT INTO `inreplays` VALUES ('14', '5525', '1', '2', '123456', '123456', '2016-12-29 15:39:28');
+INSERT INTO `inreplays` VALUES ('15', '货到付款价格', '1', '2', '123456', '123456', '2016-12-29 15:39:56');
+INSERT INTO `inreplays` VALUES ('16', '法国撒拧得过', '1', '2', '123456', '123456', '2016-12-29 15:41:34');
+INSERT INTO `inreplays` VALUES ('17', '工具', '1', '2', '123456', '123456', '2016-12-29 15:42:31');
+INSERT INTO `inreplays` VALUES ('18', '郭德纲呵呵', '1', '1', '123456', 'admin', '2016-12-29 15:51:51');
+INSERT INTO `inreplays` VALUES ('19', '03646131', '1', '2', '123456', '123456', '2016-12-29 15:56:39');
+INSERT INTO `inreplays` VALUES ('20', 'hdghhgd ', '1', '2', '123456', '123456', '2016-12-29 15:58:13');
+INSERT INTO `inreplays` VALUES ('21', '646313456', '1', '1', '123456', '123456', '2016-12-29 16:05:27');
+INSERT INTO `inreplays` VALUES ('22', '很大机会大家', '1', '1', '123456', '张三', '2016-12-29 16:08:45');
+INSERT INTO `inreplays` VALUES ('23', '将黄金分割', '1', '3', '123456', '123456', '2016-12-29 16:24:12');
+INSERT INTO `inreplays` VALUES ('24', '发顺丰', '1', '3', '123456', '123456', '2016-12-29 16:24:33');
+INSERT INTO `inreplays` VALUES ('25', '测试楼层无回复回复', '1', '5', '123456', '123456', '2016-12-29 16:30:26');
+INSERT INTO `inreplays` VALUES ('26', '51', '1', '7', '123456', 'admin', '2016-12-29 16:31:41');
+INSERT INTO `inreplays` VALUES ('27', '就会恢复时间', '1', '7', '123456', '123456', '2016-12-29 16:49:36');
+INSERT INTO `inreplays` VALUES ('28', '会hi的沙发', '1', '4', '123456', '123456', '2016-12-29 17:15:51');
+INSERT INTO `inreplays` VALUES ('29', '250156014520', '1', '10', 'admin', '123456', '2016-12-29 17:28:24');
+INSERT INTO `inreplays` VALUES ('30', '返还给i航空股', '1', '24', '123456', '123456', '2016-12-29 17:33:02');
+INSERT INTO `inreplays` VALUES ('31', '回家第三方', '1', '3', 'admin', '123456', '2016-12-30 08:56:04');
+INSERT INTO `inreplays` VALUES ('32', 'hello', '1', '23', 'admin', '123456', '2016-12-30 09:25:57');
+INSERT INTO `inreplays` VALUES ('33', '几乎很少跟法国', '2', '26', 'admin', '123456', '2016-12-30 09:27:34');
+INSERT INTO `inreplays` VALUES ('34', '飞过海', '2', '27', 'admin', 'admin', '2016-12-30 09:28:01');
+INSERT INTO `inreplays` VALUES ('35', '阿凡达', '2', '26', 'admin', '123456', '2016-12-30 09:34:17');
+INSERT INTO `inreplays` VALUES ('36', '还过得更好', '2', '26', 'admin', 'admin', '2016-12-30 09:35:22');
+INSERT INTO `inreplays` VALUES ('37', '开工负荷', '2', '26', 'admin', '123456', '2016-12-30 09:38:46');
+INSERT INTO `inreplays` VALUES ('38', '空间克隆', '2', '26', 'admin', '123456', '2016-12-30 09:39:09');
+INSERT INTO `inreplays` VALUES ('39', '法国使馆', '2', '27', 'admin', 'admin', '2016-12-30 09:44:43');
+INSERT INTO `inreplays` VALUES ('40', '科技股份', '2', '27', 'admin', 'admin', '2016-12-30 09:45:47');
+INSERT INTO `inreplays` VALUES ('41', '多萨法', '2', '27', 'admin', 'admin', '2016-12-30 09:47:24');
+INSERT INTO `inreplays` VALUES ('42', '大师傅', '2', '27', 'admin', 'admin', '2016-12-30 09:49:06');
+INSERT INTO `inreplays` VALUES ('43', '打好开发和', '4', '28', 'admin', 'admin', '2016-12-30 09:53:20');
+INSERT INTO `inreplays` VALUES ('44', '豆腐干', '4', '28', 'admin', 'admin', '2016-12-30 09:54:26');
+INSERT INTO `inreplays` VALUES ('45', '短发', '4', '28', 'admin', 'admin', '2016-12-30 09:56:20');
+INSERT INTO `inreplays` VALUES ('46', '艾丝凡', '4', '28', 'admin', 'admin', '2016-12-30 10:06:10');
+INSERT INTO `inreplays` VALUES ('47', '高飞的很高', '5', '29', 'admin', 'admin', '2016-12-30 10:08:22');
+INSERT INTO `inreplays` VALUES ('48', '啊刚刚获得发', '5', '29', 'admin', 'admin', '2016-12-30 10:09:06');
+INSERT INTO `inreplays` VALUES ('49', '的发放给', '5', '29', 'admin', 'admin', '2016-12-30 10:09:30');
+INSERT INTO `inreplays` VALUES ('50', '啊是的发放', '1', '1', 'admin', '李四', '2016-12-30 10:09:51');
 
 -- ----------------------------
 -- Table structure for `news`
@@ -90,16 +133,16 @@ CREATE TABLE `notes` (
   `newTime` datetime NOT NULL,
   `newReplayUser` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`noteId`,`noteTitle`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of notes
 -- ----------------------------
-INSERT INTO `notes` VALUES ('1', '社工到底是什么体系', '精华', 'admin', '1', '2016-12-22 10:04:04', '1', '2016-12-27 11:21:51', '123456');
-INSERT INTO `notes` VALUES ('2', '菜鸟技术 大牛请过---------小技巧谈开机密码', '精华', 'admin', '2', '2016-12-22 10:04:47', '1', '2016-12-27 11:33:55', '123456');
+INSERT INTO `notes` VALUES ('1', '社工到底是什么体系', '精华', 'admin', '1', '2016-12-22 10:04:04', '1', '2017-01-04 14:36:36', 'admin');
+INSERT INTO `notes` VALUES ('2', '菜鸟技术 大牛请过---------小技巧谈开机密码', '精华', 'admin', '2', '2016-12-22 10:04:47', '1', '2016-12-30 09:27:47', 'admin');
 INSERT INTO `notes` VALUES ('3', '乌云真的倒闭了么？', '精华', 'admin', '3', '2016-12-22 10:05:21', '2', '2016-12-22 10:32:37', 'admin');
-INSERT INTO `notes` VALUES ('4', ' 一些手机/电脑模拟黑客破解入侵解密的游戏23', '最新', 'admin', '1', '2016-12-22 10:11:53', '1', '2016-12-22 10:32:40', 'admin');
-INSERT INTO `notes` VALUES ('5', '偶然发现的太原理工大学注入点', '最新', 'admin', '1', '2016-12-22 10:12:13', '1', '2016-12-22 10:32:42', 'admin');
+INSERT INTO `notes` VALUES ('4', ' 一些手机/电脑模拟黑客破解入侵解密的游戏23', '最新', 'admin', '1', '2016-12-22 10:11:53', '1', '2016-12-30 09:52:58', 'admin');
+INSERT INTO `notes` VALUES ('5', '偶然发现的太原理工大学注入点', '最新', 'admin', '1', '2016-12-22 10:12:13', '1', '2016-12-30 10:08:16', 'admin');
 INSERT INTO `notes` VALUES ('6', '某网警查水表的工具(使用说明)', '最新', 'admin', '1', '2016-12-22 10:12:26', '1', '2016-12-22 10:32:45', 'admin');
 INSERT INTO `notes` VALUES ('7', '免费翻墙DNS|测试可用上一些被墙网站', '最新', '张三', '1', '2016-12-22 10:12:38', '1', '2016-12-22 10:32:48', 'admin');
 INSERT INTO `notes` VALUES ('8', '用不了google的戳进来，分享几个网站', '最新', '张三', '1', '2016-12-22 10:12:58', '1', '2016-12-22 10:32:51', 'admin');
@@ -118,6 +161,9 @@ INSERT INTO `notes` VALUES ('22', '让弗格森个发给', '普通', '123456', '
 INSERT INTO `notes` VALUES ('23', '噶符合和他复旦复华', '普通', '123456', '申购时间推移', '2016-12-26 17:07:40', '1', '2016-12-26 17:07:40', null);
 INSERT INTO `notes` VALUES ('24', '让他也体会过很多', '普通', '123456', '电话解放军', '2016-12-26 17:08:05', '1', '2016-12-26 17:08:05', null);
 INSERT INTO `notes` VALUES ('25', '经过海关hi个国家开发', '普通', '123456', '放松的好傻hi电话费i', '2016-12-26 17:29:53', '1', '2016-12-26 17:29:53', null);
+INSERT INTO `notes` VALUES ('26', '更好地发挥好', '普通', 'admin', '第三方公司共', '2017-01-04 09:11:20', '1', '2017-01-04 09:11:20', null);
+INSERT INTO `notes` VALUES ('27', '更好地发挥好多数发达省份发生的', '普通', '\"null\"', '第三方公司共', '2017-01-04 09:11:38', '1', '2017-01-04 09:11:38', null);
+INSERT INTO `notes` VALUES ('28', '光棍节三翻四复高年级', '普通', 'admin', '大公司的广泛共识阿发防守对方', '2017-01-04 09:28:20', '1', '2017-01-04 09:28:20', null);
 
 -- ----------------------------
 -- Table structure for `replays`
@@ -130,7 +176,7 @@ CREATE TABLE `replays` (
   `replayTime` datetime NOT NULL,
   `noteId` int(4) NOT NULL,
   PRIMARY KEY (`replayId`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of replays
@@ -158,6 +204,13 @@ INSERT INTO `replays` VALUES ('23', 'good', '123456', '2016-12-27 09:44:13', '1'
 INSERT INTO `replays` VALUES ('24', '贝多芬乖哈hi个', '123456', '2016-12-27 11:15:37', '1');
 INSERT INTO `replays` VALUES ('25', 'test', '123456', '2016-12-27 11:21:51', '1');
 INSERT INTO `replays` VALUES ('26', 'test1\n', '123456', '2016-12-27 11:33:55', '2');
+INSERT INTO `replays` VALUES ('27', '反倒是的国家和腹股沟', 'admin', '2016-12-30 09:27:47', '2');
+INSERT INTO `replays` VALUES ('28', '阿萨德发送方', 'admin', '2016-12-30 09:52:58', '4');
+INSERT INTO `replays` VALUES ('29', '低功耗的和', 'admin', '2016-12-30 10:08:16', '5');
+INSERT INTO `replays` VALUES ('30', 'fdgsggf', 'admin', '2017-01-04 11:25:20', '1');
+INSERT INTO `replays` VALUES ('31', 'sftgfgsdf', 'admin', '2017-01-04 11:26:44', '1');
+INSERT INTO `replays` VALUES ('32', '贷款纠纷化解肯定会恢复', 'admin', '2017-01-04 11:28:19', '1');
+INSERT INTO `replays` VALUES ('33', '发疯似的', 'admin', '2017-01-04 14:36:36', '1');
 
 -- ----------------------------
 -- Table structure for `sections`
@@ -202,13 +255,14 @@ CREATE TABLE `users` (
   `email` varchar(50) NOT NULL,
   `addtime` datetime NOT NULL,
   `userStatus` int(4) NOT NULL,
+  `userType` varchar(10) NOT NULL,
   PRIMARY KEY (`userId`,`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', '123456', 'e10adc3949ba59abbe56e057f20f883e', '男', '20', '123456@qq.com', '2016-12-19 16:18:31', '1');
-INSERT INTO `users` VALUES ('2', 'admin', '96e79218965eb72c92a549dd5a330112', '女', '20', '5653454@wer', '2016-12-21 13:39:55', '1');
-INSERT INTO `users` VALUES ('7', '张三', '1a100d2c0dab19c4430e7d73762b3423', '男', '20', '565345@df', '2016-12-21 14:11:59', '1');
-INSERT INTO `users` VALUES ('8', '李四', '73882ab1fa529d7273da0db6b49cc4f3', '女', '21', '444444@qq.com', '2016-12-23 11:26:12', '1');
+INSERT INTO `users` VALUES ('1', '123456', 'e10adc3949ba59abbe56e057f20f883e', '男', '20', '123456@qq.com', '2016-12-19 16:18:31', '1', '普通用户');
+INSERT INTO `users` VALUES ('2', 'admin', '96e79218965eb72c92a549dd5a330112', '女', '20', '5653454@wer', '2016-12-21 13:39:55', '1', '版主');
+INSERT INTO `users` VALUES ('7', '张三', '1a100d2c0dab19c4430e7d73762b3423', '男', '20', '565345@df', '2016-12-21 14:11:59', '1', '版主');
+INSERT INTO `users` VALUES ('8', '李四', '73882ab1fa529d7273da0db6b49cc4f3', '女', '21', '444444@qq.com', '2016-12-23 11:26:12', '1', '普通用户');

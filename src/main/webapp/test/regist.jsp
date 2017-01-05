@@ -7,6 +7,7 @@
 <title>注册</title>
 <%@include file="head.jsp"%>
 <script type="text/javascript" src="../test/js/regist.js"></script>
+
 </head>
 <body>
 
@@ -17,40 +18,59 @@
 					<li><a href="/">首页</a></li>
 					<li><a href="/n/1/">用户注册</a></li>
 				</ol>
-				<form id="form">
+				<form id="form" class="form-horizontal">
 					<div class="form-group">
-						<label for="username">用户名</label> <input type="text"
-							name="username" class="form-control" id="username"
-							placeholder="必填项" >
+						<label class="col-lg-3 control-label">用户名</label>
+						<div class="col-lg-5">
+							<input type="text" class="form-control" name="user" id="user"/>
+							<font id="errorFont" style="display: none" color="red">用户名已存在</font>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-lg-3 control-label">邮箱</label>
+						<div class="col-lg-5">
+							<input type="text" class="form-control" name="email" id="email"/>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-lg-3 control-label">密码</label>
+						<div class="col-lg-5">
+							<input type="password" class="form-control" name="password" id="password"/>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-lg-3 control-label">重置密码</label>
+						<div class="col-lg-5">
+							<input type="password" class="form-control"
+								name="confirmPassword" id="confirmPassword"/>
+						</div>
 					</div>
 					<div class="form-group">
-						<label for="email">电子邮件</label> <input type="email"
-							name="email" class="form-control" id="email" placeholder="必填项">
-					</div>
-					<div class="form-group">
-						<label for="password">密码</label> <input type="password"
-							name="password" class="form-control" id="password"
-							placeholder="必填项">
-					</div>
-					<div class="form-group">
-						<label for="passwordConfirm">重新输入一遍密码</label> <input
-							type="password" name="passwordConfirm" class="form-control"
-							id="passwordConfirm" placeholder="必填项">
-					</div>
-					<div class="form-group">
-						<label for="sex">性别</label>
-						<div class="radio">
-							<label> <input type="radio" name="sex"
-								id="sex" value="option1" checked> 男
+						<label for="sex" class="col-lg-3 control-label">性别</label>
+						<div class="col-lg-5">
+							<label> <input type="radio" name="sex" id="sex"
+								value="男" checked> 男
 							</label> <label> <input type="radio" name="sex"
-								id="optionsRadios2" value="option2"> 女
+								id="optionsRadios2" value="女"> 女
 							</label>
 						</div>
 					</div>
-                    <div>
-					<button id="regist" type="submit" class="btn btn-default">注册</button>
-					<button type="reset" class="btn btn-default">重置</button>               
-                    </div>
+					<div class="form-group">
+						<label class="col-lg-3 control-label">年龄</label>
+						<div class="col-lg-5">
+							<input type="text" class="form-control"
+								name="age" id="age"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-lg-9 col-lg-offset-3">
+							<button id="regist" type="button" class="btn btn-default">注册</button>
+							<button type="reset" class="btn btn-default">重置</button>
+						</div>
+					</div>
 
 				</form>
 

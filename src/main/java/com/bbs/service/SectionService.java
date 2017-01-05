@@ -13,4 +13,6 @@ public interface SectionService {
 	public List<Section> findAllSectionBySectionName(String sectionName) throws Exception;
 	
 	public Section findSectionBySectionId(int sectionId) throws Exception;
+	
+	public List<Section> findSectionBySectionUser(String sectionUser) throws Exception;
 }

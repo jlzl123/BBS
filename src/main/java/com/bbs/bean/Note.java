@@ -14,6 +14,7 @@ public class Note {
     private Date newTime;
     
     private int replayToatl;//非表字段
+    private String sectionName;//非表字段
     
 	public int getNoteId() {
 		return noteId;
@@ -75,5 +76,12 @@ public class Note {
 	}
     public void setReplayToatl(int replayToatl) {
 		this.replayToatl = replayToatl;
+	}
+    
+    public String getSectionName() {
+		return sectionName;
+	}
+    public void setSectionName(String sectionName) {
+		this.sectionName = sectionName;
 	}
 }

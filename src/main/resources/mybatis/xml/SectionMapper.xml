@@ -13,4 +13,7 @@
         <select id="findAllSectionBySectionName" parameterType="java.lang.String" resultType="Section">
                 select * from sections where sectionName like '%${value}%'
         </select>
+        <select id="findSectionBySectionUser" parameterType="java.lang.String" resultType="Section">
+                select * from sections where sectionUser=#{value}
+        </select>
 </mapper>

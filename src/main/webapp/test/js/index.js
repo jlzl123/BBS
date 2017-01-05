@@ -88,7 +88,7 @@ index.initsectionData=function(){
 									str+='<div class="col-xs-6 col-lg-4"><h2>'+n.sectionName+'</h2>'
 					    			+'<div class="panel-body panel-subtitle">'
 					    			+'<span class="label label-success">'+n.sectionUser+'</span></div><p>'+n.jianjie+'</p>'
-					    			+'<p><a class="btn btn-default" href="/BBS/test/note.jsp?sectionName='+n.sectionName+'" role="button">去该板块 &raquo;</a>'
+					    			+'<p><a class="btn btn-default" href="/BBS/test/note.jsp?sectionName='+n.sectionName+'" role="button">去该版块 &raquo;</a>'
 					    			+'</p></div><!--/.col-xs-6.col-lg-4-->';
 								});
 								

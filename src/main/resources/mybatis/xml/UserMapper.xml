@@ -7,8 +7,21 @@
         <select id="findUserByUsername" parameterType="java.lang.String" resultType="User">
                 select * from users where username=#{value}
         </select>
+        
+        <select id="findAllUser" resultType="User">
+                select * from users
+        </select>
+        
+        <update id="updateUserByUserStatus" parameterType="int">
+                update users set userStatus=#{0} where userId=#{1}
+        </update>
+        
         <insert id="insertUser" parameterType="User">
-                insert into users(username,password,sex,age,email,addtime,userStatus) values(
-                #{username},#{password},#{sex},#{age},#{email},#{addtime},#{userStatus})
+                insert into users(username,password,sex,age,email,addtime,userStatus,userType) values(
+                #{username},#{password},#{sex},#{age},#{email},#{addtime},#{userStatus},#{userType})
         </insert>
+        
+        <delete id="deleteUser" parameterType="int">
+                delete from users where userId=#{value}
+        </delete>
 </mapper>

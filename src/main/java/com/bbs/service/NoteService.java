@@ -18,4 +18,6 @@ public interface NoteService {
 	public List<Note> findAllNoteByNoteTitle(String noteTitle) throws Exception;
 	
 	public List<Note> findAllNoteByUserName(String userName) throws Exception;
+	
+	public List<Note> findAllNote() throws Exception;
 }

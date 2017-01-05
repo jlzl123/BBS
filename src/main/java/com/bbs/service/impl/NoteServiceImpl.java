@@ -78,4 +78,14 @@ public class NoteServiceImpl implements NoteService{
 		}
 	}
 
+	public List<Note> findAllNote() throws Exception {
+		// TODO Auto-generated method stub
+		try {
+			return noteMapper.findAllNote();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+            throw new ServiceException("查询所有帖子信息异常!");
+	}
+
 }

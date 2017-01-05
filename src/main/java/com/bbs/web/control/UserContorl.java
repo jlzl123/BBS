@@ -129,6 +129,7 @@ public class UserContorl {
 		Date date = new Date();
 		user.setAddtime(date);
 		user.setUserStatus(1);
+		user.setUserType("普通用户");
 		int i = userService.insertUser(user);
 		if (i > 0) {
 			flag = true;

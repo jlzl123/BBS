@@ -23,7 +23,7 @@ public class SectionServiceImpl implements SectionService{
 			return sectionMapper.findAllSection();			
 		} catch (Exception e) {
 			// TODO: handle exception
-			throw new ServiceException("查询所有版快信息异常!");
+			throw new ServiceException("查询所有版块信息异常!");
 		}
 	}
 
@@ -34,7 +34,7 @@ public class SectionServiceImpl implements SectionService{
 			return sectionMapper.findSectionBySectionName(sectionName);		
 		} catch (Exception e) {
 			// TODO: handle exception
-			throw new ServiceException("查询版快信息异常!");
+			throw new ServiceException("查询版块信息异常!");
 		}
 	}
 
@@ -45,7 +45,7 @@ public class SectionServiceImpl implements SectionService{
 			return sectionMapper.findAllSectionBySectionName(sectionName);		
 		} catch (Exception e) {
 			// TODO: handle exception
-			throw new ServiceException("查询所有版快信息异常!");
+			throw new ServiceException("查询所有版块信息异常!");
 		}
 	}
 
@@ -55,7 +55,18 @@ public class SectionServiceImpl implements SectionService{
 			return sectionMapper.findSectionBySectionId(sectionId);		
 		} catch (Exception e) {
 			// TODO: handle exception
-			throw new ServiceException("查询版快信息异常!");
+			throw new ServiceException("查询版块信息异常!");
+		}
+	}
+
+	public List<Section> findSectionBySectionUser(String sectionUser)
+			throws Exception {
+		// TODO Auto-generated method stub
+		try {
+			return sectionMapper.findSectionBySectionUser(sectionUser);
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new ServiceException("查询版块信息异常!");
 		}
 	}
 

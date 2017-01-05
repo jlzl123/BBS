@@ -10,8 +10,12 @@ public class User {
 	private String sex;
 	private int age;
 	private String email;
-	private Date addtime;//mysql¿ÉÒÔ±£´ædateÊý¾Ý
+	private Date addtime;//mysqlï¿½ï¿½ï¿½Ô±ï¿½ï¿½ï¿½dateï¿½ï¿½ï¿½
 	private int userStatus;
+	private String userType;
+	
+	private String userStatusStr;
+	
 	public int getUserId() {
 		return userId;
 	}
@@ -60,6 +64,18 @@ public class User {
 	public void setUserStatus(int userStatus) {
 		this.userStatus = userStatus;
 	}
+	public String getUserType() {
+		return userType;
+	}
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
 	
+	public String getUserStatusStr() {
+		return userStatusStr;
+	}
+    public void setUserStatusStr(String userStatusStr) {
+		this.userStatusStr = userStatusStr;
+	}
 	
 }

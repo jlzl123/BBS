@@ -4,7 +4,8 @@ var regist={
 
 $(document).ready(function(){
 //	regist.formValidate();
-//	regist.addUser();
+	regist.addUser();
+	regist.validateUsername();
 	$("#form").bootstrapValidator({
 		message: 'This value is not valid',
         feedbackIcons: {
@@ -13,7 +14,7 @@ $(document).ready(function(){
             validating: 'glyphicon glyphicon-refresh'
         },
 		fields:{
-			username:{
+			user:{
 				validators:{
 					notEmpty:{
 						message:"用户名不能为空!"
@@ -28,17 +29,49 @@ $(document).ready(function(){
 			
 		}
 	});
-	$("#regist").click(function(){	
-		$("#form").bootstrapValidator("validate");
-		alert(123)
-	});
+//	$("#regist").click(function(){	
+//		$("#form").bootstrapValidator("validate");
+//	});
 })
 
 regist.addUser=function(){
-	$("#regist").click(function(){	
-		$("#form").bootstrapValidator("validate");
-		alert(123)
+	$("#regist").click(function(){
+		var bootstrapValidator=$("#form").data("bootstrapValidator");
+		bootstrapValidator.validate();
+		var flag=bootstrapValidator.isValid();
+		var json=regist.getFormElementsVal();	
+		if(flag){
+			$.post("/BBS/userControl/addUser",{"json":JSON.stringify(json)},
+					function(data){
+				if(data=="添加用户信息异常!"){
+					alert("信息不正确，请检查修改");
+				}else{
+					if(data){
+						alert("注册成功，请登录。");
+					}				
+				}
+			});			
+		}else{
+			alert("信息不正确，请检查修改");
+		}
 	});
+}
+
+regist.getFormElementsVal=function(){
+	var username=$("#user").val();
+	var pass=$("#password").val();
+	var password=hex_md5(pass);
+	var age=$("#age").val();
+	var sex=$('input:radio:checked').val();
+	var email=$("#email").val();
+	var str={
+			"username":username,
+			"password":password,
+			"age":age,
+			"sex":sex,
+			"email":email
+	}
+	return str;
 }
 
 regist.formValidate=function(){
@@ -114,5 +147,22 @@ regist.formValidate=function(){
 				}
 			}
 		}
+	});
+}
+
+regist.validateUsername=function(){
+	$("#user").change(function(){       		
+		$.get("/BBS/userControl/validateUsername",{"username":$("#user").val()},
+				function(data){
+			if(data=="查询用户信息异常!"){
+				alert(data);
+			}else{
+				if(data){
+					$("#errorFont").css("display","");//如果设置block的话标签位置会变化
+				}else{
+					$("#errorFont").css("display","none");
+				}				
+			}
+		});
 	});
 }

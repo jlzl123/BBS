@@ -1,5 +1,7 @@
 package com.bbs.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -43,6 +45,37 @@ public class UserServiceImpl implements UserService{
 		} catch (Exception e) {
 			// TODO: handle exception
 			throw new ServiceException("添加用户信息异常!");
+		}
+	}
+
+	public List<User> findAllUser() throws Exception {
+		// TODO Auto-generated method stub
+		try {
+			return userMapper.findAllUser();
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new ServiceException("查询所有用户信息异常!");
+		}
+	}
+
+	public int deleteUser(int userId) throws Exception {
+		// TODO Auto-generated method stub
+		try {
+			return userMapper.deleteUser(userId);
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new ServiceException("删除用户信息异常!");
+		}
+	}
+
+	public int updateUserByUserStatus(int userStatus, int userId)
+			throws Exception {
+		// TODO Auto-generated method stub
+		try {
+			return userMapper.updateUserByUserStatus(userStatus, userId);
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new ServiceException("修改用户信息异常!");
 		}
 	}
 
