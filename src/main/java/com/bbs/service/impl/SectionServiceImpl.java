@@ -70,4 +70,14 @@ public class SectionServiceImpl implements SectionService{
 		}
 	}
 
+	public int updateSectionUser(Section section) throws Exception {
+		// TODO Auto-generated method stub
+		try {
+			return sectionMapper.updateSectionUser(section);
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new ServiceException("修改版块信息异常!");
+		}
+	}
+
 }

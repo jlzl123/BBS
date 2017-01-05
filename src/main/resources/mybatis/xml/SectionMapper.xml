@@ -16,4 +16,8 @@
         <select id="findSectionBySectionUser" parameterType="java.lang.String" resultType="Section">
                 select * from sections where sectionUser=#{value}
         </select>
+        
+        <update id="updateSectionUser" parameterType="Section">
+                update sections set sectionUser=#{sectionUser} where sectionId=#{sectionId}
+        </update>
 </mapper>

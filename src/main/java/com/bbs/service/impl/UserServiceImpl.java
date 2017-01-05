@@ -79,4 +79,14 @@ public class UserServiceImpl implements UserService{
 		}
 	}
 
+	public int updateUserType(User user) throws Exception {
+		// TODO Auto-generated method stub
+		try {
+			return userMapper.updateUserType(user);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		    throw new ServiceException("修改用户信息异常!");
+	}
+
 }

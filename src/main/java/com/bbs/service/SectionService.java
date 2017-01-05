@@ -15,4 +15,6 @@ public interface SectionService {
 	public Section findSectionBySectionId(int sectionId) throws Exception;
 	
 	public List<Section> findSectionBySectionUser(String sectionUser) throws Exception;
+
+	public int updateSectionUser(Section section) throws Exception;
 }

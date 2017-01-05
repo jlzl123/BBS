@@ -15,6 +15,9 @@
         <update id="updateUserByUserStatus" parameterType="int">
                 update users set userStatus=#{0} where userId=#{1}
         </update>
+        <update id="updateUserType" parameterType="User">
+                update users set userType=#{userType} where username=#{username}
+        </update>
         
         <insert id="insertUser" parameterType="User">
                 insert into users(username,password,sex,age,email,addtime,userStatus,userType) values(

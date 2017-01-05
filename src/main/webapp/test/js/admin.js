@@ -157,6 +157,8 @@ admin.huifuUserClick=function(object){
 
 admin.updateUserTypeClick=function(object){
 	var sectionUser=$(object).parent().prev().text();
+	$("#banzhu").text(sectionUser);
+	//初始化版主管理版块表	
 	$.ajax({
 		type:"GET",
 		url:"/BBS/adminControl/findSectionBySectionUser",
@@ -173,15 +175,79 @@ admin.updateUserTypeClick=function(object){
 				});
 				$("#tbodyUserSection").html(str);
 			}else{
-				alert("该用户还不是版主");
+				$('#myModal1').modal('show');
+			}
+		}
+	});
+	//初始化暂定版块表
+	$.ajax({
+		type:"GET",
+		url:"/BBS/adminControl/findNoUserSection",
+		success:function(data){
+			if(data.length>0){
+				var str="";
+				$.each(data,function(index,item){
+					str+='<tr><td class="sectionId">'+item.sectionId+'</td><td>'+item.sectionName+'</td>'
+						+'<td>'+admin.paseDate(item.addtime)
+						+'</td><td><a href="#" onclick="admin.addUserSection(this)">添加</a></td></tr>';
+				});
+				$("#tbodyUserSection1").html(str);
+			}
+		}
+	});
+
+}
+
+admin.removeUserSection=function(object){
+	var sectionId=$(object).parent().prevAll(".sectionId").text();
+	$.ajax({
+		type:"POST",
+		url:"/BBS/adminControl/updateSectionUser",
+		data:"sectionId="+sectionId+"&sectionUser=暂定",
+		success:function(data){
+			if(data){
+				alert("该用户不再管理该版块!");
+				var addtr=$(object).parents("tr");
+				addtr.find("a").text("添加");
+				addtr.find("a").attr("onclick","admin.addUserSection(this)");
+				var str=addtr.html();
+				var tr=$(object).parents(".modal-content").find("#tbodyUserSection1")
+				tr.append(str)
+				
+				var currentTr=$(object).parents("tr");
+				currentTr.remove();//删除改行
+			}else{
+				alert("操作错误!")
 			}
 		}
 	});
 }
 
-admin.removeUserSection=function(object){
+admin.addUserSection=function(object){
 	var sectionId=$(object).parent().prevAll(".sectionId").text();
-	alert(sectionId)
+	var sectionUser=$(object).parents(".modal-content").find("font").html();
+	$.ajax({
+		type:"POST",
+		url:"/BBS/adminControl/updateSectionUser",
+		data:"sectionId="+sectionId+"&sectionUser="+sectionUser,
+		success:function(data){
+			if(data){
+				alert("添加成功，用户是该版块的版主了");
+				//在管理表添加该版块
+				var addtr=$(object).parents("tr");
+				addtr.find("a").text("删除");
+				addtr.find("a").attr("onclick","admin.removeUserSection(this)");
+				var str=addtr.html();
+				var tr=$(object).parents(".modal-content").find("#tbodyUserSection")
+				tr.append(str)
+				
+				$(object).parents("tr").remove();//移除该行
+				
+			}else{
+				alert("操作错误!");
+			}
+		}
+	});
 }
 
 admin.initNoteData=function(){

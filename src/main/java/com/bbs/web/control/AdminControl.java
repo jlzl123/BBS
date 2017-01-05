@@ -151,4 +151,44 @@ public class AdminControl {
 		List<Section> list=sectionService.findSectionBySectionUser(sectionUser);
 		return list;
 	}
+	
+	@RequestMapping(value="/updateSectionUser",method=RequestMethod.POST)
+	public @ResponseBody Boolean updateSectionUser(@RequestParam("sectionId")int 
+			sectionId,@RequestParam("sectionUser")String sectionUser) throws Exception{
+		boolean flag=false;
+		if(sectionId>0){
+			Section s=new Section();
+			s.setSectionId(sectionId);
+		    s.setSectionUser(sectionUser);
+		    if(!sectionUser.equals("暂定")){//修改用户类型
+		    	User user=new User();
+		    	user.setUsername(sectionUser);
+		    	user.setUserType("版主");
+		    	userService.updateUserType(user);
+		    }else{
+		    	Section section=sectionService.findSectionBySectionId(sectionId);
+		    	String username=section.getSectionUser();
+		    	List<Section> list=sectionService.findSectionBySectionUser(username);
+		    	if(list.size()==1){
+		    		User u=new User();
+		    		u.setUsername(username);
+		    		u.setUserType("普通用户");
+		    		userService.updateUserType(u);
+		    	}
+		    }
+			int i=sectionService.updateSectionUser(s);
+			if(i>0){
+				flag=true;
+			}
+		}
+		return flag;
+	}
+	
+	@RequestMapping(value="/findNoUserSection",method=RequestMethod.GET)
+	public @ResponseBody List<Section> findNoUserSection(HttpServletRequest request) throws Exception{
+		List<Section> list=sectionService.findSectionBySectionUser("暂定");
+		return list;
+	}
+	
+	
 }

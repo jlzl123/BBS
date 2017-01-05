@@ -226,10 +226,10 @@
 					&times;
 				</button>
 				<h4 class="modal-title" id="myModalLabel">
-					该版主所管理的版块
+					<font id="banzhu"></font> 版主所管理的版块
 				</h4>
 			</div>
-			<div class="modal-body">
+			<div class="modal-body mb1">
 				<table class="table table-striped">
 								<thead>
 									<tr>
@@ -240,6 +240,24 @@
 									</tr>
 								</thead>
 								<tbody id="tbodyUserSection">
+									
+								</tbody>
+							</table>
+			</div>
+			<h4 class="modal-title" id="myModalLabel">
+					&nbsp;&nbsp;&nbsp;版主暂定的版块
+			</h4>
+			<div class="modal-body mb2">
+				<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>版块ID</th>
+										<th>版块名</th>
+										<th>版块创建时间</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody id="tbodyUserSection1">
 									
 								</tbody>
 							</table>
