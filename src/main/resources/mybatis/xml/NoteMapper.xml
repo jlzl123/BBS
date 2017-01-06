@@ -5,6 +5,9 @@
                 select * from notes
         </select>
 
+        <select id="findNoteByNoteId" parameterType="int" resultType="Note">
+                select * from notes where noteId=#{value}
+        </select>
         <select id="findAllNoteBySectionId" parameterType="int" resultType="Note">
                 select * from notes where sectionId=#{value}
         </select>
@@ -29,4 +32,11 @@
         <update id="updateNoteReplay" parameterType="Note">
                 update notes set newReplayUser=#{newReplayUser},newTime=#{newTime} where noteId=#{noteId}
         </update>
+        <update id="updateNoteSection" parameterType="Note">
+                update notes set sectionId=#{sectionId} where noteId=#{noteId}
+        </update>
+        
+        <delete id="deleteNote" parameterType="int">
+                delete from notes where noteId=#{value}
+        </delete>
 </mapper>

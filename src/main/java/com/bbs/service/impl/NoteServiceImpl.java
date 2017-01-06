@@ -88,4 +88,34 @@ public class NoteServiceImpl implements NoteService{
             throw new ServiceException("查询所有帖子信息异常!");
 	}
 
+	public Note findNoteByNoteId(int noteId) throws Exception {
+		// TODO Auto-generated method stub
+		try {
+			return noteMapper.findNoteByNoteId(noteId);
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new ServiceException("查询帖子信息异常!");
+		}
+	}
+
+	public int updateNoteSection(Note note) throws Exception {
+		// TODO Auto-generated method stub
+		try {
+			return noteMapper.updateNoteSection(note);
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new ServiceException("更新帖子信息异常!");
+		}
+	}
+
+	public int deleteNote(int noteId) throws Exception {
+		// TODO Auto-generated method stub
+		try {
+			return noteMapper.deleteNote(noteId);
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new ServiceException("删除帖子信息异常!");
+		}
+	}
+
 }

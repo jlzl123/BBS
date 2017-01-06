@@ -11,18 +11,6 @@
 <body>
    <a id="param" style="display: none">${param.sectionName}</a>
 	<div>
-		<div class="input-group">
-
-			<input type="text" class="form-control"> <span
-				class="input-group-btn">
-				<button class="btn btn-default" type="button">搜索</button>
-			</span>
-		</div>
-		<!-- /input-group -->
-	</div>
-	<!-- /.col-lg-6 -->
-
-	<div>
 		<!-- LEFT -->
 
 

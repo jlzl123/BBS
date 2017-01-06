@@ -120,6 +120,26 @@
 						<div class="panel-heading">
 							<h5 id="tag">文章列表</h5>
 						</div>
+						<div>
+		<div class="input-group" style="display: none">
+			<div class="input-group-btn">
+				<button type="button" class="btn btn-default dropdown-toggle"
+					data-toggle="dropdown">
+					<font>筛选</font> <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="#" class="ss">作者</a></li>
+					<li><a href="#" class="ss">帖子</a></li>
+					<li><a href="#" class="ss">版块</a></li>
+				</ul>
+			</div>
+			<!-- /btn-group -->
+			<input type="text" class="form-control" id="input"><span class="input-group-btn">
+				<button class="btn btn-default" type="button" id="sousuo">搜索</button></span>
+		</div>
+		<!-- /input-group -->
+	</div>
+						
 						<!--前面的作为模板引入，类似head.html-->
 						<!--这个table需要替换掉-->
 						<!--文章管理列表-->
@@ -191,6 +211,9 @@
 			</div>
 		</div>
 	</div>
+	
+	
+	
 <!-- 模态框（Modal） -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog" style="float: left;">
@@ -204,13 +227,13 @@
 				</h4>
 			</div>
 			<div class="modal-body">
-				确定要删除该用户吗
+				确定要删除 <font color="red" id="user"></font> 用户吗
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
 				</button>
 				<a id="a" style="display: none"></a>
-				<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="admin.removeUser(this)">
+				<button type="button" class="btn btn-primary" data-dismiss="modal">
 					确定
 				</button>
 			</div>
@@ -267,6 +290,117 @@
 				</button>
 				<a id="a" style="display: none"></a>
 				<button type="button" class="btn btn-primary" data-dismiss="modal">
+					确定
+				</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog" style="float: left;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					<font id="noteId"></font>号 帖子所属的版块:<font id="sectionName"></font>
+				</h4>
+			</div>
+			
+			<h4 class="modal-title" id="myModalLabel">
+					&nbsp;&nbsp;&nbsp;所有版块
+			</h4>
+			<div class="modal-body mb">
+				<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>版块ID</th>
+										<th>版块名</th>
+										<th>版块创建时间</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody id="tbodyNoteSection">
+									
+								</tbody>
+							</table>
+							<ul id="exampleSection3"></ul>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+				</button>
+				<a id="a" style="display: none"></a>
+				<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="admin.updateNoteSectionConfirm(this)">
+					确定
+				</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog" style="float: left;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					修改  <font color="red" class="sectionName"></font> 版块的版块名
+				</h4>
+			</div>
+			<div class="modal-body">
+				<font size="4pt">新版块名:</font><input type="text" class="form-control">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+				</button>
+				<a id="a" style="display: none"></a>
+				<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="admin.updateSectionName(this)">
+					确定
+				</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog" style="float: left;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					版块: <font id="bk"></font> 					
+				</h4>
+				<h4 class="modal-title" id="myModalLabel">
+					当前版块管理员: <font id="gly"></font> 					
+				</h4>
+			</div>
+			<div class="modal-body">
+				<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>用户ID</th>
+										<th>用户名</th>
+										<th>用户注册时间</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody id="tbodyUserSectionMt">
+									
+								</tbody>
+							</table>
+							<ul id="exampleSection4"></ul>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+				</button>
+				<a id="a" style="display: none"></a>
+				<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="admin.updateSectionUser(this)">
 					确定
 				</button>
 			</div>

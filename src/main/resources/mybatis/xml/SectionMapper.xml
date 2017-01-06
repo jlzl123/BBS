@@ -20,4 +20,10 @@
         <update id="updateSectionUser" parameterType="Section">
                 update sections set sectionUser=#{sectionUser} where sectionId=#{sectionId}
         </update>
+        
+        <!-- 已面向对象的发送更新数据库 -->
+        <update id="updateSection" parameterType="Section">
+                update sections set sectionId=#{sectionId},sectionName=#{sectionName},jianjie=#{jianjie},
+                         sectionUser=#{sectionUser},addtime=#{addtime} where sectionId=#{sectionId}
+        </update>
 </mapper>

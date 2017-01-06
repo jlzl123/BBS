@@ -1,5 +1,6 @@
 package com.bbs.web.control;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -190,5 +191,166 @@ public class AdminControl {
 		return list;
 	}
 	
+	@RequestMapping(value="/findAllNoteByNoteTitle",method=RequestMethod.GET)
+	public @ResponseBody Map<String, Object> findAllNoteByNoteTitle(
+			@RequestParam("noteTitle")String noteTitle,@RequestParam("pageIndex")int pageIndex) throws Exception{
+		Map<String, Object> map=new HashMap<String, Object>();
+		List<Note> list=noteService.findAllNoteByNoteTitle(noteTitle);
+		for(Note note:list){
+			Section s=sectionService.findSectionBySectionId(note.getSectionId());
+			note.setSectionName(s.getSectionName());
+		}
+		
+		int pageSize=10;
+		int rowCount=0;
+		rowCount=list.size();
+		if(rowCount%pageSize!=0){
+			rowCount=rowCount/pageSize+1;
+		}else{
+			rowCount=rowCount/pageSize;
+		}
+		map.put("list", list);
+		map.put("pageIndex", pageIndex);
+		map.put("pageCount", rowCount);
+		return map;
+	}
 	
+	@RequestMapping(value="/findAllNoteByUser",method=RequestMethod.GET)
+	public @ResponseBody Map<String, Object> findAllNoteByUser(
+			@RequestParam("userName")String userName,@RequestParam("pageIndex")int pageIndex) throws Exception{
+		Map<String, Object> map=new HashMap<String, Object>();
+		List<Note> list=noteService.findAllNoteByUserName(userName);
+		for(Note note:list){
+			Section s=sectionService.findSectionBySectionId(note.getSectionId());
+			note.setSectionName(s.getSectionName());
+		}
+		
+		int pageSize=10;
+		int rowCount=0;
+		rowCount=list.size();
+		if(rowCount%pageSize!=0){
+			rowCount=rowCount/pageSize+1;
+		}else{
+			rowCount=rowCount/pageSize;
+		}
+		map.put("list", list);
+		map.put("pageIndex", pageIndex);
+		map.put("pageCount", rowCount);
+		return map;
+	}
+	
+	@RequestMapping(value="/findAllNoteBySectionName",method=RequestMethod.GET)
+	public @ResponseBody Map<String, Object> findAllNoteBySectionName(
+			@RequestParam("sectionName")String sectionName,@RequestParam("pageIndex")int pageIndex) throws Exception{
+		Map<String, Object> map=new HashMap<String, Object>();
+		Section section=sectionService.findSectionBySectionName(sectionName);
+		List<Note> list=new ArrayList<Note>();
+		if(section!=null){
+			list=noteService.findAllNoteBySectionId(section.getSectionId());			
+			for(Note note:list){
+				Section s=sectionService.findSectionBySectionId(note.getSectionId());
+				note.setSectionName(s.getSectionName());
+			}
+		}
+		
+		int pageSize=10;
+		int rowCount=0;
+		rowCount=list.size();
+		if(rowCount%pageSize!=0){
+			rowCount=rowCount/pageSize+1;
+		}else{
+			rowCount=rowCount/pageSize;
+		}
+		map.put("list", list);
+		map.put("pageIndex", pageIndex);
+		map.put("pageCount", rowCount);
+		return map;				
+	}
+	
+	@RequestMapping(value="/getSectionNameByNoteId",method=RequestMethod.GET)
+	public @ResponseBody String getSectionNameByNoteId(@RequestParam("noteId")int noteId) throws Exception{
+		String str=null;
+		if(noteId>0){
+			Note note=noteService.findNoteByNoteId(noteId);
+			Section s=sectionService.findSectionBySectionId(note.getSectionId());
+			str=s.getSectionName();
+		}
+		return str;
+	}
+	
+	@RequestMapping(value="/updateNoteSection",method=RequestMethod.GET)
+	public @ResponseBody Boolean updateNoteSection(@RequestParam("sectionName")String 
+			sectionName,@RequestParam("noteId")int noteId) throws Exception{
+		boolean flag=false;
+		if(sectionName!=null){
+			Note note=new Note();
+			note.setNoteId(noteId);
+			Section section=sectionService.findSectionBySectionName(sectionName);
+			note.setSectionId(section.getSectionId());
+			int i=noteService.updateNoteSection(note);
+			if(i>0){
+				flag=true;
+			}
+		}
+		return flag;
+	}
+	
+	@RequestMapping(value="/removeNote",method=RequestMethod.GET)
+	public @ResponseBody Boolean removeNote(@RequestParam("noteId")int noteId) throws Exception{
+		boolean flag=false;
+		if(noteId>0){
+			int i=noteService.deleteNote(noteId);
+			if(i>0){
+				flag=true;
+			}
+		}
+		return flag;
+	}
+	
+	@RequestMapping(value="/findSectionName",method=RequestMethod.GET)
+	public @ResponseBody Boolean findSectionName(@RequestParam("sectionName")String 
+			sectionName) throws Exception{
+		boolean flag=false;
+		if(sectionName!=null){
+			Section section=sectionService.findSectionBySectionName(sectionName);
+			if(section==null){
+				flag=true;
+			}
+		}
+		return flag;
+	}
+	
+	@RequestMapping(value="/updateSectionName",method=RequestMethod.POST)
+	public @ResponseBody Boolean updateSectionName(@RequestParam("sectionName")String 
+			sectionName,@RequestParam("sectionNameNew")String sectionNameNew) throws Exception{
+		boolean flag=false;
+		if(sectionName!=null){
+			Section section=sectionService.findSectionBySectionName(sectionName);
+			section.setSectionName(sectionNameNew);
+			int i=sectionService.updateSection(section);
+			if(i>0){
+				flag=true;
+			}
+		}
+		return flag;
+	}
+	
+	@RequestMapping(value="/updateSectionUserBySectionName",method=RequestMethod.POST)
+	public @ResponseBody Boolean updateSectionUserBySectionName(@RequestParam("sectionName")String 
+			sectionName,@RequestParam("sectionUser")String sectionUser) throws Exception{
+		boolean flag=false;
+		if(sectionName!=null){
+			Section section=sectionService.findSectionBySectionName(sectionName);
+			section.setSectionUser(sectionUser);//修改版主
+			int i=sectionService.updateSection(section);
+			if(i>0){
+				flag=true;
+				User user=new User();
+				user.setUsername(sectionUser);
+				user.setUserType("版主");
+				userService.updateUserType(user);
+			}
+		}
+		return flag;
+	}
 }
