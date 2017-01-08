@@ -90,4 +90,24 @@ public class SectionServiceImpl implements SectionService{
 		}
 	}
 
+	public int deleteSection(String sectionName) throws Exception {
+		// TODO Auto-generated method stub
+		try {
+			return sectionMapper.deleteSection(sectionName);
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new ServiceException("删除版块信息异常!");
+		}
+	}
+
+	public int insertSection(Section section) throws Exception {
+		// TODO Auto-generated method stub
+		try {
+			return sectionMapper.insertSection(section);
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new ServiceException("插入版块信息异常!");
+		}
+	}
+
 }

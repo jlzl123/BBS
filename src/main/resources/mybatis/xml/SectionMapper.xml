@@ -26,4 +26,13 @@
                 update sections set sectionId=#{sectionId},sectionName=#{sectionName},jianjie=#{jianjie},
                          sectionUser=#{sectionUser},addtime=#{addtime} where sectionId=#{sectionId}
         </update>
+        
+        <delete id="deleteSection" parameterType="java.lang.String">
+                delete from sections where sectionName=#{value}
+        </delete>
+        
+        <insert id="insertSection" parameterType="Section">
+                insert into sections(sectionName,jianjie,sectionUser,addtime) values(
+                #{sectionName},#{jianjie},#{sectionUser},#{addtime})
+        </insert>
 </mapper>

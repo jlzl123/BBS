@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.bbs.mapper.AdminMapper">
-       <select id="findAdminByUsername" parameterType="Admin" resultType="Admin">
+       <select id="findAdminByUser" parameterType="Admin" resultType="Admin">
            select * from admin where username=#{username} and password=#{password}
        </select>
+       <select id="findAdminByUsername" parameterType="java.lang.String" resultType="Admin">
+               select * from admin where username=#{value}
+       </select>
+       
+       <update id="updateAdmin" parameterType="java.lang.String">
+               update admin set password=#{1} where username=#{0}
+       </update>
        
        <insert id="insertAdmin" parameterType="Admin">
             insert into admin(username,password) values(#{username},#{password})

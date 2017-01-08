@@ -9,7 +9,7 @@
 <script type="text/javascript" src="../test/js/index.js"></script>
 </head>
 <body>
-	<div>
+	<div class="div">
 		<!-- LEFT -->
 
 		<div class="panel panel-default">
@@ -26,5 +26,6 @@
 
 	</div>
 	<!-- END LEFT -->
+	<div id="ssc"></div>
 </body>
 </html>

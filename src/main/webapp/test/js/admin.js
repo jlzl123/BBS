@@ -12,7 +12,9 @@ admin.clickListener = function() {
 		$("#userAdminDiv").css("display", "block");
 		$("#noteAdminDiv").css("display", "none");
 		$("#sectionAdminDiv").css("display", "none");
+		$("#changePassDiv").css("display","none");
 		$(".input-group").css("display", "none");
+		$(".sectionAddDiv").css("display", "none");
 		$("#tag").text("用户列表");
 		$("#guanli").text("用户管理");
 		admin.initUserData();
@@ -22,7 +24,9 @@ admin.clickListener = function() {
 		$("#noteAdminDiv").css("display", "block");
 		$("#userAdminDiv").css("display", "none");
 		$("#sectionAdminDiv").css("display", "none");
+		$("#changePassDiv").css("display","none");
 		$(".input-group").css("display", "");// 设置block css会错误
+		$(".sectionAddDiv").css("display", "none");
 		$("#tag").text("文章列表");
 		$("#guanli").text("文章管理");
 		admin.initNoteData();
@@ -32,10 +36,131 @@ admin.clickListener = function() {
 		$("#noteAdminDiv").css("display", "none");
 		$("#userAdminDiv").css("display", "none");
 		$(".input-group").css("display", "none");
+		$("#changePassDiv").css("display","none");
+		$(".sectionAddDiv").css("display", "block");
+		//设置选择框
+		$.ajax({
+			type:"POST",
+			url:"/BBS/adminControl/findAllUser",
+			dataType:"json",
+			data:"pageIndex="+1,
+			success:function(data){
+				var str="";
+				$.each(data.list,function(index,item){
+					str+='<option>'+item.username+'</option>';
+				});
+				$("#su").html(str);
+			}
+		});
 		$("#tag").text("版块列表");
 		$("#guanli").text("版块管理");
 		admin.initSectionData();
 	});
+	$("#changePass").click(function() {
+		$("#changePassDiv").css("display","block");
+		$("#sectionAdminDiv").css("display", "none");
+		$("#noteAdminDiv").css("display", "none");
+		$("#userAdminDiv").css("display", "none");
+		$(".input-group").css("display", "none");
+		$(".sectionAddDiv").css("display", "none");
+		$("#guanli").text("修改密码");
+		$("#tag").text("修改管理员密码");
+	});
+	
+	//添加版主
+	$("#addSectionUser").click(function(){
+		var sectionName=$("#name").val().trim();
+		var jianjie=$("#jianjie").val().trim();
+		var sectionUser=$("#su").val().trim();
+		var str={
+				"sectionName":sectionName,
+				"jianjie":jianjie,
+				"sectionUser":sectionUser,
+				"addtime":new Date()
+		}
+		if(sectionName==""){
+			alert("请输入版块名");
+		}else if(jianjie==""){
+			alert("请输入版块简介");
+		}else if(sectionUser==""){
+			alert("请输入版块管理员");
+		}else if($("#nameError").css("display")=="block"){
+            alert("版块已存在，请修改");
+		}else{
+			$.ajax({
+				type:"POST",
+				url:"/BBS/adminControl/addSectiom",
+				data:JSON.stringify(str),
+				success:function(data){
+					if(data){
+						alert("版块已添加");
+						admin.initSectionData();
+					}else{
+						alert("操作错误");
+					}
+				}
+			});
+		}
+	});
+	//版块名是否存在
+	$("#name").change(function(){
+		var sectionName=$("#name").val().trim();
+		$.ajax({
+			type:"GET",
+			url:"/BBS/adminControl/findSectionBySectionName",
+			data:"sectionName="+sectionName,
+			success:function(data){
+				if(data){
+					$("#nameError").css("display","block");
+				}else{
+					$("#nameError").css("display","none");
+				}
+			}
+		});
+	});
+	//修改管理员密码
+	$("#changeAdminPass").click(function(){
+		var username=$("#adminuser").text().trim();
+		var passwordOld=$("#passwordOld").val().trim();
+		var password=$("#password").val().trim();
+		var passwordConfirm=$("#passwordConfirm").val().trim();
+		if(passwordOld==""||password==""||passwordConfirm==""){
+			alert("密码密码不能为空!");
+		}else if(password!=passwordConfirm){
+			$(".passError").css("display","block");
+		}else{
+			$(".passError").css("display","none");
+			$.ajax({
+				type:"POST",
+				url:"/BBS/adminControl/validateAdminPass",
+				data:"password="+passwordOld+"&username="+username,
+				success:function(data){
+					if(data){
+						$(".passwordError").css("display","none");	
+						$.ajax({
+							type:"POST",
+							url:"/BBS/adminControl/changeAdminPass",
+							data:"&password="+password+"&username="+username,
+							success:function(data){
+								if(data){
+									alert("密码已修改")
+								}else{
+									alert("操作错误")
+								}				
+							}
+						});
+					}else{
+						$(".passwordError").css("display","block");					
+					}
+				}
+			});
+		}
+	});
+	//退出后台管理并回到首页
+	$("#tuichu").click(function(){
+		window.location.href="/BBS/test/index.jsp";
+	});
+	
 	// 筛选框监听,改变筛选方式
 	$(".ss").click(function() {
 		var str = $(this).text();
@@ -1152,6 +1277,19 @@ admin.removeSectionClick=function(object){
 
 admin.removeSection=function(object){
 	var sectionName=$("#user").text();
+	$.ajax({
+		type:"GET",
+		url:"/BBS/adminControl/removeSection",
+		data:"sectionName="+sectionName,
+		success:function(data){
+			if(data){
+				alert("版块已删除");
+				admin.initSectionData();
+			}else{
+				alert("操作错误")
+			}
+		}
+	});
 }
 
 //解析时间字符串

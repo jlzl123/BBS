@@ -10,7 +10,7 @@
 </head>
 <body>
    <a id="param" style="display: none">${param.sectionName}</a>
-	<div>
+	<div class="div">
 		<!-- LEFT -->
 
 
@@ -35,7 +35,7 @@
 
 	<div class="panel-footer"></div>
 
-	<div class="panel panel-default">
+	<div class="panel panel-default div">
 	        <div id="tishi" class="alert alert-warning" role="alert" style="padding-top: 10px;">
                                                     请先<a href="#">登录</a> 或者 <a href="/BBS/test/regist.jsp">注册新账号</a> 然后发帖
             </div>
@@ -68,6 +68,6 @@
 			</form>
 		</div>
 	</div>
-
+    <div id="ssc"></div>
 </body>
 </html>

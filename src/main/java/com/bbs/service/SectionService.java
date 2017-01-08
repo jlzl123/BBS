@@ -19,4 +19,8 @@ public interface SectionService {
 	public int updateSectionUser(Section section) throws Exception;
 	
 	public int updateSection(Section section) throws Exception;
+	
+	public int deleteSection(String sectionName) throws Exception;
+	
+	public int insertSection(Section section) throws Exception;
 }

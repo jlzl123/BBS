@@ -14,9 +14,9 @@ public class AdminServiceImpl implements AdminService{
 	@Resource//@Resource默认是按照名称来装配注入的，只有当找不到与名称匹配的bean才会按照类型来装配注入
 	private AdminMapper adminMapper;
 
-	public Admin findAdminByUsername(Admin admin) throws Exception {
+	public Admin findAdminByUsername(String username) throws Exception {
 		try {
-			return adminMapper.findAdminByUsername(admin);			
+			return adminMapper.findAdminByUsername(username);			
 		} catch (Exception e) {
 			// TODO: handle exception
 			throw new ServiceException("查询管理员信息异常!");
@@ -30,6 +30,16 @@ public class AdminServiceImpl implements AdminService{
 		} catch (Exception e) {
 			// TODO: handle exception
 			throw new ServiceException("添加管理员异常!");
+		}
+	}
+
+	public int updateAdmin(String username, String password) throws Exception {
+		// TODO Auto-generated method stub
+		try {
+			return adminMapper.updateAdmin(username, password);
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new ServiceException("修改管理员信息异常!");
 		}
 	}
 
